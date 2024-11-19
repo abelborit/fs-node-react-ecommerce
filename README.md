@@ -20,7 +20,7 @@
 
 - Paquete `react-router-dom` usando `npm i react-router-dom` desde `https://reactrouter.com/en/main`
 
-- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `react-toastify` usando `npm i react-toastify` desde `https://www.npmjs.com/package/react-toastify`
 
 - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
