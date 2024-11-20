@@ -24,6 +24,8 @@
 
 - Paquete `tailwindcss` usando `npm install -D tailwindcss postcss autoprefixer` desde `https://tailwindcss.com/docs/guides/vite`
 
+- Paquete `react-icons` usando `npm install react-icons --save` desde `https://react-icons.github.io/react-icons/`
+
 - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
 ### \* NOTAS:
