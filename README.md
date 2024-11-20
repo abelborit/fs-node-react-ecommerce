@@ -22,7 +22,7 @@
 
 - Paquete `react-toastify` usando `npm i react-toastify` desde `https://www.npmjs.com/package/react-toastify`
 
-- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `tailwindcss` usando `npm install -D tailwindcss postcss autoprefixer` desde `https://tailwindcss.com/docs/guides/vite`
 
 - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
