@@ -1,0 +1,76 @@
+{
+  "products": [
+    {
+      "_id": 1,
+      "name": "Women Round Neck Cotton Top",
+      "description": "A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.",
+      "price": "40",
+      "image": ["p_img1"],
+      "category": "Women",
+      "subCategory": "Topwear",
+      "sizes": ["S", "M", "L"],
+      "date": 1716634345448,
+      "bestseller": true
+    },
+    {
+      "_id": 2,
+      "name": "Men Round Neck Pure Cotton T-shirt",
+      "description": "A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.",
+      "price": "80",
+      "image": ["p_img2_1", "p_img2_2", "p_img2_3", "p_img2_4"],
+      "category": "Men",
+      "subCategory": "Topwear",
+      "sizes": ["M", "L", "XXL"],
+      "date": 1716634345548,
+      "bestseller": true
+    },
+    {
+      "_id": 3,
+      "name": "Women Palazzo Pants with Waist Belt",
+      "description": "A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.",
+      "price": "67",
+      "image": ["p_img22"],
+      "category": "Women",
+      "subCategory": "Bottomwear",
+      "sizes": ["S", "M"],
+      "date": 1716634346448,
+      "bestseller": false
+    },
+    {
+      "_id": 4,
+      "name": "Women Zip-Front Relaxed Fit Jacket",
+      "description": "A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.",
+      "price": "82",
+      "image": ["p_img21"],
+      "category": "Women",
+      "subCategory": "Winterwear",
+      "sizes": ["S", "L"],
+      "date": 1716634347448,
+      "bestseller": true
+    },
+    {
+      "_id": 5,
+      "name": "Boy Round Neck Pure Cotton T-shirt",
+      "description": "A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.",
+      "price": "40",
+      "image": ["p_img14"],
+      "category": "Kids",
+      "subCategory": "Topwear",
+      "sizes": ["S", "M"],
+      "date": 1716634348448,
+      "bestseller": true
+    },
+    {
+      "_id": 6,
+      "name": "Girls Round Neck Cotton Top",
+      "description": "A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.",
+      "price": "56",
+      "image": ["p_img6"],
+      "category": "Kids",
+      "subCategory": "Topwear",
+      "sizes": ["S"],
+      "date": 1716634340448,
+      "bestseller": false
+    }
+  ]
+}
