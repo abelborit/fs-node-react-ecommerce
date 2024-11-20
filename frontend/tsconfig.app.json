@@ -7,8 +7,9 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    /* Optimización para reducir operaciones de resolución usando react + vite + typescript: si se está utilizando TypeScript hay que activar "moduleResolution": "bundler" y "allowImportingTsExtensions": true para usar las extensiones .ts y .tsx` directamente en el codigo para reducir las operaciones de resolución y evitar comprobaciones innecesarias al momento de importar un componente (https://es.vitejs.dev/guide/performance.html#reducir-operaciones-de-resolucion) */
     /* Bundler mode */
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
