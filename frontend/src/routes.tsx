@@ -85,14 +85,13 @@ export const router = createHashRouter([
       /* ************************************************************************************************************** */
       /* ROUTES - ECOMMERCE -> PRODUCT */
       {
-        path: "product",
+        path: "product/:productId",
         async lazy() {
           const { ProductPage } = await import(
             "./pages/product/ProductPage.tsx"
           );
           return { Component: ProductPage };
         },
-        children: [],
       },
       /* ROUTES - ECOMMERCE -> CART - DELIVER - ORDERS */
       {
