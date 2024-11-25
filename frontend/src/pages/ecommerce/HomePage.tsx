@@ -1,3 +1,9 @@
+import { HeroComponent } from "../../components/HeroComponent";
+
 export const HomePage = () => {
-  return <div>HomePage</div>;
+  return (
+    <div>
+      <HeroComponent />
+    </div>
+  );
 };
