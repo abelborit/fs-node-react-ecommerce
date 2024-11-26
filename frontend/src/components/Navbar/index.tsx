@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   FaAlignRight,
   FaBagShopping,
@@ -50,18 +50,12 @@ const navbarOption: NavbarOptionInterface[] = [
 
 export const Navbar = () => {
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
-  const navigate = useNavigate();
-
-  const handleLogoClick = () => {
-    /* navegar programáticamente a la ruta deseada, es decir, cambiar la ruta de la aplicación mediante código, sin que el usuario haga clic directamente en un enlace (<a> o <NavLink>). En el caso de React Router, esto se hace utilizando el hook useNavigate. Es útil en situaciones donde el cambio de ruta debe ocurrir como resultado de un evento o lógica específica, no solo por un enlace. */
-    navigate("/home");
-  };
 
   return (
     <div className="flex items-center justify-between py-5 font-medium">
-      <button onClick={handleLogoClick}>
+      <Link to="/home">
         <img src={logo_img} alt="logo" className="w-36" />
-      </button>
+      </Link>
 
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
         {navbarOption.map((optionMenu) => (
