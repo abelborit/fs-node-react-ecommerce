@@ -2,6 +2,9 @@
 // import hero_img from "./png/hero_img.png";
 import logo_img from "./png/logo_img.png";
 // import default_placeholder from "./png/default-placeholder.png";
+// import exchange from "./png/exchange.png";
+// import policy from "./png/policy.png";
+// import support from "./png/support.png";
 // import p_img1 from "./png/p_img1.png";
 // import p_img2_1 from "./png/p_img2_1.png";
 // import p_img2_2 from "./png/p_img2_2.png";
@@ -58,6 +61,9 @@ import logo_img from "./png/logo_img.png";
 import hero_img from "./webp/hero_img.webp";
 // import logo_img from "./webp/logo_img.webp";
 import default_placeholder from "./webp/default-placeholder.webp";
+import exchange from "./webp/exchange.webp";
+import policy from "./webp/policy.webp";
+import support from "./webp/support.webp";
 import p_img1 from "./webp/p_img1.webp";
 import p_img2_1 from "./webp/p_img2_1.webp";
 import p_img2_2 from "./webp/p_img2_2.webp";
@@ -114,6 +120,9 @@ export {
   hero_img,
   logo_img,
   default_placeholder,
+  exchange,
+  policy,
+  support,
   p_img1,
   p_img2_1,
   p_img2_2,
