@@ -40,7 +40,7 @@ const ourPolicyItems = [
 /* FORMA 2: pantallas pequeñas que sea como carrusel */
 export const OurPolicy = () => {
   return (
-    <div className="py-20">
+    <div className=" pt-10 pb-20">
       <div className="text-center text-xs sm:text-sm md:text-base text-gray-700">
         {/* Carrusel para pantallas pequeñas */}
         <div className="flex gap-6 sm:gap-8 overflow-x-auto sm:hidden scrollbar-hide">
