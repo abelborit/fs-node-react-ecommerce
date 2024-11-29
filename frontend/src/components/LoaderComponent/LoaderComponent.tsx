@@ -14,7 +14,7 @@ export const LoaderComponent = () => {
       </div>
 
       <p
-        className={`text-2xl text-color-light tracking-[3px] ${styles.textLoader}`}
+        className={`text-2xl text-gray-800 tracking-[3px] ${styles.textLoader}`}
       >
         -- Loading --
       </p>
