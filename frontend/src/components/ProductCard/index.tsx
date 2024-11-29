@@ -17,7 +17,7 @@ export const ProductCard = ({ product }: ProductItemProps) => {
   const { currency } = useShopContext();
 
   const { _id: id, image, name, price } = product;
-  console.log({ image });
+  // console.log({ image });
 
   return (
     <Link to={`/product/${id}`} className="text-gray-700 cursor-pointer">

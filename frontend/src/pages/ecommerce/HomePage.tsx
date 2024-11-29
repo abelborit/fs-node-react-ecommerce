@@ -1,6 +1,7 @@
 import { BestSellers } from "../../components/BestSellers";
 import { HeroComponent } from "../../components/HeroComponent";
 import { LatestCollection } from "../../components/LatestCollection";
+import { NewsletterBox } from "../../components/NewsletterBox";
 import { OurPolicy } from "../../components/OurPolicy";
 
 export const HomePage = () => {
@@ -13,6 +14,8 @@ export const HomePage = () => {
       <BestSellers />
 
       <OurPolicy />
+
+      <NewsletterBox />
     </div>
   );
 };
