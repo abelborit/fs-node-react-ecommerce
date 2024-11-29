@@ -26,7 +26,7 @@ export const NewsletterBox = () => {
 
       setTimeout(() => {
         setEmailSended(false);
-      }, 1000);
+      }, 3000);
     } else {
       console.log("Invalid email address");
     }
@@ -44,7 +44,7 @@ export const NewsletterBox = () => {
       </p>
 
       <form
-        className="w-full sm:w-1/2 flex items-center gap-3 mx-auto mt-6 mb-3 border pl-3"
+        className="w-full sm:w-1/2 flex items-center gap-3 mx-auto mt-6 mb-3 border border-gray-400 pl-3"
         onSubmit={handleSubmit}
       >
         <input
@@ -62,7 +62,7 @@ export const NewsletterBox = () => {
         <button
           type="submit"
           disabled={!email || !isValidEmail}
-          className={`text-xs px-10 py-4 transition ease-in-out ${
+          className={`text-xs px-10 py-4 border-l border-l-gray-400 transition ease-in-out ${
             isValidEmail && email
               ? "bg-gray-900 text-white hover:bg-gray-700"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
