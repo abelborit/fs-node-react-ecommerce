@@ -95,6 +95,9 @@ export const useFilterProducts = ({ products }: UseFilterProductsProps) => {
     if (sortOption !== "relevant") {
       localStorage.setItem("sortOption", sortOption);
       searchParams.set("sort", sortOption);
+    } else {
+      /* Si el sortOption es 'relevant', no lo agregamos en la URL para mantenerla un poco más limpia pero sí lo agregamos al localStorage */
+      localStorage.setItem("sortOption", "relevant");
     }
 
     const basePath = window.location.hash.split("?")[0];
@@ -133,6 +136,8 @@ export const useFilterProducts = ({ products }: UseFilterProductsProps) => {
       tempProducts.sort((a, b) => {
         return Number(b.price) - Number(a.price);
       });
+    } else if (sortOption === "relevant") {
+      tempProducts = [...products]; // No cambia el orden si no se tiene una lógica especial
     }
 
     return tempProducts;
@@ -146,6 +151,9 @@ export const useFilterProducts = ({ products }: UseFilterProductsProps) => {
   return {
     /* states */
     filteredProducts,
+    categoryFilter,
+    subCategoryFilter,
+    sortOption,
 
     /* set states */
     setCategoryFilter,
