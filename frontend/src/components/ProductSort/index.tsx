@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
+interface ProductSortProps {
+  setSortOption: (value: string) => void;
+}
+
 const sortOptions = [
   {
     value: "relevant",
@@ -16,12 +20,13 @@ const sortOptions = [
   },
 ];
 
-export const ProductSort = () => {
+export const ProductSort = ({ setSortOption }: ProductSortProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(sortOptions[0]);
 
   const handleSelectOption = (option: (typeof sortOptions)[number]) => {
     setSelectedOption(option);
+    setSortOption(option.value);
     setIsOpen(false);
   };
 
