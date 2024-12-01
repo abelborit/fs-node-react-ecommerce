@@ -29,40 +29,73 @@ export const useFilterProducts = ({ products }: UseFilterProductsProps) => {
 
   /* Sincroniza los filtros con la URL al inicializar */
   useEffect(() => {
-    const searchParams = getHashParams();
-    // const searchParams = new URLSearchParams(window.location.search); // por si no se usa el hash en la URL
+    const savedCategoryFilter = JSON.parse(
+      localStorage.getItem("categoryFilter") || "[]"
+    );
+    const savedSubCategoryFilter = JSON.parse(
+      localStorage.getItem("subCategoryFilter") || "[]"
+    );
+    const savedSortOption = localStorage.getItem("sortOption") || "relevant";
 
-    const initialCategory = searchParams.get("category")?.split(",") || [];
+    const searchParams = getHashParams();
+    const initialCategory =
+      savedCategoryFilter.length > 0
+        ? savedCategoryFilter
+        : searchParams.get("category")?.split(",") || [];
+
     const initialSubCategory =
-      searchParams.get("subCategory")?.split(",") || [];
-    const initialSort = searchParams.get("sort") || "relevant";
+      savedSubCategoryFilter.length > 0
+        ? savedSubCategoryFilter
+        : searchParams.get("subCategory")?.split(",") || [];
+
+    const initialSort =
+      savedSortOption !== "relevant"
+        ? savedSortOption
+        : searchParams.get("sort") || "relevant";
 
     setCategoryFilter(initialCategory);
     setSubCategoryFilter(initialSubCategory);
     setSortOption(initialSort);
   }, []);
 
-  /* Actualiza la URL cada vez que los filtros cambien */
+  /* Actualiza la URL y el localStorage cada vez que los filtros cambien */
   useEffect(() => {
     const searchParams = new URLSearchParams();
 
     if (categoryFilter?.length > 0) {
-      searchParams.set("category", categoryFilter.join(","));
+      // Evitar duplicados en el localStorage
+      const storedCategoryFilter = JSON.parse(
+        localStorage.getItem("categoryFilter") || "[]"
+      );
+      const updatedCategoryFilter = Array.from(
+        new Set([...storedCategoryFilter, ...categoryFilter])
+      );
+      localStorage.setItem(
+        "categoryFilter",
+        JSON.stringify(updatedCategoryFilter)
+      );
+      searchParams.set("category", updatedCategoryFilter.join(","));
     }
 
     if (subCategoryFilter?.length > 0) {
-      searchParams.set("subCategory", subCategoryFilter.join(","));
+      // Evitar duplicados en el localStorage
+      const storedSubCategoryFilter = JSON.parse(
+        localStorage.getItem("subCategoryFilter") || "[]"
+      );
+      const updatedSubCategoryFilter = Array.from(
+        new Set([...storedSubCategoryFilter, ...subCategoryFilter])
+      );
+      localStorage.setItem(
+        "subCategoryFilter",
+        JSON.stringify(updatedSubCategoryFilter)
+      );
+      searchParams.set("subCategory", updatedSubCategoryFilter.join(","));
     }
 
     if (sortOption !== "relevant") {
+      localStorage.setItem("sortOption", sortOption);
       searchParams.set("sort", sortOption);
     }
-
-    /* por si no se usa el hash en la URL */
-    // const newPathname = `${
-    //   window.location.pathname
-    // }?${searchParams.toString()}`;
-    // window.history.replaceState({}, "", newPathname);
 
     const basePath = window.location.hash.split("?")[0];
     const newHash = `${basePath}${
