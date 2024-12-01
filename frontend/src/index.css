@@ -12,6 +12,11 @@
 /* This injects Tailwind's utility classes and any utility classes registered by plugins. */
 @tailwind utilities;
 
+#root {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
 * {
   font-family: "Outfit", serif;
 }
