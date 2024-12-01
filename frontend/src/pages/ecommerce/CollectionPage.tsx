@@ -3,35 +3,20 @@ import { FilterWrapper } from "../../components/FilterWrapper";
 import { TitleComponent } from "../../components/TitleComponent";
 import { ProductSort } from "../../components/ProductSort";
 import { ProductCard } from "../../components/ProductCard";
-import { useEffect, useState } from "react";
-import { ProductInterface } from "../../../database_local/products.interface";
 import { useFilterProducts } from "../../hooks/useFilterProducts";
 
 export const CollectionPage = () => {
   const { products } = useShopContext();
-  const [filteredProducts, setFilteredProducts] = useState<ProductInterface[]>(
-    []
-  );
 
   const {
     /* states */
-    categoryFilter,
-    subCategoryFilter,
-    sortOption,
+    filteredProducts,
 
     /* set states */
     setCategoryFilter,
     setSubCategoryFilter,
     setSortOption,
-
-    /* funtions */
-    filterProducts,
   } = useFilterProducts({ products });
-
-  /* Ejecuta el filtrado cada vez que cambian los filtros o los productos */
-  useEffect(() => {
-    setFilteredProducts(filterProducts());
-  }, [products, categoryFilter, subCategoryFilter, sortOption]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
