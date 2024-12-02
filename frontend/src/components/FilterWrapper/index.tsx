@@ -3,6 +3,8 @@ import { FaAngleRight } from "react-icons/fa6";
 import { FilterBoxElements } from "../FilterBoxElements";
 
 interface FilterWrapperProps {
+  categoryFilter: string[];
+  subCategoryFilter: string[];
   /* se colocaría de esta forma si se estuviera esperando que se pasen por argumentos de forma directa los valores de los filters */
   // setCategoryFilter: (filters: string[]) => void;
   // setSubCategoryFilter: (filters: string[]) => void;
@@ -16,6 +18,8 @@ const categoriesFilter: string[] = ["Men", "Women", "Kids"];
 const typesFilter: string[] = ["Topwear", "Bottomwear", "Winterwear"];
 
 export const FilterWrapper = ({
+  categoryFilter,
+  subCategoryFilter,
   setCategoryFilter,
   setSubCategoryFilter,
 }: FilterWrapperProps) => {
@@ -45,6 +49,7 @@ export const FilterWrapper = ({
         title="CATEGORIES"
         elementsToFilter={categoriesFilter}
         showFilters={showFilters}
+        categoryFilter={categoryFilter}
         setCategoryFilter={setCategoryFilter}
       />
 
@@ -54,6 +59,7 @@ export const FilterWrapper = ({
         title="TYPE"
         elementsToFilter={typesFilter}
         showFilters={showFilters}
+        subCategoryFilter={subCategoryFilter}
         setSubCategoryFilter={setSubCategoryFilter}
       />
     </div>

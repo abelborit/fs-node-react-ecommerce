@@ -1,7 +1,12 @@
+import { useEffect } from "react";
+
 interface FilterBoxElementsProps {
   title: string;
   elementsToFilter: string[];
   showFilters: boolean;
+
+  categoryFilter?: string[];
+  subCategoryFilter?: string[];
 
   /* se colocaría de esta forma si se estuviera esperando que se pasen por argumentos de forma directa los valores de los filters */
   // setCategoryFilter?: (filters: string[]) => void;
@@ -16,6 +21,8 @@ export const FilterBoxElements = ({
   title,
   elementsToFilter,
   showFilters,
+  categoryFilter = [],
+  subCategoryFilter = [],
   setCategoryFilter,
   setSubCategoryFilter,
 }: FilterBoxElementsProps) => {
@@ -23,19 +30,62 @@ export const FilterBoxElements = ({
     // console.log({ value, isChecked });
 
     if (title === "CATEGORIES" && setCategoryFilter) {
-      setCategoryFilter((prevState: string[]) =>
-        isChecked
+      setCategoryFilter((prevState: string[]) => {
+        const updatedCategoryFilter = isChecked
           ? [...prevState, value]
-          : prevState.filter((filter) => filter !== value)
-      );
+          : prevState.filter((filter) => filter !== value);
+
+        /* Actualizar localStorage para categorías cuando se desmarque o marque la opción (más que todo cuando se desmarque porque en el hook no está esa funcionalidad) */
+        localStorage.setItem(
+          "categoryFilter",
+          JSON.stringify(updatedCategoryFilter)
+        );
+
+        return updatedCategoryFilter;
+      });
     } else if (title === "TYPE" && setSubCategoryFilter) {
-      setSubCategoryFilter((prevState: string[]) =>
-        isChecked
+      setSubCategoryFilter((prevState: string[]) => {
+        const updatedSubCategoryFilter = isChecked
           ? [...prevState, value]
-          : prevState.filter((filter) => filter !== value)
-      );
+          : prevState.filter((filter) => filter !== value);
+
+        /* Actualizar localStorage para subcategorías cuando se desmarque o marque la opción (más que todo cuando se desmarque porque en el hook no está esa funcionalidad) */
+        localStorage.setItem(
+          "subCategoryFilter",
+          JSON.stringify(updatedSubCategoryFilter)
+        );
+
+        return updatedSubCategoryFilter;
+      });
     }
   };
+
+  // Inicializar los checkboxes al montar el componente
+  useEffect(() => {
+    if (title === "CATEGORIES" && setCategoryFilter) {
+      /* trabajarlo mediante el localStorage */
+      // const savedCategoryFilter = JSON.parse(
+      //   localStorage.getItem("categoryFilter") || "[]"
+      // );
+      // setCategoryFilter(savedCategoryFilter);
+
+      setCategoryFilter(categoryFilter);
+    } else if (title === "TYPE" && setSubCategoryFilter) {
+      /* trabajarlo mediante el localStorage */
+      // const savedSubCategoryFilter = JSON.parse(
+      //   localStorage.getItem("subCategoryFilter") || "[]"
+      // );
+      // setSubCategoryFilter(savedSubCategoryFilter);
+
+      setSubCategoryFilter(subCategoryFilter);
+    }
+  }, [
+    title,
+    categoryFilter,
+    subCategoryFilter,
+    setCategoryFilter,
+    setSubCategoryFilter,
+  ]);
 
   return (
     <div
@@ -52,6 +102,10 @@ export const FilterBoxElements = ({
               className="w-3"
               type="checkbox"
               value={element.toLocaleUpperCase()}
+              checked={
+                (title === "CATEGORIES" && categoryFilter.includes(element)) ||
+                (title === "TYPE" && subCategoryFilter.includes(element))
+              }
               onChange={(event) =>
                 handleCheckboxChange(element, event.target.checked)
               }
