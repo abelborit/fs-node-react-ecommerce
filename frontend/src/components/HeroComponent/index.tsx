@@ -23,7 +23,11 @@ export const HeroComponent = () => {
       </div>
 
       {/* Hero Right Side */}
-      <img className="w-full sm:w-1/2" src={hero_img} alt="hero-image" />
+      <img
+        className="w-full sm:w-1/2 aspect-[2/1.6]"
+        src={hero_img}
+        alt="hero-image"
+      />
     </div>
   );
 };
