@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
 interface ProductSortProps {
+  sortOption: string;
   setSortOption: (value: string) => void;
 }
 
@@ -20,7 +21,10 @@ const sortOptions = [
   },
 ];
 
-export const ProductSort = ({ setSortOption }: ProductSortProps) => {
+export const ProductSort = ({
+  sortOption,
+  setSortOption,
+}: ProductSortProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(sortOptions[0]);
 
@@ -28,11 +32,25 @@ export const ProductSort = ({ setSortOption }: ProductSortProps) => {
     setSelectedOption(option);
     setSortOption(option.value);
     setIsOpen(false);
+
+    /* Si se selecciona 'relevant', también actualizamos el localStorage */
+    if (option.value === "relevant") {
+      localStorage.setItem("sortOption", "relevant");
+    } else {
+      localStorage.setItem("sortOption", option.value);
+    }
   };
 
   const handleToggleIsOpen = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    setSelectedOption(
+      sortOptions.find((option) => option.value === sortOption) ||
+        sortOptions[0]
+    );
+  }, [sortOption]);
 
   return (
     <div className="relative w-48">

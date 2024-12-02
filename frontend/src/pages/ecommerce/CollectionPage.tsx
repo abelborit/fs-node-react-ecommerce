@@ -11,6 +11,9 @@ export const CollectionPage = () => {
   const {
     /* states */
     filteredProducts,
+    categoryFilter,
+    subCategoryFilter,
+    sortOption,
 
     /* set states */
     setCategoryFilter,
@@ -32,7 +35,7 @@ export const CollectionPage = () => {
           <TitleComponent firstText="ALL" secondText="COLLECTIONS" />
 
           {/* Product Sort */}
-          <ProductSort setSortOption={setSortOption} />
+          <ProductSort sortOption={sortOption} setSortOption={setSortOption} />
         </div>
 
         {/* Rendering Products */}
