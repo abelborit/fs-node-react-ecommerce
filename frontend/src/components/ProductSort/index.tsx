@@ -74,7 +74,7 @@ export const ProductSort = ({
             <div
               key={option.value}
               onClick={() => handleSelectOption(option)}
-              className={`px-3 py-2 text-sm cursor-pointer hover:bg-gray-200 rounded-md ${
+              className={`px-3 py-2 text-sm cursor-pointer hover:bg-gray-200 rounded-md hover:font-medium ${
                 selectedOption.value === option.value
                   ? "bg-gray-700 font-medium text-white hover:text-gray-700"
                   : ""

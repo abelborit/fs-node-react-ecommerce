@@ -97,7 +97,10 @@ export const FilterBoxElements = ({
 
       <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
         {elementsToFilter.map((element) => (
-          <label key={element} className="flex gap-2 w-32">
+          <label
+            key={element}
+            className="flex gap-2 w-32 hover:cursor-pointer hover:font-semibold"
+          >
             <input
               className="w-3"
               type="checkbox"
