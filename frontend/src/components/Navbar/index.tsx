@@ -13,28 +13,15 @@ import { useShopContext } from "../../context/shopContext/ShopContext";
 
 interface NavbarOptionInterface {
   name: string;
-  pathTo: string;
-}
 
-const navbarOption: NavbarOptionInterface[] = [
-  {
-    name: "HOME",
-    // pathTo: "/", // si se quiere usar de esta forma entonces hay que hacer uso del -- end={optionMenu.pathTo === "/"} -- para que aplique coincidencia exacta solo para HOME pero hay que tener en cuenta que la ruta base debe estar solo con el "/" y nosotros nuestra ruta base es "/home" entonces deberíamos configurar nuestras "routes" y que cuando se esté en el home la url solo tenga "/" y no "/home"
-    pathTo: "/home", // aquí se coloca el path directo de "/home" para que pueda reconocer es "isActive" del "NavLink" porque si se coloca directo "/" entonces es como una ruta base que también coincide con rutas anidadas como /about o /collection, etc, por eso puede causar que el estado "isActive" no funcione como se espera, ya que React Router ve que "/" está activo incluso cuando se está en otras rutas
-  },
-  {
-    name: "COLLECTION",
-    pathTo: "/collection",
-  },
-  {
-    name: "ABOUT",
-    pathTo: "/about",
-  },
-  {
-    name: "CONTACT",
-    pathTo: "/contact",
-  },
-];
+  /* para que pueda tomar las url que no tienen parámetros y si tiene parámetros entonces que no se borren */
+  pathTo:
+    | string
+    | {
+        pathname: string;
+        search: string;
+      };
+}
 
 /* aquí se podría usar como una función o también como un elemento de React, y si fuera como elemento de React (porque está retornando un jsx o tsx) habría que cambiar el nombre a "RenderNavLinkContent". Se coloca separado con la inteción de que reciba los parámetros que necesita o en vez de una función aparte también se puede colocar de forma directa los componentes necesarios */
 // const renderNavLinkContent = (name: string, isActive: boolean) => {
@@ -53,8 +40,17 @@ const navbarOption: NavbarOptionInterface[] = [
 export const Navbar = () => {
   const location = useLocation();
   const { showSearch, setShowSearch } = useShopContext();
-
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
+
+  /* incluir los parámetros actuales de la URL (por ejemplo, search, y cualquier otro parámetro que se esté utilizando como los filtros) cuando se navega. Esto se puede lograr utilizando useLocation de React Router para obtener los parámetros actuales y luego agregarlos al to del Link */
+  /* Obtener los parámetros de la URL actual */
+  const currentParams = new URLSearchParams(location.search);
+
+  /* Crear la URL para el "Link" incluyendo los parámetros actuales */
+  const searchLink = {
+    pathname: "/collection",
+    search: currentParams.toString() ? `?${currentParams.toString()}` : "",
+  };
 
   const handleOpenSearchBar = () => {
     setShowSearch(!showSearch);
@@ -67,6 +63,26 @@ export const Navbar = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
+
+  const navbarOption: NavbarOptionInterface[] = [
+    {
+      name: "HOME",
+      // pathTo: "/", // si se quiere usar de esta forma entonces hay que hacer uso del -- end={optionMenu.pathTo === "/"} -- para que aplique coincidencia exacta solo para HOME pero hay que tener en cuenta que la ruta base debe estar solo con el "/" y nosotros nuestra ruta base es "/home" entonces deberíamos configurar nuestras "routes" y que cuando se esté en el home la url solo tenga "/" y no "/home"
+      pathTo: "/home", // aquí se coloca el path directo de "/home" para que pueda reconocer es "isActive" del "NavLink" porque si se coloca directo "/" entonces es como una ruta base que también coincide con rutas anidadas como /about o /collection, etc, por eso puede causar que el estado "isActive" no funcione como se espera, ya que React Router ve que "/" está activo incluso cuando se está en otras rutas
+    },
+    {
+      name: "COLLECTION",
+      pathTo: searchLink,
+    },
+    {
+      name: "ABOUT",
+      pathTo: "/about",
+    },
+    {
+      name: "CONTACT",
+      pathTo: "/contact",
+    },
+  ];
 
   return (
     <div className="flex items-center justify-between py-5 font-medium">
@@ -107,7 +123,7 @@ export const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-6">
-        <Link to="/collection" onClick={handleOpenSearchBar}>
+        <Link to={searchLink} onClick={handleOpenSearchBar}>
           <FaMagnifyingGlass className="w-5 min-w-5 h-5 min-h-5" />
         </Link>
 
