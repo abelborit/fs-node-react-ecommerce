@@ -59,16 +59,22 @@ export const FilterWrapper = ({
           />
         </button>
 
-        {categoryFilter.length > 0 ||
-        subCategoryFilter.length > 0 ||
-        search !== "" ? (
+        <div
+          className={`transition-opacity duration-300 ${
+            categoryFilter.length > 0 ||
+            subCategoryFilter.length > 0 ||
+            search !== ""
+              ? "opacity-100"
+              : "opacity-0 pointer-events-none"
+          }`}
+        >
           <button
             className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-5 border border-red-500 hover:border-transparent rounded scale-75 transition-all duration-300"
             onClick={handleClick}
           >
             Clear
           </button>
-        ) : null}
+        </div>
       </div>
 
       {/* Category Filter */}
