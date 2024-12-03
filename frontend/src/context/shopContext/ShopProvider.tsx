@@ -19,6 +19,8 @@ const INITIAL_STATE: ShopProviderStateInterface = {
 
 export const ShopProvider = ({ children }: ShopProviderProps) => {
   const [state, setState] = useState(INITIAL_STATE);
+  const [search, setSearch] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
 
   /* funciones y métodos para colocar en el value... */
   /* Para optimizar sería bueno hacer uso de useCallback() para las funciones y useMemo() para los valores que se le pasarán al value para evitar que en cada render del provider (se hace un nuevo render cada vez que cambia el estado) se cree una nueva referencia en memoria de la misma función y el mismo objeto del estado (misma referencia en memoria pero diferente valor ya que se va cambiando). Esto es lo mismo que se haría para un custom hook para mejorar el performance y no tener fugas de memoria. Es decir, si el valor de API Context es un objeto deberemos pasarlo memorizado ya que si no se hace esto entonces en cada render estaremos generando una nueva instancia del mismo objeto lo que provocará que todos los componentes consumidores se rendericen. Para resolver este problema emplearemos los hooks useMemo y useCallback... */
@@ -30,8 +32,12 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
       ...state,
       currency,
       delivery_fee,
+      search,
+      showSearch,
+      setSearch,
+      setShowSearch,
     }),
-    [state]
+    [state, search, showSearch]
   );
 
   return (

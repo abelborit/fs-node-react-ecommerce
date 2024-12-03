@@ -7,6 +7,10 @@ interface ShopContextProps {
   products: ProductInterface[];
   currency: string;
   delivery_fee: number;
+  search: string;
+  showSearch: boolean;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setShowSearch: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ShopContext = createContext<ShopContextProps>(

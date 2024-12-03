@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import {
   FaAlignRight,
   FaBagShopping,
@@ -8,7 +8,8 @@ import {
   // FaCheck,
 } from "react-icons/fa6";
 import { logo_img } from "../../assets";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useShopContext } from "../../context/shopContext/ShopContext";
 
 interface NavbarOptionInterface {
   name: string;
@@ -50,7 +51,22 @@ const navbarOption: NavbarOptionInterface[] = [
 // };
 
 export const Navbar = () => {
+  const location = useLocation();
+  const { showSearch, setShowSearch } = useShopContext();
+
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
+
+  const handleOpenSearchBar = () => {
+    setShowSearch(!showSearch);
+  };
+
+  useEffect(() => {
+    if (location.pathname !== "/collection") {
+      setShowSearch(false);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   return (
     <div className="flex items-center justify-between py-5 font-medium">
@@ -91,9 +107,9 @@ export const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-6">
-        <button>
+        <Link to="/collection" onClick={handleOpenSearchBar}>
           <FaMagnifyingGlass className="w-5 min-w-5 h-5 min-h-5" />
-        </button>
+        </Link>
 
         <button className="group relative">
           <FaUser className="w-5 min-w-5 h-5 min-h-5" />
