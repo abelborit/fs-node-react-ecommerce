@@ -4,9 +4,10 @@ import { TitleComponent } from "../../components/TitleComponent";
 import { ProductSort } from "../../components/ProductSort";
 import { ProductCard } from "../../components/ProductCard";
 import { useFilterProducts } from "../../hooks/useFilterProducts";
+import { useSearchFilterProducts } from "../../hooks/useSearchFilterProducts";
 
 export const CollectionPage = () => {
-  const { products } = useShopContext();
+  const { products, search, showSearch } = useShopContext();
 
   const {
     /* states */
@@ -20,6 +21,11 @@ export const CollectionPage = () => {
     setSubCategoryFilter,
     setSortOption,
   } = useFilterProducts({ products });
+
+  const { searchFilteredProducts } = useSearchFilterProducts({
+    products: filteredProducts, // Aplicar búsqueda sobre productos filtrados
+    search,
+  });
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
@@ -42,7 +48,7 @@ export const CollectionPage = () => {
 
         {/* Rendering Products */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
-          {filteredProducts.map((product) => (
+          {searchFilteredProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
         </div>
