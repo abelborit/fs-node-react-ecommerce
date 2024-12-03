@@ -5,6 +5,7 @@ import {
   FaAngleLeft,
   FaMagnifyingGlass,
   FaUser,
+  // FaCheck,
 } from "react-icons/fa6";
 import { logo_img } from "../../assets";
 import { useState } from "react";
@@ -97,17 +98,62 @@ export const Navbar = () => {
         <button className="group relative">
           <FaUser className="w-5 min-w-5 h-5 min-h-5" />
 
-          <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2">
-            <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
-              <button className="text-left hover:text-gray-900">
+          {/* Hover clásico */}
+          {/* <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2 z-[999]">
+            <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded-lg">
+              <button className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold">
+                My Profile
+                <FaCheck />
+              </button>
+
+              <button className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold">
+                Orders
+                <FaCheck />
+              </button>
+
+              <button className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold">
+                Logout
+                <FaCheck />
+              </button>
+            </div>
+          </div> */}
+
+          {/* Efecto que la opción se mueva a la derecha cuando está el hover */}
+          <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2 z-[999]">
+            <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded-lg">
+              <button className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold transform transition-transform duration-400 hover:translate-x-2">
                 My Profile
               </button>
 
-              <button className="text-left hover:text-gray-900">Orders</button>
+              <button className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold transform transition-transform duration-400 hover:translate-x-2">
+                Orders
+              </button>
 
-              <button className="text-left hover:text-gray-900">Logout</button>
+              <button className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold transform transition-transform duration-400 hover:translate-x-2">
+                Logout
+              </button>
             </div>
           </div>
+
+          {/* Efecto fade-in y fade-out con el ícono de check */}
+          {/* <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2 z-[999]">
+            <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded-lg">
+              <button className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold group/button">
+                My Profile
+                <FaCheck className="opacity-0 group-hover/button:opacity-100 transition-opacity duration-300" />
+              </button>
+
+              <button className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold group/button">
+                Orders
+                <FaCheck className="opacity-0 group-hover/button:opacity-100 transition-opacity duration-300" />
+              </button>
+
+              <button className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold group/button">
+                Logout
+                <FaCheck className="opacity-0 group-hover/button:opacity-100 transition-opacity duration-300" />
+              </button>
+            </div>
+          </div> */}
         </button>
 
         <Link to="/cart" className="relative">
