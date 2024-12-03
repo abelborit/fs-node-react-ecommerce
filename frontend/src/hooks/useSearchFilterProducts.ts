@@ -22,14 +22,15 @@ export const useSearchFilterProducts = ({
   // Al iniciar, recuperar el search del localStorage si no está en la URL
   useEffect(() => {
     const storedSearch = localStorage.getItem("searchTerm");
-    if (!search && storedSearch) {
-      // Si no hay un valor de búsqueda en la URL, usar el valor guardado en localStorage
+    const searchParams = new URLSearchParams(location.search);
+
+    if (!search && !searchParams.has("search") && storedSearch) {
       navigate({
         pathname: "/collection",
         search: `?search=${storedSearch}`, // Aplicar el search almacenado
       });
     }
-  }, [search, navigate]);
+  }, [search, navigate, location.search]);
 
   // Debounce para retrasar el filtro
   useEffect(() => {
@@ -39,22 +40,22 @@ export const useSearchFilterProducts = ({
 
       const searchParams = new URLSearchParams(location.search);
 
-      // Agregar o actualizar el parámetro de búsqueda
+      // Modificar solo el parámetro de búsqueda
       if (search) {
         searchParams.set("search", search);
       } else {
-        searchParams.delete("search");
+        searchParams.delete("search"); // Eliminar el parámetro de búsqueda si está vacío
       }
 
-      // Actualizar la URL sin recargar la página
+      // Actualizar la URL con los parámetros existentes
       navigate({
         pathname: "/collection",
-        search: searchParams.toString() ? `?${searchParams.toString()}` : "",
+        search: `?${searchParams.toString()}`, // Mantener otros parámetros
       });
     }, 400);
 
     return () => clearTimeout(handler);
-  }, [search, location, navigate]);
+  }, [search, location.search, navigate]);
 
   // Filtrar productos
   useEffect(() => {
