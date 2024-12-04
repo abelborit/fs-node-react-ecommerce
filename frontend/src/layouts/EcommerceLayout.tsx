@@ -5,14 +5,20 @@ import { SearchBar } from "../components/SearchBar";
 
 export const EcommerceLayout = () => {
   return (
-    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-      <Navbar />
+    /* se están colocando estilos para que si es poco contenido o si es bastante contenido entonces el header y footer se queden arriba y abajo respectivamente (en el extremo superior e inferior) y el contenido del centro se amolde al espacio sobrante */
+    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] flex flex-col min-h-screen">
+      <header>
+        <Navbar />
+        <SearchBar />
+      </header>
 
-      <SearchBar />
+      <main className="flex-grow container mx-auto bg-red-200">
+        <Outlet />
+      </main>
 
-      <Outlet />
-
-      <Footer />
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 };
