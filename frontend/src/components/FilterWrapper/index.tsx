@@ -77,25 +77,32 @@ export const FilterWrapper = ({
         </div>
       </div>
 
-      {/* Category Filter */}
-      <FilterBoxElements
-        key="CATEGORIES"
-        title="CATEGORIES"
-        elementsToFilter={categoriesFilter}
-        showFilters={showFilters}
-        categoryFilter={categoryFilter}
-        setCategoryFilter={setCategoryFilter}
-      />
+      {/* contenedor para que en mobile no ocupe espacio innecesario */}
+      <div
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          showFilters ? "max-h-screen" : "max-h-0"
+        } sm:max-h-none sm:overflow-visible`}
+      >
+        {/* Category Filter */}
+        <FilterBoxElements
+          key="CATEGORIES"
+          title="CATEGORIES"
+          elementsToFilter={categoriesFilter}
+          showFilters={showFilters}
+          categoryFilter={categoryFilter}
+          setCategoryFilter={setCategoryFilter}
+        />
 
-      {/* Subcategory Filter */}
-      <FilterBoxElements
-        key="TYPE"
-        title="TYPE"
-        elementsToFilter={typesFilter}
-        showFilters={showFilters}
-        subCategoryFilter={subCategoryFilter}
-        setSubCategoryFilter={setSubCategoryFilter}
-      />
+        {/* Subcategory Filter */}
+        <FilterBoxElements
+          key="TYPE"
+          title="TYPE"
+          elementsToFilter={typesFilter}
+          showFilters={showFilters}
+          subCategoryFilter={subCategoryFilter}
+          setSubCategoryFilter={setSubCategoryFilter}
+        />
+      </div>
     </div>
   );
 };

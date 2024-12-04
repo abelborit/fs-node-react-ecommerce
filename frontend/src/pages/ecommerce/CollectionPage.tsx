@@ -7,7 +7,7 @@ import { useFilterProducts } from "../../hooks/useFilterProducts";
 import { useSearchFilterProducts } from "../../hooks/useSearchFilterProducts";
 
 export const CollectionPage = () => {
-  const { products, search, showSearch } = useShopContext();
+  const { products, search } = useShopContext();
 
   const {
     /* states */
