@@ -89,7 +89,7 @@ export const FilterBoxElements = ({
 
   return (
     <div
-      className={`border border-gray-300 px-5 py-3 mt-6 overflow-hidden transition-all duration-700 ease-in-out ${
+      className={`border border-gray-300 px-5 py-3 overflow-hidden transition-all duration-700 ease-in-out ${
         showFilters ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
       } sm:max-h-none sm:opacity-100`}
     >

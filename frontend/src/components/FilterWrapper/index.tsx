@@ -45,7 +45,7 @@ export const FilterWrapper = ({
   };
 
   return (
-    <div className="min-w-60 mb-6">
+    <div className="min-w-60 mb-6 w-full sm:w-auto">
       <div className="flex justify-between">
         <button
           onClick={handleToggleShowFilter}
@@ -79,7 +79,7 @@ export const FilterWrapper = ({
 
       {/* contenedor para que en mobile no ocupe espacio innecesario */}
       <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+        className={`flex flex-col gap-6 mt-2 overflow-hidden transition-all duration-500 ease-in-out ${
           showFilters ? "max-h-screen" : "max-h-0"
         } sm:max-h-none sm:overflow-visible`}
       >
