@@ -12,7 +12,7 @@ export const EcommerceLayout = () => {
         <SearchBar />
       </header>
 
-      <main className="flex-grow container mx-auto bg-red-200">
+      <main className="flex flex-grow container mx-auto">
         <Outlet />
       </main>
 
