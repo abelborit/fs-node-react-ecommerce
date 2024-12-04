@@ -12,7 +12,7 @@ export const ProductNotFound = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-gray-800 w-full">
+    <div className="flex flex-col items-center justify-center text-gray-800 w-full py-10 px-5 bg-red-50 rounded-3xl">
       <div className="text-center">
         <h1 className="text-6xl font-bold text-red-500">Product Not Found</h1>
 
@@ -21,17 +21,17 @@ export const ProductNotFound = () => {
           removed or is temporarily unavailable.
         </p>
 
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center">
           <button
             onClick={handleGoBack}
-            className="bg-gray-200 text-gray-800 px-6 py-3 rounded-md shadow-md hover:bg-gray-300 transition-all duration-300"
+            className="bg-gray-200 text-gray-800 px-6 py-3 rounded-md shadow-md hover:bg-gray-300 transition-all duration-300 w-52"
           >
             Go Back
           </button>
 
           <button
             onClick={handleGoHome}
-            className="bg-red-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition-all duration-300"
+            className="bg-red-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition-all duration-300 w-52"
           >
             Go to Homepage
           </button>
