@@ -6,7 +6,7 @@ import { OurPolicy } from "../../components/OurPolicy";
 
 export const HomePage = () => {
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center w-full">
       <HeroComponent />
 
       <LatestCollection />
