@@ -85,9 +85,9 @@ export const Navbar = () => {
   ];
 
   return (
-    <div className="flex items-center justify-between py-5 font-medium">
+    <div className="flex items-center justify-between py-4 font-medium border-b">
       <Link to="/home">
-        <img src={logo_img} alt="logo" className="w-36" />
+        <img src={logo_img} alt="logo" className="w-32" />
       </Link>
 
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
