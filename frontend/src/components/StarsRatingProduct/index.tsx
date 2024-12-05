@@ -1,8 +1,19 @@
 // import { FaStar  } from "react-icons/fa6";
+import { useEffect } from "react";
+import { useAverageRatingProduct } from "../../hooks/useAverageRatingProduct";
 import { useRatingProduct } from "../../hooks/useRatingProduct";
+
+const fakeStarsRaiting = [0, 3, 5, 4, 5, 3, 2];
 
 export const StarsRatingProduct = () => {
   const { rating, handleStarRating, clearRating } = useRatingProduct();
+  const { averageRating } = useAverageRatingProduct(fakeStarsRaiting);
+
+  useEffect(() => {
+    handleStarRating(averageRating);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [averageRating]);
 
   return (
     <div className="flex flex-row items-center justify-between">
@@ -22,7 +33,7 @@ export const StarsRatingProduct = () => {
           ))}
         </div>
 
-        <p>(122)</p>
+        <p>({fakeStarsRaiting.length})</p>
       </div>
 
       <div
