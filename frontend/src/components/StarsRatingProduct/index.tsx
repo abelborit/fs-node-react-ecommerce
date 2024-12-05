@@ -2,8 +2,11 @@
 import { useEffect } from "react";
 import { useAverageRatingProduct } from "../../hooks/useAverageRatingProduct";
 import { useRatingProduct } from "../../hooks/useRatingProduct";
+import { fakeRatingProductAndComments } from "../../pages/product/fakeRatingProductAndComments";
 
-const fakeStarsRaiting = [0, 3, 5, 4, 5, 3, 2];
+const fakeStarsRaiting = fakeRatingProductAndComments.map(
+  (elements) => elements.rating
+);
 
 export const StarsRatingProduct = () => {
   const { rating, handleStarRating, clearRating } = useRatingProduct();
