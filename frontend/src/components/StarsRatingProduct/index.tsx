@@ -5,7 +5,7 @@ export const StarsRatingProduct = () => {
   const { rating, handleStarRating, clearRating } = useRatingProduct();
 
   return (
-    <div className="flex justify-between">
+    <div className="flex flex-row items-center justify-between">
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-1">
           {/* se coloca el "_" como un valor que no se usará (es un standar colocarlo de esa forma) porque en este caso solo haremos uso del "index" */}
@@ -31,7 +31,7 @@ export const StarsRatingProduct = () => {
         }`}
       >
         <button
-          className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-5 border border-red-500 hover:border-transparent rounded scale-[70%] transition-all duration-300 w-40"
+          className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-3 border border-red-500 hover:border-transparent rounded scale-[70%] transition-all duration-300 w-36"
           onClick={clearRating}
         >
           Clear rating
