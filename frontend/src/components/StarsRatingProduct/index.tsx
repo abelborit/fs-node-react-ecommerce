@@ -1,3 +1,4 @@
+// import { FaStar  } from "react-icons/fa6";
 import { useRatingProduct } from "../../hooks/useRatingProduct";
 
 export const StarsRatingProduct = () => {
@@ -5,18 +6,23 @@ export const StarsRatingProduct = () => {
 
   return (
     <div className="flex justify-between">
-      <div className="flex items-center gap-1">
-        {[...Array(5)].map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleStarRating(index + 1)}
-            className={`text-xl ${
-              index < rating ? "text-orange-500" : "text-gray-400"
-            }`}
-          >
-            ★
-          </button>
-        ))}
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          {/* se coloca el "_" como un valor que no se usará (es un standar colocarlo de esa forma) porque en este caso solo haremos uso del "index" */}
+          {[...Array(5)].map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handleStarRating(index + 1)}
+              className={`text-xl ${
+                index < rating ? "text-orange-500" : "text-gray-400"
+              }`}
+            >
+              ★{/* <FaStar  /> */}
+            </button>
+          ))}
+        </div>
+
+        <p>(122)</p>
       </div>
 
       <div
