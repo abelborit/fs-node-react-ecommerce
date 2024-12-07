@@ -38,7 +38,7 @@ export const RelatedProducts = ({
   }, [category, products, subCategory]);
 
   return (
-    <div className="my-16">
+    <div className="mt-16">
       <div className="text-center text-2xl sm:text-2xl mb-4">
         <TitleComponent firstText="RELATED" secondText="PRODUCTS" />
       </div>
