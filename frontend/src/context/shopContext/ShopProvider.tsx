@@ -19,8 +19,10 @@ const INITIAL_STATE: ShopProviderStateInterface = {
 
 export const ShopProvider = ({ children }: ShopProviderProps) => {
   const [state, setState] = useState(INITIAL_STATE);
-  const [search, setSearch] = useState(
-    localStorage.getItem("searchTerm") ? localStorage.getItem("searchTerm") : ""
+  /* aquí en el "search" nos está dando un warning de que está tipado como string o null pero nosotros solo queremos que sea string, así sea un string vacío, este error sucede porque -- localStorage.getItem("searchTerm") -- devuelve un valor que puede ser una cadena de texto o null. Esto sucede porque si no hay un elemento almacenado con la clave "searchTerm", getItem retorna null. Aunque se intente manejar esto con un operador ternario, el tipo infiere que search puede ser -- string | null -- . */
+  const [search, setSearch] = useState<string>(
+    /* El operador ?? asegura que el valor sea "" solo si el resultado de localStorage.getItem("searchTerm") es null o undefined. Esto es más seguro que || porque evita valores como false, 0 o "" que podrían ser considerados falsy por || */
+    localStorage.getItem("searchTerm") ?? "" // Asegura que sea string incluso si es null
   );
   const [showSearch, setShowSearch] = useState(
     localStorage.getItem("searchTerm") ? true : false
@@ -50,3 +52,42 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
     </ShopContext.Provider>
   );
 };
+
+/* NOTA: diferencia entre -- ?? (Nullish Coalescing) -- y -- && (Logical AND) -- */
+/* La diferencia entre los operadores ?? (nullish coalescing) y && (logical AND) radica en el propósito y el comportamiento al evaluar valores: */
+
+/* ?? (Nullish Coalescing) */
+/*
+- Propósito: Retorna el valor del lado derecho solo si el valor del lado izquierdo es null o undefined. De lo contrario, devuelve el valor del lado izquierdo.
+
+- Casos comunes: Es útil para proporcionar valores predeterminados solo cuando un valor puede ser null o undefined, sin afectar otros valores considerados "falsy" como false, 0, o "".
+
+
+
+const value = null ?? "default";  // "default"
+const value2 = undefined ?? "default";  // "default"
+const value3 = "" ?? "default";  // "" (porque "" no es null ni undefined)
+const value4 = 0 ?? "default";  // 0 (porque 0 no es null ni undefined)
+*/
+
+/* && (Logical AND) */
+/*
+- Propósito: Evalúa y retorna el valor del lado derecho solo si el valor del lado izquierdo es "truthy". Si el lado izquierdo es "falsy", retorna ese valor inmediatamente.
+
+- Casos comunes: Es útil para realizar operaciones condicionales, donde solo deseas evaluar o ejecutar algo si una condición es verdadera.
+
+
+
+const value = true && "hello";  // "hello" (porque true es truthy)
+const value2 = false && "hello";  // false (porque false es falsy)
+const value3 = 0 && "hello";  // 0 (porque 0 es falsy)
+const value4 = "text" && "world";  // "world" (porque "text" es truthy)
+*/
+
+/* Comparación Directa */
+/*
+Situación	                                          |   ?? Resulta en:          |   && Resulta en:
+Izquierda es null o undefined	                      |   Devuelve la derecha     |   Devuelve la izquierda (falsy)
+Izquierda es un valor "falsy" (ej: "", 0, false)    |   Devuelve la izquierda   |   Devuelve la izquierda
+Izquierda es "truthy"                               |   Devuelve la izquierda   |   Devuelve la derecha
+*/
