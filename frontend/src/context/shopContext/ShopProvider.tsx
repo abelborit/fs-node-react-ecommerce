@@ -1,8 +1,22 @@
 /* crear el provider que es un componente que vamos a utilizar para obtener la información de nuestro context y es quien envolverá al componente más alto para repartir la información a sus hijos. Aquí se va a definir el estado a través de una interface para ir viendo cómo quiero que se vea a futuro la aplicación */
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { ShopContext } from "./ShopContext";
 import database_local from "../../../database_local/products.json";
 import { ProductInterface } from "../../../database_local/products.interface";
+import { toast } from "react-toastify";
+
+export interface HandleAddToCartInterface {
+  productId: string;
+  productSize: string;
+}
+
+/* ambas son el mismo tipado y dicen lo mismo pero de distinta forma */
+// export type CartDataInterface = Record<string, Record<string, number>>;
+export type CartDataInterface = {
+  [key: string]: {
+    [key: string]: number;
+  };
+};
 
 interface ShopProviderProps {
   children: JSX.Element | JSX.Element[];
@@ -27,6 +41,48 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
   const [showSearch, setShowSearch] = useState(
     localStorage.getItem("searchTerm") ? true : false
   );
+  const [cartItems, setCartItems] = useState({});
+
+  const handleAddToCart = ({
+    productId,
+    productSize,
+  }: HandleAddToCartInterface) => {
+    /* El método "structuredClone" es una función nativa de JavaScript que realiza una copia profunda (deep copy) de un objeto o valor. Esto significa que crea una nueva instancia del objeto y copia todo su contenido, incluidos los objetos anidados, sin mantener referencias al original. Es una alternativa moderna y eficiente a técnicas como JSON.parse(JSON.stringify(obj)), que tienen ciertas limitaciones por ejemplo que el "structuredClone" soporta valores complejos como -- Date / RegExp / ArrayBuffer / Map / Set -- */
+    /*  */
+    const cartData: CartDataInterface = structuredClone(cartItems);
+
+    if (!productSize) {
+      toast.error("Select product size", {
+        autoClose: 1500,
+        pauseOnHover: false,
+        position: "top-right",
+      });
+
+      return;
+    }
+
+    if (cartData[productId]) {
+      if (cartData[productId][productSize]) {
+        cartData[productId][productSize] += 1;
+      } else {
+        cartData[productId][productSize] = 1;
+      }
+    } else {
+      cartData[productId] = {};
+      cartData[productId][productSize] = 1;
+    }
+
+    setCartItems(cartData);
+    toast.success("Product added!", {
+      autoClose: 1500,
+      pauseOnHover: false,
+      position: "top-right",
+    });
+  };
+
+  useEffect(() => {
+    console.log(cartItems);
+  }, [cartItems]);
 
   /* funciones y métodos para colocar en el value... */
   /* Para optimizar sería bueno hacer uso de useCallback() para las funciones y useMemo() para los valores que se le pasarán al value para evitar que en cada render del provider (se hace un nuevo render cada vez que cambia el estado) se cree una nueva referencia en memoria de la misma función y el mismo objeto del estado (misma referencia en memoria pero diferente valor ya que se va cambiando). Esto es lo mismo que se haría para un custom hook para mejorar el performance y no tener fugas de memoria. Es decir, si el valor de API Context es un objeto deberemos pasarlo memorizado ya que si no se hace esto entonces en cada render estaremos generando una nueva instancia del mismo objeto lo que provocará que todos los componentes consumidores se rendericen. Para resolver este problema emplearemos los hooks useMemo y useCallback... */
@@ -35,15 +91,24 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
 
   const valueProvider = useMemo(
     () => ({
+      /* states */
       ...state,
       currency,
       delivery_fee,
       search,
       showSearch,
+      cartItems,
+
+      /* set state functions */
       setSearch,
       setShowSearch,
+
+      /* functions */
+      handleAddToCart,
     }),
-    [state, search, showSearch]
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [state, search, showSearch, cartItems]
   );
 
   return (

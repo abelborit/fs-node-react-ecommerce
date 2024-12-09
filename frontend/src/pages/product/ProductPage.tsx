@@ -16,7 +16,7 @@ const typedImages: Record<string, string> = images;
 
 export const ProductPage = () => {
   const { productId } = useParams();
-  const { products, currency } = useShopContext();
+  const { products, currency, handleAddToCart } = useShopContext();
   const [productData, setProductData] = useState<ProductInterface | null>(null);
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
@@ -120,11 +120,34 @@ export const ProductPage = () => {
             </div>
           </div>
 
-          <button className="bg-gray-900 text-white py-3 text-xs hover:bg-gray-700 w-36">
-            ADD TO CART
-          </button>
+          <div className="group w-56">
+            <button
+              disabled={!selectedSize}
+              className={`py-3 text-xs w-36 ${
+                selectedSize
+                  ? "bg-gray-900 text-white hover:bg-gray-700"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+              onClick={() =>
+                handleAddToCart({
+                  productId: productData._id.toString(),
+                  productSize: selectedSize,
+                })
+              }
+            >
+              ADD TO CART
+            </button>
 
-          <hr className="mt-8" />
+            <p
+              className={`text-red-500 text-sm transition-opacity duration-200 mt-2 ${
+                selectedSize ? "opacity-0" : "opacity-0 group-hover:opacity-100"
+              }`}
+            >
+              You have to select a product size
+            </p>
+          </div>
+
+          <hr className="mt-3" />
 
           <div className="text-xs text-gray-500 mt-5 flex flex-col gap-1">
             <p>100% Original product.</p>
