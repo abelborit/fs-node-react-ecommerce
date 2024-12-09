@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 export const CartEmpty = () => {
   const navigate = useNavigate();
 
-  const handleGoHome = () => {
-    navigate("/");
+  const handleGoCollection = () => {
+    navigate("/collection");
   };
 
   return (
@@ -22,10 +22,10 @@ export const CartEmpty = () => {
 
         <div className="mt-4 flex flex-col sm:flex-row gap-4 items-center justify-center">
           <button
-            onClick={handleGoHome}
+            onClick={handleGoCollection}
             className="bg-red-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition-all duration-300 w-52"
           >
-            Go to Homepage
+            Go to products page
           </button>
         </div>
       </div>
