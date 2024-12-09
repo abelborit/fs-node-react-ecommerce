@@ -16,11 +16,7 @@ export const CartEmpty = () => {
           Start adding some products!
         </p>
 
-        <p className="text-lg md:text-xl font-medium mt-4 text-gray-600">
-          - Or -
-        </p>
-
-        <div className="mt-4 flex flex-col sm:flex-row gap-4 items-center justify-center">
+        <div className="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
           <button
             onClick={handleGoCollection}
             className="bg-red-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition-all duration-300 w-52"
