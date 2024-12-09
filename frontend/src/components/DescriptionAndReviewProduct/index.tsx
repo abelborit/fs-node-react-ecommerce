@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fakeRatingProductAndComments } from "../../pages/product/fakeRatingProductAndComments";
+import { fakeRatingProductAndComments } from "../../../database_local/fakeRatingProductAndComments.json";
 
 export const DescriptionAndReviewProduct = () => {
   const [activeTab, setActiveTab] = useState<"description" | "reviews">(
