@@ -12,7 +12,7 @@ export const ProductNotFound = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-gray-800 w-full py-10 px-5 bg-red-50 rounded-3xl">
+    <div className="flex flex-col items-center justify-center text-gray-800 w-full py-10 px-5 bg-red-50 rounded-3xl mt-8">
       <div className="text-center">
         <h1 className="text-6xl font-bold text-red-500">Product Not Found</h1>
 

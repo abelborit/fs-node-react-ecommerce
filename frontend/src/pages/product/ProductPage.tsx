@@ -139,7 +139,7 @@ export const ProductPage = () => {
             </button>
 
             <p
-              className={`text-red-500 text-center text-xs transition-opacity duration-200 mt-2 ${
+              className={`text-red-500 text-center text-sm transition-opacity duration-200 mt-2 ${
                 selectedSize ? "opacity-0" : "opacity-0 group-hover:opacity-100"
               }`}
             >

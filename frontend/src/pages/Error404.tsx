@@ -8,7 +8,7 @@ export const Error404 = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full text-gray-800 py-10 px-5 bg-red-50 rounded-3xl">
+    <div className="flex flex-col items-center justify-center w-full text-gray-800 py-10 px-5 bg-red-50 rounded-3xl mt-8">
       <div className="text-center">
         <h1 className="text-9xl font-extrabold text-red-500">404</h1>
 
