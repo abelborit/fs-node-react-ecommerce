@@ -1,10 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { useShopContext } from "../../context/shopContext/ShopContext";
 import { useRoundedCurrency } from "../../hooks/useRoundedCurrency";
 import { TitleComponent } from "../TitleComponent";
 
 export const CartTotal = () => {
-  const navigate = useNavigate();
   const { currency, delivery_fee, handleGetCountAmount } = useShopContext();
   const { handleFormattedValue } = useRoundedCurrency();
 
@@ -15,12 +13,8 @@ export const CartTotal = () => {
       ? "0"
       : handleFormattedValue(handleGetCountAmount() + delivery_fee);
 
-  const handleGoToCheckout = () => {
-    navigate("/place-order");
-  };
-
   return (
-    <div className="flex justify-end my-20">
+    <div className="flex justify-end mt-20 mb-8">
       <div className="w-full sm:w-[450px]">
         <div className="text-2xl">
           <TitleComponent firstText="CART" secondText="TOTALS" />
@@ -50,17 +44,6 @@ export const CartTotal = () => {
             <p>
               {currency} {formattedTotal}
             </p>
-          </div>
-
-          <div className="w-full text-end mt-5">
-            <button
-              className={
-                "bg-gray-900 text-white hover:bg-gray-700 py-3 px-8 text-sm"
-              }
-              onClick={handleGoToCheckout}
-            >
-              PROCEED TO CHECKOUT
-            </button>
           </div>
         </div>
       </div>

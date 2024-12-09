@@ -5,6 +5,7 @@ import { TitleComponent } from "../../components/TitleComponent";
 import { ProductInCart } from "../../components/ProductInCart";
 import { CartEmpty } from "../../components/CartEmpty";
 import { CartTotal } from "../../components/CartTotal";
+import { useNavigate } from "react-router-dom";
 
 export interface ProductInCartDataInterface {
   id: string;
@@ -13,6 +14,7 @@ export interface ProductInCartDataInterface {
 }
 
 export const CartPage = () => {
+  const navigate = useNavigate();
   const { cartItems, handleCleanCart } = useShopContext();
 
   // const [cartData, setCartData] = useState<CartDataInterface[]>([]);
@@ -52,6 +54,10 @@ export const CartPage = () => {
     });
   }, [cartItems]);
 
+  const handleGoToCheckout = () => {
+    navigate("/place-order");
+  };
+
   if (!cartData.length) {
     return <CartEmpty />;
   }
@@ -79,6 +85,17 @@ export const CartPage = () => {
       </div>
 
       <CartTotal />
+
+      <div className="w-full text-end my-5">
+        <button
+          className={
+            "bg-gray-900 text-white hover:bg-gray-700 py-3 px-8 text-sm"
+          }
+          onClick={handleGoToCheckout}
+        >
+          PROCEED TO CHECKOUT
+        </button>
+      </div>
     </div>
   );
 };
