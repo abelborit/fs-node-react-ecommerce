@@ -1,5 +1,5 @@
 /* crear el provider que es un componente que vamos a utilizar para obtener la información de nuestro context y es quien envolverá al componente más alto para repartir la información a sus hijos. Aquí se va a definir el estado a través de una interface para ir viendo cómo quiero que se vea a futuro la aplicación */
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { ShopContext } from "./ShopContext";
 import database_local from "../../../database_local/products.json";
 import { ProductInterface } from "../../../database_local/products.interface";
@@ -41,7 +41,7 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
   const [showSearch, setShowSearch] = useState(
     localStorage.getItem("searchTerm") ? true : false
   );
-  const [cartItems, setCartItems] = useState({});
+  const [cartItems, setCartItems] = useState<CartDataInterface>({});
 
   const handleAddToCart = ({
     productId,
@@ -80,9 +80,42 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
     });
   };
 
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
+  // const handleGetCartCount = (): number => {
+  //   let totalCartCount: number = 0;
+
+  //   for (const items in cartItems) {
+  //     for (const item in cartItems[items]) {
+  //       try {
+  //         if (cartItems[items][item] > 0) {
+  //           totalCartCount += cartItems[items][item];
+  //         }
+  //       } catch (error) {
+  //         console.log("getCartCount", error);
+  //       }
+  //     }
+  //   }
+
+  //   return totalCartCount;
+  // };
+
+  const handleGetCartCount = (): number => {
+    // console.log("cartItems", cartItems);
+    // console.log("Object.values(cartItems)", Object.values(cartItems));
+
+    /* El primer reduce acumula el total del carrito sumando los totales de cada productsInCart */
+    return Object.values(cartItems).reduce((total, productsInCart) => {
+      // console.log("productsInCart", productsInCart);
+
+      /* El segundo reduce dentro de cada productsInCart acumula la suma de los valores individuales, filtrando con (count > 0 ? count : 0) para asegurarnos de que solo se sumen valores positivos */
+      const productsInCartTotal = Object.values(productsInCart).reduce(
+        (sum, count) => sum + (count > 0 ? count : 0),
+        0
+      );
+      // console.log("productsInCartTotal", productsInCartTotal);
+
+      return total + productsInCartTotal;
+    }, 0);
+  };
 
   /* funciones y métodos para colocar en el value... */
   /* Para optimizar sería bueno hacer uso de useCallback() para las funciones y useMemo() para los valores que se le pasarán al value para evitar que en cada render del provider (se hace un nuevo render cada vez que cambia el estado) se cree una nueva referencia en memoria de la misma función y el mismo objeto del estado (misma referencia en memoria pero diferente valor ya que se va cambiando). Esto es lo mismo que se haría para un custom hook para mejorar el performance y no tener fugas de memoria. Es decir, si el valor de API Context es un objeto deberemos pasarlo memorizado ya que si no se hace esto entonces en cada render estaremos generando una nueva instancia del mismo objeto lo que provocará que todos los componentes consumidores se rendericen. Para resolver este problema emplearemos los hooks useMemo y useCallback... */
@@ -105,6 +138,7 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
 
       /* functions */
       handleAddToCart,
+      handleGetCartCount,
     }),
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

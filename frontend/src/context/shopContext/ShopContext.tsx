@@ -22,6 +22,7 @@ interface ShopContextProps {
     productId,
     productSize,
   }: HandleAddToCartInterface) => void;
+  handleGetCartCount: () => number;
 }
 
 export const ShopContext = createContext<ShopContextProps>(

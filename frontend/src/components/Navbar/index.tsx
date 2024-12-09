@@ -39,7 +39,7 @@ interface NavbarOptionInterface {
 
 export const Navbar = () => {
   const location = useLocation();
-  const { showSearch, setShowSearch } = useShopContext();
+  const { showSearch, setShowSearch, handleGetCartCount } = useShopContext();
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
 
   /* incluir los parámetros actuales de la URL (por ejemplo, search, y cualquier otro parámetro que se esté utilizando como los filtros) cuando se navega. Esto se puede lograr utilizando useLocation de React Router para obtener los parámetros actuales y luego agregarlos al to del Link */
@@ -191,7 +191,7 @@ export const Navbar = () => {
         <Link to="/cart" className="relative">
           <FaBagShopping className="w-5 min-w-5 h-5 min-h-5" />
           <p className="absolute right-[-6px] bottom-[-6px] w-4 text-center leading-4 bg-[#b36b8f] text-white aspect-square rounded-full text-[8px]">
-            10
+            {handleGetCartCount()}
           </p>
         </Link>
 
