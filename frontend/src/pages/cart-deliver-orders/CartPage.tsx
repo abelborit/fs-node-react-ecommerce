@@ -12,7 +12,7 @@ export interface ProductInCartDataInterface {
 }
 
 export const CartPage = () => {
-  const { cartItems } = useShopContext();
+  const { cartItems, handleCleanCart } = useShopContext();
 
   // const [cartData, setCartData] = useState<CartDataInterface[]>([]);
 
@@ -57,8 +57,15 @@ export const CartPage = () => {
 
   return (
     <div className="border-t pt-14 w-full">
-      <div className="text-2xl mb-3">
+      <div className="flex flex-col text-2xl mb-3">
         <TitleComponent firstText="YOUR" secondText="CART" />
+
+        <button
+          className="text-sm bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-3 border border-red-500 hover:border-transparent rounded transition-all duration-300 w-32"
+          onClick={handleCleanCart}
+        >
+          Clear all cart
+        </button>
       </div>
 
       <div>

@@ -32,6 +32,7 @@ interface ShopContextProps {
     productSize,
     productQuantity,
   }: HandleUpdateProductQuantityInterface) => void;
+  handleCleanCart: () => void;
 }
 
 export const ShopContext = createContext<ShopContextProps>(
