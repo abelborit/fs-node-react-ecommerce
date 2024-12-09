@@ -10,6 +10,12 @@ export interface HandleAddToCartInterface {
   productSize: string;
 }
 
+export interface HandleUpdateProductQuantityInterface {
+  productId: string;
+  productSize: string;
+  productQuantity: number;
+}
+
 /* ambas son el mismo tipado y dicen lo mismo pero de distinta forma */
 // export type CartDataInterface = Record<string, Record<string, number>>;
 export type CartDataInterface = {
@@ -102,19 +108,31 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
     // console.log("cartItems", cartItems);
     // console.log("Object.values(cartItems)", Object.values(cartItems));
 
-    /* El primer reduce acumula el total del carrito sumando los totales de cada productsInCart */
-    return Object.values(cartItems).reduce((total, productsInCart) => {
-      // console.log("productsInCart", productsInCart);
+    /* El primer reduce acumula el total del carrito sumando los totales de cada productInCart */
+    return Object.values(cartItems).reduce((total, productInCart) => {
+      // console.log("productInCart", productInCart);
 
-      /* El segundo reduce dentro de cada productsInCart acumula la suma de los valores individuales, filtrando con (count > 0 ? count : 0) para asegurarnos de que solo se sumen valores positivos */
-      const productsInCartTotal = Object.values(productsInCart).reduce(
+      /* El segundo reduce dentro de cada productInCart acumula la suma de los valores individuales, filtrando con (count > 0 ? count : 0) para asegurarnos de que solo se sumen valores positivos */
+      const productInCartTotal = Object.values(productInCart).reduce(
         (sum, count) => sum + (count > 0 ? count : 0),
         0
       );
-      // console.log("productsInCartTotal", productsInCartTotal);
+      // console.log("productInCartTotal", productInCartTotal);
 
-      return total + productsInCartTotal;
+      return total + productInCartTotal;
     }, 0);
+  };
+
+  const handleUpdateProductQuantity = ({
+    productId,
+    productSize,
+    productQuantity,
+  }: HandleUpdateProductQuantityInterface) => {
+    const cartData: CartDataInterface = structuredClone(cartItems);
+
+    cartData[productId][productSize] = productQuantity;
+
+    setCartItems(cartData);
   };
 
   /* funciones y métodos para colocar en el value... */
@@ -139,6 +157,7 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
       /* functions */
       handleAddToCart,
       handleGetCartCount,
+      handleUpdateProductQuantity,
     }),
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
