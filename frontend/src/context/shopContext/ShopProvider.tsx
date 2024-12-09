@@ -47,7 +47,9 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
   const [showSearch, setShowSearch] = useState(
     localStorage.getItem("searchTerm") ? true : false
   );
-  const [cartItems, setCartItems] = useState<CartDataInterface>({});
+  const [cartItems, setCartItems] = useState<CartDataInterface>(
+    JSON.parse(localStorage.getItem("cartData") ?? "{}")
+  );
 
   const handleAddToCart = ({
     productId,
@@ -79,6 +81,7 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
     }
 
     setCartItems(cartData);
+    localStorage.setItem("cartData", JSON.stringify(cartData));
     toast.success("Product added!", {
       autoClose: 1500,
       pauseOnHover: false,
@@ -128,14 +131,43 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
     productSize,
     productQuantity,
   }: HandleUpdateProductQuantityInterface) => {
+    /* Clonamos el carrito para no modificar el estado directamente */
     const cartData: CartDataInterface = structuredClone(cartItems);
 
-    cartData[productId][productSize] = productQuantity;
+    if (productQuantity === 0) {
+      /* Eliminar el tamaño del producto si la cantidad es 0 */
+      const product = cartData[productId];
+
+      /* Verificamos si existe el producto y el tamaño */
+      if (product && productSize in product) {
+        delete product[productSize];
+      }
+
+      /* Si el producto ya no tiene tamaños, eliminamos el producto completo */
+      if (Object.keys(product).length === 0) {
+        delete cartData[productId];
+      }
+    } else {
+      /* Si la cantidad es mayor que 0, simplemente actualizamos el valor */
+      if (cartData[productId]) {
+        cartData[productId][productSize] = productQuantity;
+      }
+    }
+
+    /* Filtramos cualquier producto que ya no tenga tamaños y se utiliza como un paso adicional de limpieza para asegurarse de que no queden productos vacíos en el objeto, es decir, productos que ya no tienen ningún tamaño asociado */
+    /* NOTA: igual funciona sin utilizar esta función pero la dejo comentada por si acaso */
+    // const updatedCartData = Object.fromEntries(
+    //   Object.entries(cartData).filter(
+    //     ([_, sizes]) => Object.keys(sizes).length > 0
+    //   )
+    // );
 
     setCartItems(cartData);
+    localStorage.setItem("cartData", JSON.stringify(cartData));
   };
 
   const handleCleanCart = () => {
+    localStorage.removeItem("cartData");
     setCartItems({});
   };
 
