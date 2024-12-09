@@ -34,7 +34,7 @@ export const StarsRatingProduct = () => {
           </p>
         </div>
 
-        <p>({fakeStarsRaiting.length} reviews)</p>
+        <p className="text-sm">({fakeStarsRaiting.length} reviews)</p>
       </div>
 
       {/* Client Rating */}
@@ -55,7 +55,7 @@ export const StarsRatingProduct = () => {
             ))}
           </div>
 
-          <p>(Your rating)</p>
+          <p className="text-sm">(Your rating)</p>
         </div>
 
         <div
