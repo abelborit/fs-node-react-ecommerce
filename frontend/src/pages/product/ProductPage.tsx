@@ -120,7 +120,7 @@ export const ProductPage = () => {
             </div>
           </div>
 
-          <div className="group w-56">
+          <div className="group w-36">
             <button
               disabled={!selectedSize}
               className={`py-3 text-xs w-36 ${
@@ -139,11 +139,11 @@ export const ProductPage = () => {
             </button>
 
             <p
-              className={`text-red-500 text-sm transition-opacity duration-200 mt-2 ${
+              className={`text-red-500 text-center text-xs transition-opacity duration-200 mt-2 ${
                 selectedSize ? "opacity-0" : "opacity-0 group-hover:opacity-100"
               }`}
             >
-              You have to select a product size
+              Select a product size
             </p>
           </div>
 
