@@ -4,6 +4,7 @@ import { useShopContext } from "../../context/shopContext/ShopContext";
 import { TitleComponent } from "../../components/TitleComponent";
 import { ProductInCart } from "../../components/ProductInCart";
 import { CartEmpty } from "../../components/CartEmpty";
+import { CartTotal } from "../../components/CartTotal";
 
 export interface ProductInCartDataInterface {
   id: string;
@@ -76,6 +77,8 @@ export const CartPage = () => {
           />
         ))}
       </div>
+
+      <CartTotal />
     </div>
   );
 };

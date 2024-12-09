@@ -63,7 +63,7 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
       toast.error("Select product size", {
         autoClose: 1500,
         pauseOnHover: false,
-        position: "top-right",
+        position: "bottom-right",
       });
 
       return;
@@ -85,7 +85,7 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
     toast.success("Product added!", {
       autoClose: 1500,
       pauseOnHover: false,
-      position: "top-right",
+      position: "bottom-right",
     });
   };
 
@@ -171,6 +171,30 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
     setCartItems({});
   };
 
+  const handleGetCountAmount = (): number => {
+    return Object.entries(cartItems).reduce(
+      (totalAmount, [productId, sizes]) => {
+        const itemInfo = state.products.find(
+          (product) => product._id.toString() === productId
+        );
+
+        if (itemInfo) {
+          const sizeTotal = Object.values(sizes).reduce(
+            (subtotal, quantity) =>
+              quantity > 0
+                ? subtotal + Number(itemInfo.price) * quantity
+                : subtotal,
+            0
+          );
+          return totalAmount + sizeTotal;
+        }
+
+        return totalAmount;
+      },
+      0
+    );
+  };
+
   /* funciones y métodos para colocar en el value... */
   /* Para optimizar sería bueno hacer uso de useCallback() para las funciones y useMemo() para los valores que se le pasarán al value para evitar que en cada render del provider (se hace un nuevo render cada vez que cambia el estado) se cree una nueva referencia en memoria de la misma función y el mismo objeto del estado (misma referencia en memoria pero diferente valor ya que se va cambiando). Esto es lo mismo que se haría para un custom hook para mejorar el performance y no tener fugas de memoria. Es decir, si el valor de API Context es un objeto deberemos pasarlo memorizado ya que si no se hace esto entonces en cada render estaremos generando una nueva instancia del mismo objeto lo que provocará que todos los componentes consumidores se rendericen. Para resolver este problema emplearemos los hooks useMemo y useCallback... */
   const currency = "$";
@@ -195,6 +219,7 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
       handleGetCartCount,
       handleUpdateProductQuantity,
       handleCleanCart,
+      handleGetCountAmount,
     }),
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
