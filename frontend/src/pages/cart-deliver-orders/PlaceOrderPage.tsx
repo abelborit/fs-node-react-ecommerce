@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CartTotal } from "../../components/CartTotal";
 import { DeliveryInformationForm } from "../../components/DeliveryInformationForm";
 import { TitleComponent } from "../../components/TitleComponent/index";
+import { PaymentMethods } from "../../components/PaymentMethods";
 
 export const PlaceOrderPage = () => {
   const [isComplete, setIsComplete] = useState(false);
@@ -16,14 +17,16 @@ export const PlaceOrderPage = () => {
         <div className="flex flex-col gap-10 sm:flex-row justify-between">
           <DeliveryInformationForm />
 
-          <div className="flex flex-col gap-14 items-end w-full">
+          <div className="flex flex-col gap-10 items-end w-full">
             <CartTotal />
 
+            <PaymentMethods />
+
             {/* Submit Button */}
-            <div className="flex flex-col group items-center justify-center">
+            <div className="flex flex-col group items-center mt-2 justify-center">
               <button
                 disabled={!isComplete}
-                className={`py-3 text-sm w-36 ${
+                className={`py-3 text-sm w-44 ${
                   isComplete
                     ? "bg-gray-900 text-white hover:bg-gray-700"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -38,7 +41,7 @@ export const PlaceOrderPage = () => {
                   isComplete ? "opacity-0" : "opacity-0 group-hover:opacity-100"
                 }`}
               >
-                Complete the form
+                Complete delivery information
               </p>
             </div>
           </div>

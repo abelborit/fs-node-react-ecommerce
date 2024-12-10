@@ -88,7 +88,7 @@ export const CartPage = () => {
         <CartTotal />
       </div>
 
-      <div className="w-full text-end my-5">
+      <div className="w-full text-end mt-5 mb-10">
         <button
           className={
             "bg-gray-900 text-white hover:bg-gray-700 py-3 px-8 text-sm"
