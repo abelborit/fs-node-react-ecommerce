@@ -33,7 +33,7 @@ export const NewsletterBox = () => {
   };
 
   return (
-    <div className="text-center">
+    <div className="text-center w-full">
       <p className="text-2xl font-medium text-gray-800">
         Subscribe now & get 20% off
       </p>
