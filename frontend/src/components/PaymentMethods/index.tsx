@@ -3,7 +3,6 @@ import { TitleComponent } from "../TitleComponent";
 
 export const PaymentMethods = () => {
   const [selectedMethod, setSelectedMethod] = useState<string>("");
-  const [isHoveringDisabled, setIsHoveringDisabled] = useState<boolean>(false);
 
   const paymentMethodsOptions = [
     { id: "method1", label: "Credit Card", status: "disabled" },
@@ -30,13 +29,7 @@ export const PaymentMethods = () => {
             onClick={() =>
               method.status !== "disabled" && handleSelectMethod(method.id)
             }
-            onMouseEnter={() =>
-              method.status === "disabled" && setIsHoveringDisabled(true)
-            }
-            onMouseLeave={() =>
-              method.status === "disabled" && setIsHoveringDisabled(false)
-            }
-            className={`flex items-center border rounded-md p-3 cursor-pointer transition hover:border-orange-400 ${
+            className={`group flex items-center border rounded-md p-3 cursor-pointer transition hover:border-orange-400 ${
               selectedMethod === method.id
                 ? "bg-orange-400 border-orange-500"
                 : ""
@@ -46,16 +39,16 @@ export const PaymentMethods = () => {
                 : ""
             }`}
           >
-            {method.label}
+            <span>{method.label}</span>
+
+            {/* Mostrar mensaje solo si está deshabilitado y se hace hover */}
+            {method.status === "disabled" && (
+              <span className="absolute bottom-[-2rem] left-0 w-full text-center text-red-500 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                This option is disabled for now
+              </span>
+            )}
           </div>
         ))}
-
-        {/* Mensaje de opción deshabilitada */}
-        {isHoveringDisabled && (
-          <p className="absolute bottom-[-2rem] left-0 w-full text-center text-red-500 text-sm">
-            This options is disabled for now
-          </p>
-        )}
       </div>
     </div>
   );
