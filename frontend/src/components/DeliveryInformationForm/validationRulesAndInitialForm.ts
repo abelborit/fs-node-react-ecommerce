@@ -1,6 +1,18 @@
 import * as Yup from "yup";
 
-export const initialForm = {
+export interface InitialFormInterface {
+  firstName: string;
+  lastName: string;
+  email: string;
+  street: string;
+  city: string;
+  state: string;
+  zipcode: string;
+  country: string;
+  phone: string;
+}
+
+export const initialForm: InitialFormInterface = {
   firstName: "",
   lastName: "",
   email: "",
