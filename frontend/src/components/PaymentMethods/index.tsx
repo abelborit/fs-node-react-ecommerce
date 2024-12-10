@@ -36,13 +36,13 @@ export const PaymentMethods = () => {
             onMouseLeave={() =>
               method.status === "disabled" && setIsHoveringDisabled(false)
             }
-            className={`flex items-center border rounded-md p-3 cursor-pointer transition ${
+            className={`flex items-center border rounded-md p-3 cursor-pointer transition hover:border-orange-400 ${
               selectedMethod === method.id
                 ? "bg-orange-400 border-orange-500"
                 : ""
-            } hover:border-orange-400 ${
+            } ${
               method.status === "disabled"
-                ? "bg-gray-100 text-gray-500 cursor-not-allowed hover:border-gray-200"
+                ? "bg-gray-200 text-gray-500 cursor-not-allowed"
                 : ""
             }`}
           >
