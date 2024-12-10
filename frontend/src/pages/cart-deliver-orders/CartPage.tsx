@@ -84,7 +84,9 @@ export const CartPage = () => {
         ))}
       </div>
 
-      <CartTotal />
+      <div className="mt-6 sm:mt-20 mb-8 flex justify-end">
+        <CartTotal />
+      </div>
 
       <div className="w-full text-end my-5">
         <button

@@ -14,37 +14,35 @@ export const CartTotal = () => {
       : handleFormattedValue(handleGetCountAmount() + delivery_fee);
 
   return (
-    <div className="flex justify-end mt-20 mb-8">
-      <div className="w-full sm:w-[450px]">
-        <div className="text-2xl">
-          <TitleComponent firstText="CART" secondText="TOTALS" />
+    <div className="w-full sm:max-w-[450px]">
+      <div className="text-2xl">
+        <TitleComponent firstText="CART" secondText="TOTALS" />
+      </div>
+
+      <div className="flex flex-col gap-2 mt-2 text-sm">
+        <div className="flex justify-between">
+          <p>Subtotal</p>
+          <p>
+            {currency} {formattedCountAmont}
+          </p>
         </div>
 
-        <div className="flex flex-col gap-2 mt-2 text-sm">
-          <div className="flex justify-between">
-            <p>Subtotal</p>
-            <p>
-              {currency} {formattedCountAmont}
-            </p>
-          </div>
+        <hr />
 
-          <hr />
+        <div className="flex justify-between">
+          <p>Shipping Fee</p>
+          <p>
+            {currency} {formattedDelivery_fee}
+          </p>
+        </div>
 
-          <div className="flex justify-between">
-            <p>Shipping Fee</p>
-            <p>
-              {currency} {formattedDelivery_fee}
-            </p>
-          </div>
+        <hr />
 
-          <hr />
-
-          <div className="flex justify-between font-semibold text-base">
-            <p>Total</p>
-            <p>
-              {currency} {formattedTotal}
-            </p>
-          </div>
+        <div className="flex justify-between font-semibold text-base">
+          <p>Total</p>
+          <p>
+            {currency} {formattedTotal}
+          </p>
         </div>
       </div>
     </div>
