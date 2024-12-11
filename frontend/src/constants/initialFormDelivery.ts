@@ -21,3 +21,15 @@ export const initialFormDelivery: FormDeliveryInterface = {
   country: "",
   phone: "",
 };
+
+// export const initialFormDelivery: FormDeliveryInterface = {
+//   firstName: "nombre",
+//   lastName: "apellido",
+//   email: "correo@correo.com",
+//   street: "calle 123",
+//   city: "ciudad",
+//   state: "estado",
+//   zipcode: "123456",
+//   country: "pais",
+//   phone: "123456789123",
+// };
