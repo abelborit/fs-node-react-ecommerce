@@ -27,7 +27,7 @@ interface HandleChangeManualInterface {
 //   "flex flex-col sm:flex-row justify-evenly gap-6 w-full";
 
 export const DeliveryInformationForm = () => {
-  const { setFormValidity, setFormState } = useFormDeliveryContext();
+  const { handleFormValidity, setFormState } = useFormDeliveryContext();
 
   const handleChangeManual = ({
     event,
@@ -82,7 +82,7 @@ export const DeliveryInformationForm = () => {
           /* se coloca un "setTimeout" para que de tiempo de renderizar primero el componente y luego recién actualizar el estado del contexto porque si no dará un warning similar a -- Warning: Cannot update a component (`FormDeliveryProvider`) while rendering a different component (`Formik`). To locate the bad setState() call inside `Formik`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render Error Component Stack -- */
           /* NOTA: no es la mejor solución pero al menos funciona por ahora. Se está colocando 50 milisegundos porque ya al colocar el "setTimeout", así sea en 0, se sabe que se verá afectado el event loop */
           setTimeout(() => {
-            setFormValidity(isFormValid);
+            handleFormValidity(isFormValid);
           }, 50);
 
           return (

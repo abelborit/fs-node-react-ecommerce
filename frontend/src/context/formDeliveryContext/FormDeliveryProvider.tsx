@@ -23,11 +23,11 @@ export const FormDeliveryProvider = ({
   children,
 }: FormDeliveryProviderProps) => {
   const [formState, setFormState] = useState(INITIAL_STATE);
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [selectedMethod, setSelectedMethod] = useState<string>("");
 
-  const setFormValidity = (valid: boolean) => {
-    setIsFormValid(valid);
+  const handleFormValidity = (isValid: boolean) => {
+    setIsFormValid(isValid);
   };
 
   const handleSelectMethod = (methodId: string) => {
@@ -48,9 +48,9 @@ export const FormDeliveryProvider = ({
 
       /* set state functions */
       setFormState,
-      setFormValidity,
 
       /* functions */
+      handleFormValidity,
       handleSelectMethod,
     }),
 

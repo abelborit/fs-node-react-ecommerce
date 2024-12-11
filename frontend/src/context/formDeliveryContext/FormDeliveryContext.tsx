@@ -14,9 +14,9 @@ interface FormContextProps {
   setFormState: React.Dispatch<
     React.SetStateAction<FormDeliveryProviderInterface>
   >;
-  setFormValidity: (valid: boolean) => void;
 
   /* functions */
+  handleFormValidity: (isValid: boolean) => void;
   handleSelectMethod: (methodId: string) => void;
 }
 
