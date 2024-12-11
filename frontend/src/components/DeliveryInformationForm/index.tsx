@@ -7,6 +7,7 @@ import {
   FormDeliveryInterface,
   initialFormDelivery,
 } from "../../constants/initialFormDelivery";
+import { inputGroupsForm } from "./inputGroupsForm";
 
 interface HandleChangeManualInterface {
   event: ChangeEvent<HTMLInputElement>;
@@ -22,8 +23,8 @@ interface HandleChangeManualInterface {
   ) => Promise<void | FormikErrors<FormDeliveryInterface>>;
 }
 
-const classWrapperInput =
-  "flex flex-col sm:flex-row justify-evenly gap-6 w-full";
+// const classWrapperInput =
+//   "flex flex-col sm:flex-row justify-evenly gap-6 w-full";
 
 export const DeliveryInformationForm = () => {
   const { setFormValidity, setFormState } = useFormDeliveryContext();
@@ -86,150 +87,177 @@ export const DeliveryInformationForm = () => {
 
           return (
             /* al usar el Form de los componentes de Formik ya no es necesario usar el onSubmit porque el Form ya sabe lo que tiene que hacer al mandar el formulario */
+            // <Form className="flex flex-col gap-4 py-6 px-6 bg-gray-100 rounded-lg w-full sm:max-w-[550px]">
+            //   {/* Grupo 1: First Name, Last Name */}
+            //   <div className={classWrapperInput}>
+            //     <InputComponent
+            //       label="First Name"
+            //       name="firstName"
+            //       type="text"
+            //       placeholder="Ana Rouse"
+            //       onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //         handleChangeManual({
+            //           event,
+            //           setFieldTouched: formik.setFieldTouched,
+            //           setFieldValue: formik.setFieldValue,
+            //         })
+            //       }
+            //     />
+
+            //     <InputComponent
+            //       label="Last Name"
+            //       name="lastName"
+            //       type="text"
+            //       placeholder="Bart Zhon"
+            //       onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //         handleChangeManual({
+            //           event,
+            //           setFieldTouched: formik.setFieldTouched,
+            //           setFieldValue: formik.setFieldValue,
+            //         })
+            //       }
+            //     />
+            //   </div>
+
+            //   {/* Grupo 2: Email */}
+            //   <div className={classWrapperInput}>
+            //     <InputComponent
+            //       label="Email"
+            //       name="email"
+            //       type="email"
+            //       placeholder="email@example.com"
+            //       onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //         handleChangeManual({
+            //           event,
+            //           setFieldTouched: formik.setFieldTouched,
+            //           setFieldValue: formik.setFieldValue,
+            //         })
+            //       }
+            //     />
+            //   </div>
+
+            //   {/* Grupo 3: Street */}
+            //   <div className={classWrapperInput}>
+            //     <InputComponent
+            //       label="Street"
+            //       name="street"
+            //       type="text"
+            //       placeholder="Urb. Dot 504 - UX"
+            //       onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //         handleChangeManual({
+            //           event,
+            //           setFieldTouched: formik.setFieldTouched,
+            //           setFieldValue: formik.setFieldValue,
+            //         })
+            //       }
+            //     />
+            //   </div>
+
+            //   {/* Grupo 4: City, State */}
+            //   <div className={classWrapperInput}>
+            //     <InputComponent
+            //       label="City"
+            //       name="city"
+            //       type="text"
+            //       placeholder="USA"
+            //       onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //         handleChangeManual({
+            //           event,
+            //           setFieldTouched: formik.setFieldTouched,
+            //           setFieldValue: formik.setFieldValue,
+            //         })
+            //       }
+            //     />
+
+            //     <InputComponent
+            //       label="State"
+            //       name="state"
+            //       type="text"
+            //       placeholder="California"
+            //       onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //         handleChangeManual({
+            //           event,
+            //           setFieldTouched: formik.setFieldTouched,
+            //           setFieldValue: formik.setFieldValue,
+            //         })
+            //       }
+            //     />
+            //   </div>
+
+            //   {/* Grupo 5: Zipcode, Country */}
+            //   <div className={classWrapperInput}>
+            //     <InputComponent
+            //       label="Zipcode"
+            //       name="zipcode"
+            //       type="text"
+            //       placeholder="90001"
+            //       onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //         handleChangeManual({
+            //           event,
+            //           setFieldTouched: formik.setFieldTouched,
+            //           setFieldValue: formik.setFieldValue,
+            //         })
+            //       }
+            //     />
+
+            //     <InputComponent
+            //       label="Country"
+            //       name="country"
+            //       type="text"
+            //       placeholder="LA - Los Ángeles"
+            //       onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //         handleChangeManual({
+            //           event,
+            //           setFieldTouched: formik.setFieldTouched,
+            //           setFieldValue: formik.setFieldValue,
+            //         })
+            //       }
+            //     />
+            //   </div>
+
+            //   {/* Grupo 6: Phone */}
+            //   <div className={classWrapperInput}>
+            //     <InputComponent
+            //       label="Phone"
+            //       name="phone"
+            //       type="tel"
+            //       placeholder="850465234"
+            //       onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //         handleChangeManual({
+            //           event,
+            //           setFieldTouched: formik.setFieldTouched,
+            //           setFieldValue: formik.setFieldValue,
+            //         })
+            //       }
+            //     />
+            //   </div>
+            // </Form>
+
+            /* realizando el mapeo */
             <Form className="flex flex-col gap-4 py-6 px-6 bg-gray-100 rounded-lg w-full sm:max-w-[550px]">
-              {/* Grupo 1: First Name, Last Name */}
-              <div className={classWrapperInput}>
-                <InputComponent
-                  label="First Name"
-                  name="firstName"
-                  type="text"
-                  placeholder="Ana Rouse"
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    handleChangeManual({
-                      event,
-                      setFieldTouched: formik.setFieldTouched,
-                      setFieldValue: formik.setFieldValue,
-                    })
-                  }
-                />
-
-                <InputComponent
-                  label="Last Name"
-                  name="lastName"
-                  type="text"
-                  placeholder="Bart Zhon"
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    handleChangeManual({
-                      event,
-                      setFieldTouched: formik.setFieldTouched,
-                      setFieldValue: formik.setFieldValue,
-                    })
-                  }
-                />
-              </div>
-
-              {/* Grupo 2: Email */}
-              <div className={classWrapperInput}>
-                <InputComponent
-                  label="Email"
-                  name="email"
-                  type="email"
-                  placeholder="email@example.com"
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    handleChangeManual({
-                      event,
-                      setFieldTouched: formik.setFieldTouched,
-                      setFieldValue: formik.setFieldValue,
-                    })
-                  }
-                />
-              </div>
-
-              {/* Grupo 3: Street */}
-              <div className={classWrapperInput}>
-                <InputComponent
-                  label="Street"
-                  name="street"
-                  type="text"
-                  placeholder="Urb. Dot 504 - UX"
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    handleChangeManual({
-                      event,
-                      setFieldTouched: formik.setFieldTouched,
-                      setFieldValue: formik.setFieldValue,
-                    })
-                  }
-                />
-              </div>
-
-              {/* Grupo 4: City, State */}
-              <div className={classWrapperInput}>
-                <InputComponent
-                  label="City"
-                  name="city"
-                  type="text"
-                  placeholder="USA"
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    handleChangeManual({
-                      event,
-                      setFieldTouched: formik.setFieldTouched,
-                      setFieldValue: formik.setFieldValue,
-                    })
-                  }
-                />
-
-                <InputComponent
-                  label="State"
-                  name="state"
-                  type="text"
-                  placeholder="California"
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    handleChangeManual({
-                      event,
-                      setFieldTouched: formik.setFieldTouched,
-                      setFieldValue: formik.setFieldValue,
-                    })
-                  }
-                />
-              </div>
-
-              {/* Grupo 5: Zipcode, Country */}
-              <div className={classWrapperInput}>
-                <InputComponent
-                  label="Zipcode"
-                  name="zipcode"
-                  type="text"
-                  placeholder="90001"
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    handleChangeManual({
-                      event,
-                      setFieldTouched: formik.setFieldTouched,
-                      setFieldValue: formik.setFieldValue,
-                    })
-                  }
-                />
-
-                <InputComponent
-                  label="Country"
-                  name="country"
-                  type="text"
-                  placeholder="LA - Los Ángeles"
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    handleChangeManual({
-                      event,
-                      setFieldTouched: formik.setFieldTouched,
-                      setFieldValue: formik.setFieldValue,
-                    })
-                  }
-                />
-              </div>
-
-              {/* Grupo 6: Phone */}
-              <div className={classWrapperInput}>
-                <InputComponent
-                  label="Phone"
-                  name="phone"
-                  type="tel"
-                  placeholder="(555) 555-1234"
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    handleChangeManual({
-                      event,
-                      setFieldTouched: formik.setFieldTouched,
-                      setFieldValue: formik.setFieldValue,
-                    })
-                  }
-                />
-              </div>
+              {inputGroupsForm.map((group, index) => (
+                <div
+                  key={index + "-" + group[0].name}
+                  className="flex flex-col sm:flex-row justify-evenly gap-6 w-full"
+                >
+                  {group.map((field) => (
+                    <InputComponent
+                      key={field.name}
+                      label={field.label}
+                      name={field.name}
+                      type={field.type}
+                      placeholder={field.placeholder}
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        handleChangeManual({
+                          event,
+                          setFieldTouched: formik.setFieldTouched,
+                          setFieldValue: formik.setFieldValue,
+                        })
+                      }
+                    />
+                  ))}
+                </div>
+              ))}
             </Form>
           );
         }}
