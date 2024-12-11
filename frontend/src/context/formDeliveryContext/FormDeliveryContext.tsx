@@ -8,12 +8,16 @@ interface FormContextProps {
   /* states */
   formDeliveryValues: FormDeliveryInterface;
   isFormValid: boolean;
+  selectedMethod: string;
 
   /* set state functions */
   setFormState: React.Dispatch<
     React.SetStateAction<FormDeliveryProviderInterface>
   >;
   setFormValidity: (valid: boolean) => void;
+
+  /* functions */
+  handleSelectMethod: (methodId: string) => void;
 }
 
 export const FormDeliveryContext = createContext<FormContextProps>(

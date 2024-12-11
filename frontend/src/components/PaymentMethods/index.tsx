@@ -1,20 +1,14 @@
-import { useState } from "react";
 import { TitleComponent } from "../TitleComponent";
+import { useFormDeliveryContext } from "../../context/formDeliveryContext/FormDeliveryContext";
 
 export const PaymentMethods = () => {
-  const [selectedMethod, setSelectedMethod] = useState<string>("");
+  const { selectedMethod, handleSelectMethod } = useFormDeliveryContext();
 
   const paymentMethodsOptions = [
     { id: "method1", label: "Credit Card", status: "disabled" },
     { id: "method2", label: "PayPal", status: "disabled" },
     { id: "method3", label: "Bank Transfer", status: "" },
   ];
-
-  const handleSelectMethod = (methodId: string) => {
-    setSelectedMethod((prevMethod) =>
-      prevMethod === methodId ? "" : methodId
-    );
-  };
 
   return (
     <div className="w-full sm:max-w-[450px]">

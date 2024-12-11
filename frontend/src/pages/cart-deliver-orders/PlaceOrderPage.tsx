@@ -5,7 +5,7 @@ import { PaymentMethods } from "../../components/PaymentMethods";
 import { useFormDeliveryContext } from "../../context/formDeliveryContext/FormDeliveryContext";
 
 export const PlaceOrderPage = () => {
-  const { isFormValid } = useFormDeliveryContext();
+  const { isFormValid, selectedMethod } = useFormDeliveryContext();
 
   return (
     <div className="flex flex-col py-5 sm:py-10 border-t w-full">
@@ -23,11 +23,11 @@ export const PlaceOrderPage = () => {
             <PaymentMethods />
 
             {/* Submit Button */}
-            <div className="flex flex-col group items-center mt-2 justify-center">
+            <div className="flex flex-col group items-end mt-2 justify-center w-[12.5rem]">
               <button
-                disabled={!isFormValid}
+                disabled={!isFormValid && !selectedMethod}
                 className={`py-3 text-sm w-44 ${
-                  isFormValid
+                  isFormValid && selectedMethod
                     ? "bg-gray-900 text-white hover:bg-gray-700"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
@@ -38,12 +38,14 @@ export const PlaceOrderPage = () => {
 
               <p
                 className={`text-red-500 text-center text-sm transition-opacity duration-200 mt-2 ${
-                  isFormValid
+                  isFormValid && selectedMethod
                     ? "opacity-0"
                     : "opacity-0 group-hover:opacity-100"
                 }`}
               >
-                Complete delivery information
+                {!isFormValid
+                  ? "Complete delivery information"
+                  : "Select a paymet method"}
               </p>
             </div>
           </div>
