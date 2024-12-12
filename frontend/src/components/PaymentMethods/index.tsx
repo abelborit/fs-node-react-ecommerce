@@ -5,9 +5,9 @@ export const PaymentMethods = () => {
   const { selectedMethod, handleSelectMethod } = useFormDeliveryContext();
 
   const paymentMethodsOptions = [
-    { id: "method1", label: "Credit Card", status: "disabled" },
-    { id: "method2", label: "PayPal", status: "disabled" },
-    { id: "method3", label: "Bank Transfer", status: "" },
+    { id: "credit-card", label: "Credit Card", status: "disabled" },
+    { id: "paypal", label: "PayPal", status: "disabled" },
+    { id: "cash-on-delivery", label: "Cash on Delivery", status: "" },
   ];
 
   return (

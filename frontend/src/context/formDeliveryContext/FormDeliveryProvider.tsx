@@ -23,8 +23,8 @@ export const FormDeliveryProvider = ({
   children,
 }: FormDeliveryProviderProps) => {
   /* Recupera el estado inicial del formulario desde localStorage o usa el predeterminado */
-  const getInitialState = () => {
-    const savedState = localStorage.getItem("formState-deliveryInformation");
+  const getInitialFormState = () => {
+    const savedState = localStorage.getItem("deliveryInformation-formState");
 
     /* se coloca como objeto y "formDeliveryValues" porque así definimos el INITIAL_STATE entonces tiene que cumplir con esa firma */
     return savedState
@@ -32,25 +32,42 @@ export const FormDeliveryProvider = ({
       : INITIAL_STATE;
   };
 
-  const [formState, setFormState] = useState(getInitialState);
+  const getInitialSelectedMethod = () => {
+    const savedState = localStorage.getItem(
+      "deliveryInformation-paymentMethod"
+    );
+
+    return savedState ? JSON.parse(savedState) : "";
+  };
+
+  const [formState, setFormState] = useState(getInitialFormState);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
-  const [selectedMethod, setSelectedMethod] = useState<string>("");
+  const [selectedMethod, setSelectedMethod] = useState<string>(
+    getInitialSelectedMethod
+  );
 
   const handleFormValidity = (isValid: boolean) => {
     setIsFormValid(isValid);
   };
 
   const handleSelectMethod = (methodId: string) => {
-    setSelectedMethod((prevMethod) =>
-      prevMethod === methodId ? "" : methodId
-    );
+    setSelectedMethod((prevMethod) => {
+      const newMethod = prevMethod === methodId ? "" : methodId;
+
+      localStorage.setItem(
+        "deliveryInformation-paymentMethod",
+        JSON.stringify(newMethod)
+      );
+
+      return newMethod;
+    });
   };
 
   const handleSetFormState = (valuesForm: FormDeliveryInterface) => {
     setFormState({ formDeliveryValues: valuesForm });
 
     localStorage.setItem(
-      "formState-deliveryInformation",
+      "deliveryInformation-formState",
       JSON.stringify(valuesForm)
     );
   };
