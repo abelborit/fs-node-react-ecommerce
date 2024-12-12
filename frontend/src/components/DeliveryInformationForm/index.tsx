@@ -58,6 +58,7 @@ export const DeliveryInformationForm = () => {
         onSubmit={(values) => {
           console.log("onSubmit", values);
         }}
+        validateOnMount={true}
         validationSchema={validationSchemaRules}
         validate={(values: FormDeliveryInterface) => {
           // console.log(values);
@@ -70,6 +71,23 @@ export const DeliveryInformationForm = () => {
         {/* trabajarlo así usando una función pasada como un children dentro de un HOC me da la facilidad que pueda tener todo el objeto de Formik ahí en la expresión formik */}
         {/* NOTA: si se usa MUI entonces no se podría usar el Field y ErrorMessage, se debería desestructurar de la función el handleBlur, el getFieldProps, etc, y colocarlo según las necesidades en los componentes de MUI */}
         {(formik) => {
+          // console.log(formik);
+
+          /* NOTA: no es la mejor solución pero al menos funciona por ahora. Lo que se está haciendo aquí es que si el formulario tiene errores entonces al cargar simule que los campos fueron tocados y ahí es donde se verá qué campo tiene error */
+          if (Object.keys(formik.errors).length > 0) {
+            formik.touched = {
+              firstName: true,
+              lastName: true,
+              email: true,
+              street: true,
+              city: true,
+              state: true,
+              zipcode: true,
+              country: true,
+              phone: true,
+            };
+          }
+
           const isFieldsWithoutErrors = Object.keys(formik.errors).length === 0;
           const isFieldsNotEmpty = Object.values(formik.values).every(
             (value) => value !== ""
