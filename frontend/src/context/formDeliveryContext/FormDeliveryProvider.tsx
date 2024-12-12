@@ -63,12 +63,32 @@ export const FormDeliveryProvider = ({
     });
   };
 
-  const handleSetFormState = (valuesForm: FormDeliveryInterface) => {
-    setFormState({ formDeliveryValues: valuesForm });
+  // const handleSetFormState = (valuesForm: FormDeliveryInterface) => {
+  //   setFormState({ formDeliveryValues: valuesForm });
 
+  //   localStorage.setItem(
+  //     "deliveryInformation-formState",
+  //     JSON.stringify(valuesForm)
+  //   );
+  // };
+
+  const handleSetFormState = (valuesForm: FormDeliveryInterface) => {
+    /* Iterar sobre cada clave y valor en el objeto valuesForm */
+    const trimmedValuesForm = Object.keys(valuesForm).reduce((acc, key) => {
+      acc[key as keyof FormDeliveryInterface] =
+        typeof valuesForm[key as keyof FormDeliveryInterface] === "string"
+          ? valuesForm[key as keyof FormDeliveryInterface].trim() // Eliminar espacios si el valor es un string
+          : valuesForm[key as keyof FormDeliveryInterface]; // Mantener el valor original si no es un string
+      return acc;
+    }, {} as FormDeliveryInterface);
+
+    /* Establecer el estado con los valores modificados */
+    setFormState({ formDeliveryValues: trimmedValuesForm });
+
+    // Almacenar en el localStorage los valores recortados
     localStorage.setItem(
       "deliveryInformation-formState",
-      JSON.stringify(valuesForm)
+      JSON.stringify(trimmedValuesForm)
     );
   };
 
