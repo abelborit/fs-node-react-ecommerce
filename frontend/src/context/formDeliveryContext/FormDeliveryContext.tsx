@@ -1,7 +1,6 @@
 /* el context es quien va a exponer los datos a los demás componentes */
 import { createContext, useContext } from "react";
 import { FormDeliveryInterface } from "../../constants/initialFormDelivery";
-import { FormDeliveryProviderInterface } from "./FormDeliveryProvider";
 
 /* aquí es donde se coloca qué es lo que quiero distribuir en el value del Provider, aquí deberían estar todos los métodos, estados, etc... */
 interface FormContextProps {
@@ -11,11 +10,9 @@ interface FormContextProps {
   selectedMethod: string;
 
   /* set state functions */
-  setFormState: React.Dispatch<
-    React.SetStateAction<FormDeliveryProviderInterface>
-  >;
 
   /* functions */
+  handleSetFormState: (valuesForm: FormDeliveryInterface) => void;
   handleFormValidity: (isValid: boolean) => void;
   handleSelectMethod: (methodId: string) => void;
 }

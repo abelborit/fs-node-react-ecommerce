@@ -22,7 +22,17 @@ const INITIAL_STATE: FormDeliveryProviderInterface = {
 export const FormDeliveryProvider = ({
   children,
 }: FormDeliveryProviderProps) => {
-  const [formState, setFormState] = useState(INITIAL_STATE);
+  /* Recupera el estado inicial del formulario desde localStorage o usa el predeterminado */
+  const getInitialState = () => {
+    const savedState = localStorage.getItem("formState-deliveryInformation");
+
+    /* se coloca como objeto y "formDeliveryValues" porque así definimos el INITIAL_STATE entonces tiene que cumplir con esa firma */
+    return savedState
+      ? { formDeliveryValues: JSON.parse(savedState) }
+      : INITIAL_STATE;
+  };
+
+  const [formState, setFormState] = useState(getInitialState);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [selectedMethod, setSelectedMethod] = useState<string>("");
 
@@ -33,6 +43,15 @@ export const FormDeliveryProvider = ({
   const handleSelectMethod = (methodId: string) => {
     setSelectedMethod((prevMethod) =>
       prevMethod === methodId ? "" : methodId
+    );
+  };
+
+  const handleSetFormState = (valuesForm: FormDeliveryInterface) => {
+    setFormState({ formDeliveryValues: valuesForm });
+
+    localStorage.setItem(
+      "formState-deliveryInformation",
+      JSON.stringify(valuesForm)
     );
   };
 
@@ -47,9 +66,9 @@ export const FormDeliveryProvider = ({
       selectedMethod,
 
       /* set state functions */
-      setFormState,
 
       /* functions */
+      handleSetFormState,
       handleFormValidity,
       handleSelectMethod,
     }),

@@ -3,10 +3,7 @@ import { InputComponent } from "../InputComponent";
 import { ChangeEvent } from "react";
 import { useFormDeliveryContext } from "../../context/formDeliveryContext/FormDeliveryContext";
 import { validationSchemaRules } from "./validationSchemaRules";
-import {
-  FormDeliveryInterface,
-  initialFormDelivery,
-} from "../../constants/initialFormDelivery";
+import { FormDeliveryInterface } from "../../constants/initialFormDelivery";
 import { inputGroupsForm } from "./inputGroupsForm";
 
 interface HandleChangeManualInterface {
@@ -27,7 +24,8 @@ interface HandleChangeManualInterface {
 //   "flex flex-col sm:flex-row justify-evenly gap-6 w-full";
 
 export const DeliveryInformationForm = () => {
-  const { handleFormValidity, setFormState } = useFormDeliveryContext();
+  const { formDeliveryValues, handleFormValidity, handleSetFormState } =
+    useFormDeliveryContext();
 
   const handleChangeManual = ({
     event,
@@ -41,7 +39,7 @@ export const DeliveryInformationForm = () => {
 
     /* FORMA 1: */
     /* Actualizar los valores en el contexto cada vez que un campo cambia */
-    // setFormState((prevValues) => ({
+    // handleSetFormState((prevValues) => ({
     //   ...prevValues,
     //   formDeliveryValues: {
     //     ...prevValues.formDeliveryValues,
@@ -56,17 +54,17 @@ export const DeliveryInformationForm = () => {
 
       {/* Formik es un componente porque retorna un JSX.Element. Lo que se está haciendo aquí es que en vez de usar el hook de useFormik se está colocando directamente en el objeto de Formik y eso nos ayuda a ya no usar todo el hook de useFormik y su código, aunque relativamente es el mismo código, solo que el componente Formik ya lo trabaja internamente */}
       <Formik
-        initialValues={initialFormDelivery}
+        initialValues={formDeliveryValues}
         onSubmit={(values) => {
           console.log("onSubmit", values);
         }}
         validationSchema={validationSchemaRules}
-        validate={(values) => {
+        validate={(values: FormDeliveryInterface) => {
           // console.log(values);
 
           /* FORMA 2: */
           /* Actualizar los valores en el contexto cada vez que un campo cambia */
-          setFormState({ formDeliveryValues: values });
+          handleSetFormState(values);
         }}
       >
         {/* trabajarlo así usando una función pasada como un children dentro de un HOC me da la facilidad que pueda tener todo el objeto de Formik ahí en la expresión formik */}
