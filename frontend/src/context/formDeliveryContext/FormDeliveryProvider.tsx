@@ -37,7 +37,17 @@ export const FormDeliveryProvider = ({
       "deliveryInformation-paymentMethod"
     );
 
-    return savedState ? JSON.parse(savedState) : "";
+    return savedState
+      ? JSON.parse(savedState) === ""
+        ? localStorage.setItem(
+            "deliveryInformation-paymentMethod",
+            JSON.stringify("cash-on-delivery")
+          )
+        : JSON.parse(savedState)
+      : localStorage.setItem(
+          "deliveryInformation-paymentMethod",
+          JSON.stringify("cash-on-delivery")
+        );
   };
 
   const [formState, setFormState] = useState(getInitialFormState);
