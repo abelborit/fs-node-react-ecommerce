@@ -3,7 +3,6 @@ import { createContext, useContext } from "react";
 import { ProductInterface } from "../../../database_local/products.interface";
 import {
   CartDataInterface,
-  HandleAddToCartInterface,
   HandleUpdateProductQuantityInterface,
 } from "./ShopProvider";
 
@@ -25,7 +24,12 @@ interface ShopContextProps {
   handleAddToCart: ({
     productId,
     productSize,
-  }: HandleAddToCartInterface) => void;
+    productData,
+  }: {
+    productId: string;
+    productSize: string;
+    productData: ProductInterface;
+  }) => void;
   handleGetCartCount: () => number;
   handleUpdateProductQuantity: ({
     productId,

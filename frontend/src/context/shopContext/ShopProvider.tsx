@@ -6,8 +6,12 @@ import { ProductInterface } from "../../../database_local/products.interface";
 import { toast } from "react-toastify";
 
 export interface HandleAddToCartInterface {
-  productId: string;
-  productSize: string;
+  productData: ProductInterface; // Información general del producto
+  quantityBySize: Record<string, number>; // Cantidades agrupadas por talla
+  // quantityBySize: {
+  //   // Cantidades agrupadas por talla
+  //   [key: string]: number;
+  // };
 }
 
 export interface HandleUpdateProductQuantityInterface {
@@ -17,10 +21,11 @@ export interface HandleUpdateProductQuantityInterface {
 }
 
 /* ambas son el mismo tipado y dicen lo mismo pero de distinta forma */
-// export type CartDataInterface = Record<string, Record<string, number>>;
+// export type CartDataInterface = Record<string, HandleAddToCartInterface>; // Mapear ID de producto al HandleAddToCartInterface
 export type CartDataInterface = {
   [key: string]: {
-    [key: string]: number;
+    productData: ProductInterface; // Información general del producto
+    quantityBySize: Record<string, number>; // Cantidades agrupadas por talla
   };
 };
 
@@ -40,23 +45,31 @@ const INITIAL_STATE: ShopProviderStateInterface = {
 export const ShopProvider = ({ children }: ShopProviderProps) => {
   const [state, setState] = useState(INITIAL_STATE);
   /* aquí en el "search" nos está dando un warning de que está tipado como string o null pero nosotros solo queremos que sea string, así sea un string vacío, este error sucede porque -- localStorage.getItem("searchTerm") -- devuelve un valor que puede ser una cadena de texto o null. Esto sucede porque si no hay un elemento almacenado con la clave "searchTerm", getItem retorna null. Aunque se intente manejar esto con un operador ternario, el tipo infiere que search puede ser -- string | null -- . */
+
   const [search, setSearch] = useState<string>(
     /* El operador ?? asegura que el valor sea "" solo si el resultado de localStorage.getItem("searchTerm") es null o undefined. Esto es más seguro que || porque evita valores como false, 0 o "" que podrían ser considerados falsy por || */
     localStorage.getItem("searchTerm") ?? "" // Asegura que sea string incluso si es null
   );
+
   const [showSearch, setShowSearch] = useState(
     localStorage.getItem("searchTerm") ? true : false
   );
-  const [cartItems, setCartItems] = useState<CartDataInterface>(
-    JSON.parse(localStorage.getItem("cartData") ?? "{}")
-  );
+
+  const [cartItems, setCartItems] = useState<CartDataInterface>(() => {
+    const savedCartData = localStorage.getItem("cartData");
+    return savedCartData ? JSON.parse(savedCartData) : {};
+  });
 
   const handleAddToCart = ({
     productId,
     productSize,
-  }: HandleAddToCartInterface) => {
+    productData,
+  }: {
+    productId: string;
+    productSize: string;
+    productData: ProductInterface;
+  }) => {
     /* El método "structuredClone" es una función nativa de JavaScript que realiza una copia profunda (deep copy) de un objeto o valor. Esto significa que crea una nueva instancia del objeto y copia todo su contenido, incluidos los objetos anidados, sin mantener referencias al original. Es una alternativa moderna y eficiente a técnicas como JSON.parse(JSON.stringify(obj)), que tienen ciertas limitaciones por ejemplo que el "structuredClone" soporta valores complejos como -- Date / RegExp / ArrayBuffer / Map / Set -- */
-    /*  */
     const cartData: CartDataInterface = structuredClone(cartItems);
 
     if (!productSize) {
@@ -69,19 +82,26 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
       return;
     }
 
+    // Verificar si ya existe el producto en el carrito
     if (cartData[productId]) {
-      if (cartData[productId][productSize]) {
-        cartData[productId][productSize] += 1;
-      } else {
-        cartData[productId][productSize] = 1;
-      }
+      // Producto existe, actualizar cantidad para la talla
+      const existingItem = cartData[productId];
+      existingItem.quantityBySize[productSize] =
+        (existingItem.quantityBySize[productSize] || 0) + 1;
     } else {
-      cartData[productId] = {};
-      cartData[productId][productSize] = 1;
+      // Producto no existe, agregar con talla y cantidad inicial
+      cartData[productId] = {
+        productData,
+        quantityBySize: {
+          [productSize]: 1,
+        },
+      };
     }
 
+    // Actualizar el estado del carrito y el localStorage
     setCartItems(cartData);
     localStorage.setItem("cartData", JSON.stringify(cartData));
+
     toast.success("Product added!", {
       autoClose: 1500,
       pauseOnHover: false,
@@ -116,8 +136,10 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
       // console.log("productInCart", productInCart);
 
       /* El segundo reduce dentro de cada productInCart acumula la suma de los valores individuales, filtrando con (count > 0 ? count : 0) para asegurarnos de que solo se sumen valores positivos */
-      const productInCartTotal = Object.values(productInCart).reduce(
-        (sum, count) => sum + (count > 0 ? count : 0),
+      const productInCartTotal = Object.values(
+        productInCart.quantityBySize
+      ).reduce(
+        (sum, count) => sum + (count > 0 ? count : 0), // Aseguramos que solo se sumen valores positivos
         0
       );
       // console.log("productInCartTotal", productInCartTotal);
@@ -139,19 +161,22 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
       const product = cartData[productId];
 
       /* Verificamos si existe el producto y el tamaño */
-      if (product && productSize in product) {
-        delete product[productSize];
+      if (product && productSize in product.quantityBySize) {
+        delete product.quantityBySize[productSize];
       }
 
       /* Si el producto ya no tiene tamaños, eliminamos el producto completo */
-      if (Object.keys(product).length === 0) {
+      if (Object.keys(product.quantityBySize).length === 0) {
         delete cartData[productId];
       }
     } else {
       /* Si la cantidad es mayor que 0, simplemente actualizamos el valor */
-      if (cartData[productId]) {
-        cartData[productId][productSize] = productQuantity;
+      if (!cartData[productId]) {
+        console.warn(`Product with ID ${productId} not found in cart.`);
+        return;
       }
+
+      cartData[productId].quantityBySize[productSize] = productQuantity;
     }
 
     /* Filtramos cualquier producto que ya no tenga tamaños y se utiliza como un paso adicional de limpieza para asegurarse de que no queden productos vacíos en el objeto, es decir, productos que ya no tienen ningún tamaño asociado */
@@ -173,16 +198,15 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
 
   const handleGetCountAmount = (): number => {
     return Object.entries(cartItems).reduce(
-      (totalAmount, [productId, sizes]) => {
-        const itemInfo = state.products.find(
-          (product) => product._id.toString() === productId
-        );
+      (totalAmount, [productId, productInCart]) => {
+        /* aquí no se estaría usando el "productId" */
+        const { productData, quantityBySize } = productInCart;
 
-        if (itemInfo) {
-          const sizeTotal = Object.values(sizes).reduce(
+        if (productData) {
+          const sizeTotal = Object.values(quantityBySize).reduce(
             (subtotal, quantity) =>
               quantity > 0
-                ? subtotal + Number(itemInfo.price) * quantity
+                ? subtotal + Number(productData.price) * quantity
                 : subtotal,
             0
           );

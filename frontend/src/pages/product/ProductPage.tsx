@@ -130,6 +130,7 @@ export const ProductPage = () => {
               }`}
               onClick={() =>
                 handleAddToCart({
+                  productData,
                   productId: productData._id.toString(),
                   productSize: selectedSize,
                 })

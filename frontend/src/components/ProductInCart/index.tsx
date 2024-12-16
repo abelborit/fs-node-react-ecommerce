@@ -14,13 +14,11 @@ const typedImages: Record<string, string> = images;
 // console.log(typedImages);
 
 export const ProductInCart = ({ productInCart }: ProductInCartProps) => {
-  const { products, currency, handleUpdateProductQuantity } = useShopContext();
+  const { cartItems, currency, handleUpdateProductQuantity } = useShopContext();
 
-  const productData = products.find(
-    (product) => product._id.toString() === productInCart.id
-  );
+  const productDataInCart = cartItems[productInCart.id];
 
-  if (!productData) return null;
+  if (!productDataInCart) return null;
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -41,19 +39,21 @@ export const ProductInCart = ({ productInCart }: ProductInCartProps) => {
         <img
           className="w-16 sm:w-20"
           src={
-            typedImages[productData?.image[0]] ||
+            typedImages[productDataInCart.productData?.image[0]] ||
             typedImages["default_placeholder"]
           }
-          alt={productData?.name}
+          alt={productDataInCart.productData?.name}
         />
 
         <div>
-          <p className="text-sm sm:text-lg font-medium">{productData?.name}</p>
+          <p className="text-sm sm:text-lg font-medium">
+            {productDataInCart.productData?.name}
+          </p>
 
           <div className="flex items-center gap-5 mt-2">
             <p>
               {currency}
-              {productData?.price}
+              {productDataInCart.productData?.price}
             </p>
 
             <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">

@@ -39,12 +39,12 @@ export const CartPage = () => {
   // }, [cartItems]);
 
   /* useMemo asegura que cartData no se recalcula innecesariamente */
-  const cartData: ProductInCartDataInterface[] = useMemo(() => {
+  const cartDataQuantityBySize: ProductInCartDataInterface[] = useMemo(() => {
     /* Object.entries(cartItems) permite iterar directamente sobre las claves (id de productos) y valores (objetos con tallas y cantidades) de cartItems */
     /* El flatMap combina map y aplanamiento en un solo paso, eliminando la necesidad de crear un array temporal como en el código de arriba */
-    return Object.entries(cartItems).flatMap(([id, sizes]) => {
+    return Object.entries(cartItems).flatMap(([id, productData]) => {
       /* Dentro de cada entrada, utilizamos otro Object.entries para obtener las tallas y sus cantidades */
-      return Object.entries(sizes)
+      return Object.entries(productData.quantityBySize)
         .filter(([, quantity]) => quantity > 0)
         .map(([size, quantity]) => ({
           id,
@@ -58,7 +58,7 @@ export const CartPage = () => {
     navigate("/place-order");
   };
 
-  if (!cartData.length) {
+  if (!cartDataQuantityBySize.length) {
     return <CartEmpty />;
   }
 
@@ -76,7 +76,7 @@ export const CartPage = () => {
       </div>
 
       <div>
-        {cartData.map((productInCart, index) => (
+        {cartDataQuantityBySize.map((productInCart, index) => (
           <ProductInCart
             key={`${index}-${productInCart.id}-${productInCart.size}`}
             productInCart={productInCart}
