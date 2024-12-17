@@ -52,7 +52,7 @@ export const OrderFormTotalCartTracking = ({
         {/* Detalles del formulario */}
         <div className="flex flex-col gap-10 items-start w-full px-4 py-3">
           <div>
-            <div className="text-2xl">
+            <div className="text-xl">
               <TitleComponent firstText="DELIVERY" secondText="INFORMATION" />
             </div>
 

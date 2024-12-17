@@ -41,7 +41,7 @@ export const OrdersPage = () => {
           className={`px-4 py-2 rounded-lg ${
             orders.length === 0
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : " bg-green-500 text-white hover:bg-green-600"
+              : " bg-slate-700 text-white hover:bg-slate-500"
           }`}
         >
           Expand All
@@ -53,7 +53,7 @@ export const OrdersPage = () => {
           className={`px-4 py-2 rounded-lg ${
             orders.length === 0
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : " bg-red-500 text-white hover:bg-red-600"
+              : " border border-slate-700 text-gray-700 hover:bg-slate-500 hover:text-white hover:border-slate-500"
           }`}
         >
           Collapse All

@@ -28,7 +28,7 @@ export const OrderCartTotalTracking = ({
 
   return (
     <div className="w-full sm:max-w-[450px]">
-      <div className="text-2xl">
+      <div className="text-xl">
         <TitleComponent firstText="CART" secondText="TOTALS" />
       </div>
 
