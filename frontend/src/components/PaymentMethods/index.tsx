@@ -1,14 +1,9 @@
 import { TitleComponent } from "../TitleComponent";
 import { useFormDeliveryContext } from "../../context/formDeliveryContext/FormDeliveryContext";
+import { paymentMethodsOptions } from "../../constants/paymentMethodsOptions";
 
 export const PaymentMethods = () => {
   const { selectedMethod, handleSelectMethod } = useFormDeliveryContext();
-
-  const paymentMethodsOptions = [
-    { id: "credit-card", label: "Credit Card", status: "disabled" },
-    { id: "paypal", label: "PayPal", status: "disabled" },
-    { id: "cash-on-delivery", label: "Cash on Delivery", status: "" },
-  ];
 
   return (
     <div className="w-full sm:max-w-[450px]">
