@@ -57,52 +57,52 @@ export const ShopFormTotalCartSummary = ({
 
             <ul className="text-gray-700 space-y-1">
               <li>
-                <span className="font-bold text-lg">First Name:</span>{" "}
+                <span className="font-bold text-base">First Name:</span>{" "}
                 {formDeliveryValues.firstName}
               </li>
 
               <li>
-                <span className="font-bold text-lg">Last Name:</span>{" "}
+                <span className="font-bold text-base">Last Name:</span>{" "}
                 {formDeliveryValues.lastName}
               </li>
 
               <li>
-                <span className="font-bold text-lg">Email:</span>{" "}
+                <span className="font-bold text-base">Email:</span>{" "}
                 {formDeliveryValues.email}
               </li>
 
               <li>
-                <span className="font-bold text-lg">Street:</span>{" "}
+                <span className="font-bold text-base">Street:</span>{" "}
                 {formDeliveryValues.street}
               </li>
 
               <li>
-                <span className="font-bold text-lg">City:</span>{" "}
+                <span className="font-bold text-base">City:</span>{" "}
                 {formDeliveryValues.city}
               </li>
 
               <li>
-                <span className="font-bold text-lg">State:</span>{" "}
+                <span className="font-bold text-base">State:</span>{" "}
                 {formDeliveryValues.state}
               </li>
 
               <li>
-                <span className="font-bold text-lg">Zipcode:</span>{" "}
+                <span className="font-bold text-base">Zipcode:</span>{" "}
                 {formDeliveryValues.zipcode}
               </li>
 
               <li>
-                <span className="font-bold text-lg">Country:</span>{" "}
+                <span className="font-bold text-base">Country:</span>{" "}
                 {formDeliveryValues.country}
               </li>
 
               <li>
-                <span className="font-bold text-lg">Phone:</span>{" "}
+                <span className="font-bold text-base">Phone:</span>{" "}
                 {formDeliveryValues.phone}
               </li>
 
               <li>
-                <span className="font-bold text-lg">Payment Method:</span>{" "}
+                <span className="font-bold text-base">Payment Method:</span>{" "}
                 {handleSelectedMethodValue(selectedMethod)}
               </li>
             </ul>
