@@ -113,6 +113,15 @@ export const router = createHashRouter([
         },
       },
       {
+        path: "shop-summary",
+        async lazy() {
+          const { ShopSummary } = await import(
+            "./pages/cart-deliver-orders/ShopSummary.tsx"
+          );
+          return { Component: ShopSummary };
+        },
+      },
+      {
         path: "orders",
         async lazy() {
           const { OrdersPage } = await import(

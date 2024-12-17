@@ -3,9 +3,15 @@ import { DeliveryInformationForm } from "../../components/DeliveryInformationFor
 import { TitleComponent } from "../../components/TitleComponent/index";
 import { PaymentMethods } from "../../components/PaymentMethods";
 import { useFormDeliveryContext } from "../../context/formDeliveryContext/FormDeliveryContext";
+import { useNavigate } from "react-router-dom";
 
 export const PlaceOrderPage = () => {
+  const navigate = useNavigate();
   const { isFormValid, selectedMethod } = useFormDeliveryContext();
+
+  const handleGoShopSummary = () => {
+    navigate("/shop-summary");
+  };
 
   return (
     <div className="flex flex-col py-5 sm:py-10 border-t w-full">
@@ -31,9 +37,9 @@ export const PlaceOrderPage = () => {
                     ? "bg-gray-900 text-white hover:bg-gray-700"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
-                onClick={() => {}}
+                onClick={handleGoShopSummary}
               >
-                PLACE ORDER
+                SHOP SUMMARY
               </button>
 
               <p
