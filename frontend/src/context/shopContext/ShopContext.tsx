@@ -38,6 +38,7 @@ interface ShopContextProps {
   }: HandleUpdateProductQuantityInterface) => void;
   handleCleanCart: () => void;
   handleGetCountAmount: () => number;
+  handleGetCountAmountInEachOrder: (cartItemsOrder: CartDataInterface) => number;
 }
 
 export const ShopContext = createContext<ShopContextProps>(
