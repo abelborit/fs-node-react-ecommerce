@@ -11,10 +11,29 @@ export const OrdersPage = () => {
   const { currency } = useShopContext();
 
   /* convertir el objeto de compras a un array para mapearlo */
-  const orders = Object.entries(purchaseShopState).map(([date, data]) => ({
-    date,
-    ...data,
-  }));
+  const orders = Object.entries(purchaseShopState).map(([dateKey, data]) => {
+    // Dividir clave en partes (a partir del tercer guión, el resto es timestamp)
+    const lastHyphenIndex = dateKey.lastIndexOf("-");
+    const date = dateKey.slice(0, lastHyphenIndex); // Obtener solo la fecha (YYYY-MM-DD)
+    const timestamp = dateKey.slice(lastHyphenIndex + 1); // Obtener el timestamp en milisegundos
+
+    // Convertir timestamp a hora local
+    const time = new Date(parseInt(timestamp, 10)).toLocaleTimeString(
+      undefined,
+      {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true, // Formato de 24 horas
+      }
+    );
+
+    return {
+      date, // Fecha (YYYY-MM-DD)
+      time, // Hora local
+      ...data,
+    };
+  });
 
   const toggleOrderDetails = (index: number) => {
     setExpandedOrders((prev) =>
@@ -69,7 +88,7 @@ export const OrdersPage = () => {
         ) : (
           orders.map((order, index) => (
             <div
-              key={order.date}
+              key={order.date + order.time}
               className="border rounded-lg shadow-md bg-white overflow-hidden"
             >
               {/* Encabezado del desplegable */}
@@ -77,7 +96,17 @@ export const OrdersPage = () => {
                 onClick={() => toggleOrderDetails(index)}
                 className="w-full text-left px-4 py-3 bg-gray-100 hover:bg-gray-200 flex justify-between items-center"
               >
-                <span className="font-semibold">{order.date}</span>
+                <div className="flex flex-row items-center justify-center gap-2">
+                  {/* Fecha */}
+                  <span className="font-semibold">{order.date}</span>
+                  <span className="block text-sm text-gray-500">-</span>
+
+                  {/* Hora */}
+                  <span className="block text-sm text-gray-500">
+                    {order.time}
+                  </span>
+                </div>
+
                 <span className="text-sm text-gray-600">
                   {expandedOrders.includes(index) ? "Hide" : "Show"}
                 </span>

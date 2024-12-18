@@ -21,17 +21,20 @@ export const useBuyProductsLocalStorage = () => {
     return storedData ? JSON.parse(storedData) : {};
   });
 
-  const saveToLocalStorage = (data: Record<string, UseBuyProductsLocalStorageInterface>) => {
+  const saveToLocalStorage = (
+    data: Record<string, UseBuyProductsLocalStorageInterface>
+  ) => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
   };
 
   const addPurchase = useCallback(
     (purchase: UseBuyProductsLocalStorageInterface) => {
-      // Formatear fecha en "YYYY-MM-DD"
-      const formattedDate = purchase.shopDate.toISOString().slice(0, 10); // Ejemplo: "2024-12-17"
+      const timestamp = purchase.shopDate.getTime(); // Obtener milisegundos desde Epoch, daría algo como "1734551385982"
+      const formattedDate = purchase.shopDate.toISOString().slice(0, 10); // Formatear fecha en "YYYY-MM-DD"
+      const uniqueKey = `${formattedDate}-${timestamp}`; // Combinar fecha y timestamp
 
       setPurchaseShopState((prev) => {
-        const updatedState = { ...prev, [formattedDate]: purchase };
+        const updatedState = { ...prev, [uniqueKey]: purchase };
         saveToLocalStorage(updatedState); // Guardar en localStorage
         return updatedState;
       });
