@@ -56,33 +56,59 @@ export const OrdersProductsTracking = ({
         }`}
       >
         <div className="px-4 py-3">
-          <TitleComponent firstText="CURRENT" secondText="ORDERS" />
+          <div className="text-xl">
+            <TitleComponent firstText="CURRENT" secondText="ORDER" />
+          </div>
+
           {productEntries.map(({ id, productData, size, quantity }) => (
             <div
               key={`${id}-${size}`}
-              className="py-4 border-b flex justify-between items-center"
+              className="py-4 border-b text-gray-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
             >
               {/* Información del producto */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-start gap-6">
                 <img
                   src={
                     typedImages[productData.image[0]] ||
                     typedImages["default_placeholder"]
                   }
                   alt={productData.name}
-                  className="w-16 h-16 object-cover"
+                  className="w-16 sm:w-20"
                 />
-                <div>
-                  <p className="font-semibold">{productData.name}</p>
-                  <p className="text-sm text-gray-500">
-                    Size: {size} | Quantity: {quantity}
-                  </p>
-                </div>
-              </div>
 
-              {/* Precio */}
-              <div className="font-semibold">
-                {currency} {Number(productData.price) * quantity}
+                <div>
+                  <p className="font-semibold text-lg">{productData.name}</p>
+
+                  <p className="text-xs text-gray-500 max-w-sm">
+                    {productData.description.length > 120
+                      ? `${productData.description.slice(0, 120)}...`
+                      : productData.description}
+                  </p>
+
+                  <ul className="flex flex-col gap-1 mt-2 text-gray-700 text-sm">
+                    <li>
+                      <p className="font-medium">
+                        Size: <span className="text-gray-500">{size}</span>
+                      </p>
+                    </li>
+
+                    <li>
+                      <p className="font-medium">
+                        Quantity:{" "}
+                        <span className="text-gray-500">{quantity}</span>
+                      </p>
+                    </li>
+
+                    <li>
+                      <p className="font-medium">
+                        Price:{" "}
+                        <span className="text-gray-500">
+                          {currency} {Number(productData.price) * quantity}
+                        </span>
+                      </p>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           ))}
