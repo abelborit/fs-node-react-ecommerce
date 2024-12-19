@@ -30,8 +30,6 @@
 
 - Paquete `yup` usando `https://www.npmjs.com/package/yup` desde `npm i yup`
 
-- Paquete `jspdf` usando `npm i jspdf` desde `https://www.npmjs.com/package/jspdf`
-
 - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
 ### \* NOTAS:
