@@ -16,8 +16,24 @@ export const OrderPDFPage = () => {
         @page {
           size: landscape;
         }
+        body {
+          -webkit-print-color-adjust: exact;
+        }
       }
     `;
+
+    // printStyle.innerHTML = `
+    //   @media print {
+    //     @page {
+    //       size: A4;
+    //       margin: 20mm; /* Márgenes personalizados */
+    //     }
+    //     body {
+    //       -webkit-print-color-adjust: exact; /* Mantener los colores */
+    //       scale: 0.9; /* Escala para ajustar contenido */
+    //     }
+    //   }
+    // `;
     document.head.appendChild(printStyle);
 
     // Abrir las herramientas de impresión
@@ -35,6 +51,11 @@ export const OrderPDFPage = () => {
 
     // Llamar a la función de impresión con un pequeño retraso
     setTimeout(handlePrint, 100);
+
+    // Cleanup: Remover el estilo al desmontar el componente
+    return () => {
+      document.head.removeChild(printStyle);
+    };
   }, [navigate]);
 
   return (

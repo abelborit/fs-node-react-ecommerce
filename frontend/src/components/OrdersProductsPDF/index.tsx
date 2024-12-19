@@ -47,7 +47,7 @@ export const OrdersProductsPDF = ({
             <TitleComponent firstText="CURRENT" secondText="ORDER" />
           </div>
 
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-2 gap-3">
             {productEntries.map(({ id, productData, size, quantity }) => (
               <div
                 key={`${id}-${size}`}
