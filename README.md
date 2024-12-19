@@ -26,9 +26,9 @@
 
 - Paquete `react-icons` usando `npm install react-icons --save` desde `https://react-icons.github.io/react-icons/`
 
-- Paquete `formik` usando `https://formik.org/docs/overview` desde `npm install formik --save`
+- Paquete `formik` usando `npm install formik --save` desde `https://formik.org/docs/overview`
 
-- Paquete `yup` usando `https://www.npmjs.com/package/yup` desde `npm i yup`
+- Paquete `yup` usando `npm i yup` desde `https://www.npmjs.com/package/yup`
 
 - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
