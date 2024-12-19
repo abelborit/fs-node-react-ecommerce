@@ -132,7 +132,7 @@ export const DeliveryInformationForm = () => {
         <button
           type="button"
           onClick={handleResetForm}
-          className="py-2 px-4 w-full border border-red-500 bg-transparent text-red-500 hover:bg-red-500 hover:text-white"
+          className="text-sm py-2 px-4 w-full border border-red-500 bg-transparent text-red-500 hover:bg-red-500 hover:text-white"
         >
           Reset Form
         </button>
@@ -140,7 +140,7 @@ export const DeliveryInformationForm = () => {
         <button
           type="button"
           onClick={handleValidation}
-          className="py-2 px-4 w-full bg-gray-900 text-white hover:bg-gray-700"
+          className="text-sm py-2 px-4 w-full bg-gray-900 text-white hover:bg-gray-700"
         >
           Validate Form
         </button>
