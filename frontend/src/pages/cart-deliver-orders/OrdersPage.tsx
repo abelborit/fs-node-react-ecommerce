@@ -4,9 +4,25 @@ import { OrdersProductsTracking } from "../../components/OrdersProductsTracking"
 import { useBuyProductsLocalStorage } from "../../hooks/useBuyProductsLocalStorage";
 import { useShopContext } from "../../context/shopContext/ShopContext";
 import { OrderFormTotalCartTracking } from "../../components/OrderFormTotalCartTracking";
+import { OrderPreviewModal } from "../../components/OrderPreviewModal";
+import { CartDataInterface } from "../../context/shopContext/ShopProvider";
+import { FormDeliveryInterface } from "../../constants/initialFormDelivery";
+
+export interface OrderInterface {
+  cartItems: CartDataInterface;
+  getCountAmount: number;
+  formDeliveryValues: FormDeliveryInterface;
+  selectedMethod: string;
+  shopDate: Date;
+  date: string;
+  time: string;
+}
 
 export const OrdersPage = () => {
   const [expandedOrders, setExpandedOrders] = useState<number[]>([]);
+  const [selectedOrder, setSelectedOrder] = useState<OrderInterface | null>(
+    null
+  );
   const { purchaseShopState } = useBuyProductsLocalStorage();
   const { currency } = useShopContext();
 
@@ -45,6 +61,14 @@ export const OrdersPage = () => {
 
   const collapseAllOrders = () => setExpandedOrders([]);
 
+  const handlePreviewPDF = (order: OrderInterface) => {
+    setSelectedOrder(order);
+  };
+
+  const closeModal = () => {
+    setSelectedOrder(null);
+  };
+
   return (
     <div className="py-5 sm:py-10 border-t w-full">
       {/* Título principal */}
@@ -72,7 +96,7 @@ export const OrdersPage = () => {
           className={`px-4 py-2 rounded-lg ${
             orders.length === 0
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : " border border-slate-700 text-gray-700 hover:bg-slate-500 hover:text-white hover:border-slate-500"
+              : "border border-slate-700 text-gray-700 hover:bg-slate-500 hover:text-white hover:border-slate-500"
           }`}
         >
           Collapse All
@@ -135,11 +159,33 @@ export const OrdersPage = () => {
                     currency={currency}
                   />
                 </div>
+
+                {/* Botón para previsualizar el PDf de la orden de compra para descargar */}
+                <div className="my-2 flex gap-4 justify-center">
+                  <button
+                    onClick={(event) => {
+                      event.preventDefault();
+                      handlePreviewPDF(order);
+                    }}
+                    className={`px-4 py-2 rounded-lg border border-slate-700 text-gray-700 hover:bg-slate-500 hover:text-white hover:border-slate-500`}
+                  >
+                    Preview & Download PDF
+                  </button>
+                </div>
               </div>
             </div>
           ))
         )}
       </div>
+
+      {/* Modal de previsualización */}
+      {selectedOrder && (
+        <OrderPreviewModal
+          order={selectedOrder}
+          currency={currency}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 };
