@@ -20,6 +20,7 @@ export interface OrderInterface {
 }
 
 export const OrdersPage = () => {
+  const navigate = useNavigate();
   const [expandedOrders, setExpandedOrders] = useState<number[]>([]);
   // const [selectedOrder, setSelectedOrder] = useState<OrderInterface | null>(
   //   null
@@ -45,9 +46,25 @@ export const OrdersPage = () => {
       }
     );
 
+    // return {
+    //   date, // Fecha (YYYY-MM-DD)
+    //   time, // Hora local
+    //   // purchaseState: "Sending purchase request",
+    //   // purchaseState: "In the process of validation",
+    //   purchaseState: "Ready to ship products",
+    //   ...data,
+    // };
+
+    /* se está colocando en código duro según sea el estado de la compra */
+    /* NOTA: toda esta orden de compra debería venir por backend para que por frontend podamos hacer el consumo de la API correctamente y la maquetación correspondiente */
     return {
       date, // Fecha (YYYY-MM-DD)
       time, // Hora local
+      purchaseState: date.includes("2024-")
+        ? "Sending purchase request"
+        : date.includes("2025-")
+        ? "In the process of validation"
+        : "Ready to ship products",
       ...data,
     };
   });
@@ -70,11 +87,14 @@ export const OrdersPage = () => {
   //   setSelectedOrder(null);
   // };
 
-  const navigate = useNavigate();
-
-  const handlePrint = (order: OrderInterface) => {
+  const handleOrderPDFPrint = (order: OrderInterface) => {
     /* se está navegando a otra página y el segundo argumento de navigate es un objeto de configuración, que tiene una propiedad state, la cual es una forma de pasar datos entre las páginas (sin tener que incluirlos en la URL) */
     navigate("/order-pdf", { state: { order, currency } });
+  };
+
+  const handleOrderTracking = (order: OrderInterface) => {
+    /* se está navegando a otra página y el segundo argumento de navigate es un objeto de configuración, que tiene una propiedad state, la cual es una forma de pasar datos entre las páginas (sin tener que incluirlos en la URL) */
+    navigate("/order-tracking", { state: { order, currency } });
   };
 
   return (
@@ -169,13 +189,55 @@ export const OrdersPage = () => {
                 </div>
 
                 {/* Botón para previsualizar el PDf de la orden de compra para descargar */}
-                <div className="my-2 flex gap-4 justify-center">
+                <div className="my-2 flex gap-4 justify-between px-4 py-3">
                   <button
-                    onClick={() => handlePrint(order)}
+                    onClick={() => handleOrderPDFPrint(order)}
                     className={`px-4 py-2 rounded-lg border border-slate-700 text-gray-700 hover:bg-slate-500 hover:text-white hover:border-slate-500`}
                   >
                     Preview & Download PDF
                   </button>
+
+                  <div className="flex flex-row items-center justify-evenly gap-10">
+                    <div className="flex items-center gap-2">
+                      {/* este sería un estado el cual tendría que venir de backend para poder hacer seguimiento del pedido y ver si está "Enviando solicitud de compra" - "En proceso de validación" - "Listo para enviar" */}
+
+                      {/* <p className="min-w-2 h-2 rounded-full bg-red-500"></p>
+                      <p className="text-sm md:text-base">
+                        Sending purchase request
+                      </p> */}
+
+                      {/* <p className="min-w-2 h-2 rounded-full bg-yellow-500"></p>
+                      <p className="text-sm md:text-base">
+                        In the process of validation
+                      </p> */}
+
+                      {/* <p className="min-w-2 h-2 rounded-full bg-green-500"></p>
+                      <p className="text-sm md:text-base">
+                        Ready to ship products
+                      </p> */}
+
+                      <p
+                        className={`min-w-2 h-2 rounded-full ${
+                          order.purchaseState === "Sending purchase request"
+                            ? "bg-red-500"
+                            : order.purchaseState ===
+                              "In the process of validation"
+                            ? "bg-yellow-500"
+                            : "bg-green-500"
+                        }`}
+                      ></p>
+                      <p className="text-sm md:text-base">
+                        {order.purchaseState}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => handleOrderTracking(order)}
+                      className="px-4 py-2 rounded-lg bg-slate-700 text-white hover:bg-slate-500"
+                    >
+                      Track Order
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -23,13 +23,13 @@ export const ShopSummary = () => {
 
   const handleBuyProducts = () => {
     /* una vez finalizada la compra se podría eliminar todo el localStorage para que todo desde cero. También sería bueno enviar la fecha de la compra para que se pueda jalar después esa información desde el backend o sino que el backend pueda generar la fecha de compra al recibir esta solicitud */
-    console.log("handleBuyProducts", {
-      cartItems,
-      handleGetCountAmount: handleGetCountAmount() + delivery_fee,
-      formDeliveryValues,
-      selectedMethod,
-      shopDate: new Date(),
-    });
+    // console.log("handleBuyProducts", {
+    //   cartItems,
+    //   handleGetCountAmount: handleGetCountAmount() + delivery_fee,
+    //   formDeliveryValues,
+    //   selectedMethod,
+    //   shopDate: new Date(),
+    // });
 
     const newPurchase: UseBuyProductsLocalStorageInterface = {
       cartItems,
@@ -37,10 +37,18 @@ export const ShopSummary = () => {
       getCountAmount: handleGetCountAmount() + delivery_fee,
       selectedMethod,
       shopDate: new Date(),
+
       /* Sumar 1 día a la fecha actual */
       // shopDate: (() => {
       //   const currentDate = new Date();
       //   currentDate.setDate(currentDate.getDate() + 1); // Suma un día
+      //   return currentDate;
+      // })(),
+
+      /* Sumar 1 año a la fecha actual */
+      // shopDate: (() => {
+      //   const currentDate = new Date();
+      //   currentDate.setFullYear(currentDate.getFullYear() + 2); // Suma un año
       //   return currentDate;
       // })(),
     };

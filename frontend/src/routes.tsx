@@ -130,6 +130,15 @@ export const router = createHashRouter([
           return { Component: OrdersPage };
         },
       },
+      {
+        path: "order-tracking",
+        async lazy() {
+          const { OrderTrackingPage } = await import(
+            "./pages/cart-deliver-orders/OrderTrackingPage.tsx"
+          );
+          return { Component: OrderTrackingPage };
+        },
+      },
 
       /* ************************************************************************************************************** */
       /* ROUTES - 404 */
