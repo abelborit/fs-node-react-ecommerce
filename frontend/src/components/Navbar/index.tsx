@@ -208,7 +208,7 @@ export const Navbar = () => {
 
       {/* siderbar menu for small screens */}
       <div
-        className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
+        className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all z-50 ${
           isVisibleMenu ? "w-full" : "w-0"
         }`}
       >
