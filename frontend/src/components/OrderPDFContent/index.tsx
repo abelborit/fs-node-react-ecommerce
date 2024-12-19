@@ -19,7 +19,7 @@ interface OrderPDFContentProps {
 
 export const OrderPDFContent = ({ order, currency }: OrderPDFContentProps) => {
   return (
-    <div className="py-5 sm:py-10 border-t w-full">
+    <div className="py-5 border-t w-full">
       {/* Título principal */}
       <div className="text-2xl mb-4">
         <TitleComponent firstText="MY" secondText="ORDERS" />
