@@ -1,3 +1,4 @@
+/* este componente NO se está utilizando actualmente porque ya se creó una ruta para visualizar la Orden y se abrirán las herramientas de impresión del navegador, pero igual se dejó el componente por si se necesita en un futuro o si se necesita como guía */
 import React from "react";
 import { OrderPDFContent } from "../OrderPDFContent";
 import { OrderInterface } from "../../pages/cart-deliver-orders/OrdersPage";

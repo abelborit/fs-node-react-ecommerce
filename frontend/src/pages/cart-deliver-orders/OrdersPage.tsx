@@ -4,10 +4,10 @@ import { OrdersProductsTracking } from "../../components/OrdersProductsTracking"
 import { useBuyProductsLocalStorage } from "../../hooks/useBuyProductsLocalStorage";
 import { useShopContext } from "../../context/shopContext/ShopContext";
 import { OrderFormTotalCartTracking } from "../../components/OrderFormTotalCartTracking";
-import { OrderPreviewModal } from "../../components/OrderPreviewModal";
 import { CartDataInterface } from "../../context/shopContext/ShopProvider";
 import { FormDeliveryInterface } from "../../constants/initialFormDelivery";
 import { useNavigate } from "react-router-dom";
+// import { OrderPreviewModal } from "../../components/OrderPreviewModal";
 
 export interface OrderInterface {
   cartItems: CartDataInterface;
@@ -21,9 +21,9 @@ export interface OrderInterface {
 
 export const OrdersPage = () => {
   const [expandedOrders, setExpandedOrders] = useState<number[]>([]);
-  const [selectedOrder, setSelectedOrder] = useState<OrderInterface | null>(
-    null
-  );
+  // const [selectedOrder, setSelectedOrder] = useState<OrderInterface | null>(
+  //   null
+  // );
   const { purchaseShopState } = useBuyProductsLocalStorage();
   const { currency } = useShopContext();
 
@@ -62,17 +62,18 @@ export const OrdersPage = () => {
 
   const collapseAllOrders = () => setExpandedOrders([]);
 
-  const handlePreviewPDF = (order: OrderInterface) => {
-    setSelectedOrder(order);
-  };
+  // const handlePreviewPDF = (order: OrderInterface) => {
+  //   setSelectedOrder(order);
+  // };
 
-  const closeModal = () => {
-    setSelectedOrder(null);
-  };
+  // const closeModal = () => {
+  //   setSelectedOrder(null);
+  // };
 
   const navigate = useNavigate();
 
   const handlePrint = (order: OrderInterface) => {
+    /* se está navegando a otra página y el segundo argumento de navigate es un objeto de configuración, que tiene una propiedad state, la cual es una forma de pasar datos entre las páginas (sin tener que incluirlos en la URL) */
     navigate("/order-pdf", { state: { order, currency } });
   };
 
@@ -170,10 +171,7 @@ export const OrdersPage = () => {
                 {/* Botón para previsualizar el PDf de la orden de compra para descargar */}
                 <div className="my-2 flex gap-4 justify-center">
                   <button
-                    onClick={(event) => {
-                      event.preventDefault();
-                      handlePrint(order);
-                    }}
+                    onClick={() => handlePrint(order)}
                     className={`px-4 py-2 rounded-lg border border-slate-700 text-gray-700 hover:bg-slate-500 hover:text-white hover:border-slate-500`}
                   >
                     Preview & Download PDF
@@ -186,13 +184,13 @@ export const OrdersPage = () => {
       </div>
 
       {/* Modal de previsualización */}
-      {selectedOrder && (
+      {/* {selectedOrder && (
         <OrderPreviewModal
           order={selectedOrder}
           currency={currency}
           onClose={closeModal}
         />
-      )}
+      )} */}
     </div>
   );
 };

@@ -21,7 +21,11 @@ export const OrderPDFContent = ({ order, currency }: OrderPDFContentProps) => {
   return (
     <div className="py-5 border-t w-full">
       {/* Título principal */}
-      <div className="text-2xl mb-4">
+      <div className="text-3xl flex items-center justify-center">
+        <h2>- FOREVER -</h2>
+      </div>
+
+      <div className="text-lg mb-2 flex">
         <TitleComponent firstText="MY" secondText="ORDERS" />
       </div>
 
