@@ -153,9 +153,12 @@ export const Navbar = () => {
           {/* Efecto que la opción se mueva a la derecha cuando está el hover */}
           <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2 z-[999]">
             <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded-lg">
-              <button className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold transform transition-transform duration-400 hover:translate-x-1">
+              <Link
+                to="login"
+                className="text-left flex items-center justify-between gap-3 hover:text-gray-900 hover:font-semibold transform transition-transform duration-400 hover:translate-x-1"
+              >
                 My Profile
-              </button>
+              </Link>
 
               <Link
                 to="orders"
