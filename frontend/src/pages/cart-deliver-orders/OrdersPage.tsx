@@ -7,6 +7,7 @@ import { OrderFormTotalCartTracking } from "../../components/OrderFormTotalCartT
 import { OrderPreviewModal } from "../../components/OrderPreviewModal";
 import { CartDataInterface } from "../../context/shopContext/ShopProvider";
 import { FormDeliveryInterface } from "../../constants/initialFormDelivery";
+import { useNavigate } from "react-router-dom";
 
 export interface OrderInterface {
   cartItems: CartDataInterface;
@@ -67,6 +68,12 @@ export const OrdersPage = () => {
 
   const closeModal = () => {
     setSelectedOrder(null);
+  };
+
+  const navigate = useNavigate();
+
+  const handlePrint = (order: OrderInterface) => {
+    navigate("/order-pdf", { state: { order, currency } });
   };
 
   return (
@@ -165,7 +172,7 @@ export const OrdersPage = () => {
                   <button
                     onClick={(event) => {
                       event.preventDefault();
-                      handlePreviewPDF(order);
+                      handlePrint(order);
                     }}
                     className={`px-4 py-2 rounded-lg border border-slate-700 text-gray-700 hover:bg-slate-500 hover:text-white hover:border-slate-500`}
                   >

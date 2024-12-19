@@ -143,6 +143,17 @@ export const router = createHashRouter([
     ],
   },
 
+  /* ROUTES - Order PDF */
+  {
+    path: "order-pdf",
+    async lazy() {
+      const { OrderPDFPage } = await import(
+        "./pages/cart-deliver-orders/OrderPDFPage.tsx"
+      );
+      return { Component: OrderPDFPage };
+    },
+  },
+
   /* ROUTES - 404 */
   {
     path: "*",
