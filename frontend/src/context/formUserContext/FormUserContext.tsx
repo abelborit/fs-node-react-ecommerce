@@ -2,10 +2,12 @@
 import { createContext, useContext } from "react";
 import { FormLoginInterface } from "../../constants/initialFormLogin";
 import { FormRegisterInterface } from "../../constants/initialFormRegister";
+import { UserInfoInterface } from "../../constants/initialUserInfo";
 
 /* aquí es donde se coloca qué es lo que quiero distribuir en el value del Provider, aquí deberían estar todos los métodos, estados, etc... */
 interface FormContextProps {
   /* states */
+  userInfo: UserInfoInterface;
   formLogin: FormLoginInterface;
   formRegister: FormRegisterInterface;
   // isFormLoginValid: boolean;

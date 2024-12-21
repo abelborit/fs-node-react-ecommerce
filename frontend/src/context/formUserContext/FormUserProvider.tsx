@@ -9,6 +9,7 @@ import {
   FormRegisterInterface,
   initialFormRegister,
 } from "../../constants/initialFormRegister";
+import { initialUserInfo, UserInfoInterface } from "../../constants/initialUserInfo";
 
 interface FormProviderProps {
   children: JSX.Element | JSX.Element[];
@@ -18,15 +19,17 @@ interface FormProviderProps {
 export interface FormUserProviderInterface {
   formLoginValues: FormLoginInterface;
   formRegisterValues: FormRegisterInterface;
+  userInfoValues: UserInfoInterface;
 }
 
 const INITIAL_STATE: FormUserProviderInterface = {
   formLoginValues: initialFormLogin,
   formRegisterValues: initialFormRegister,
+  userInfoValues: initialUserInfo,
 };
 
 export const FormUserProvider = ({ children }: FormProviderProps) => {
-  // const [userInfo, setUserInfo] = useState(null); // estado donde se guardará la información del usuario que venga desde backend al loguearse o registrarse
+  const [userInfo, setUserInfo] = useState(INITIAL_STATE.userInfoValues); // estado donde se guardará la información del usuario que venga desde backend al loguearse o registrarse
 
   const [formLogin, setFormLogin] = useState<FormLoginInterface>(() => {
     /* Recupera el estado inicial del formulario desde localStorage o usa el predeterminado */
@@ -65,6 +68,16 @@ export const FormUserProvider = ({ children }: FormProviderProps) => {
     /* Establecer el estado con los valores modificados */
     setFormLogin(trimmedValuesForm);
 
+    setUserInfo({
+      userInfo: {
+        firstName: "First Name",
+        lastName: "Lastname",
+        email: "user@email.com",
+      },
+      isAuthenticated: true,
+      tokenUser: "tokenUser123",
+    });
+
     // Almacenar en el localStorage los valores recortados
     // localStorage.setItem("login-formState", JSON.stringify(trimmedValuesForm));
   };
@@ -81,6 +94,16 @@ export const FormUserProvider = ({ children }: FormProviderProps) => {
 
     /* Establecer el estado con los valores modificados */
     setFormRegister(trimmedValuesForm);
+
+    setUserInfo({
+      userInfo: {
+        firstName: "First Name",
+        lastName: "Lastname",
+        email: "user@email.com",
+      },
+      isAuthenticated: true,
+      tokenUser: "tokenUser123",
+    });
 
     // Almacenar en el localStorage los valores recortados
     // localStorage.setItem(
@@ -111,6 +134,7 @@ export const FormUserProvider = ({ children }: FormProviderProps) => {
   const valueProvider = useMemo(
     () => ({
       /* states */
+      userInfo,
       formLogin,
       formRegister,
       // isFormLoginValid,
