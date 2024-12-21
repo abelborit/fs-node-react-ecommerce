@@ -24,6 +24,11 @@ export const validationSchemaRules = Yup.object({
   email: Yup.string()
     .email("Invalid email format: email@example.com")
     .required("This input is required"),
-  password: Yup.string().required("This input is required"),
-  repeatPassword: Yup.string().required("This input is required"),
+  password: Yup.string()
+    .min(6, "Must be 6 characters or more")
+    .required("This input is required"),
+  /* .oneOf([Yup.ref("password")]) para que haga referencia al password y lo campare a ver si son o no iguales */
+  repeatPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "The passwords must be equal")
+    .required("This input is required"),
 });
