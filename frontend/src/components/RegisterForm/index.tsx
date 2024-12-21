@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import {
@@ -8,12 +8,15 @@ import {
 import { validationSchemaRules } from "./validationSchemaRules";
 import { InputComponent } from "../InputComponent";
 import { useFormUserContext } from "../../context/formUserContext/FormUserContext";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const classWrapperInput =
   "flex flex-col sm:flex-row justify-evenly gap-6 w-full";
 
 export const RegisterForm = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
   const {
     formRegister,
     isFormRegisterValid,
@@ -119,19 +122,51 @@ export const RegisterForm = () => {
         </div>
 
         <div className={classWrapperInput}>
-          {renderInputField(
-            "Password",
-            "repeatPassword",
-            "password",
-            "********"
-          )}
+          <div className="flex items-center justify-center w-full relative">
+            {renderInputField(
+              "Password",
+              "password",
+              showPassword ? "text" : "password",
+              "********"
+            )}
 
-          {renderInputField(
-            "Repeat Password",
-            "password",
-            "password",
-            "********"
-          )}
+            <span
+              className={`absolute right-2 ${
+                formik.errors.repeatPassword &&
+                formik.touched.repeatPassword &&
+                !formik.errors.password &&
+                !formik.touched.password
+                  ? "top-11"
+                  : "top-9"
+              } cursor-pointer`}
+              onClick={() => setShowPassword((prevState) => !prevState)}
+            >
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-center w-full relative">
+            {renderInputField(
+              "Repeat Password",
+              "repeatPassword",
+              showRepeatPassword ? "text" : "password",
+              "********"
+            )}
+
+            <span
+              className={`absolute right-2 ${
+                formik.errors.password &&
+                formik.touched.password &&
+                !formik.errors.repeatPassword &&
+                !formik.touched.repeatPassword
+                  ? "top-11"
+                  : "top-9"
+              } cursor-pointer`}
+              onClick={() => setShowRepeatPassword((prevState) => !prevState)}
+            >
+              {showRepeatPassword ? <FaEye /> : <FaEyeSlash />}
+            </span>
+          </div>
         </div>
 
         <div className="mt-4 flex flex-col sm:flex-row gap-4 sm:gap-10 items-center justify-between">
