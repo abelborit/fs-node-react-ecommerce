@@ -188,7 +188,7 @@ export const RegisterForm = () => {
         </div>
       </form>
 
-      <div className="flex items-center justify-between w-full sm:max-w-[550px] mt-3">
+      <div className="flex items-center justify-between w-full sm:max-w-[550px] mt-2">
         <button onClick={() => console.log("not implemented yet")}>
           Forgot your password?
         </button>
@@ -199,7 +199,7 @@ export const RegisterForm = () => {
       <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-10 items-center justify-center">
         <button
           disabled={!isFormRegisterValid}
-          type="button"
+          type="submit"
           onClick={handleSubmitRegister}
           className={`py-2 px-4 w-[200px] ${
             isFormRegisterValid

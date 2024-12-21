@@ -65,13 +65,17 @@ export const LoginForm = () => {
   //   handleFormLoginValidity(isFormValidStatus);
   // };
 
+  /* Validar si el formulario es válido basado en campos tocados */
   // useEffect(() => {
-  //   if (formik.errors) {
-  //     handleFormLoginValidity(false);
-  //   }
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [formik.errors]);
+  //   const hasTouchedErrors = Object.keys(formik.errors).some(
+  //     (field) => formik.touched[field]
+  //   );
+  //   const allFieldsTouched = Object.keys(formik.values).every(
+  //     (field) => formik.touched[field]
+  //   );
+  //   const isValid = !hasTouchedErrors && allFieldsTouched;
+  //   handleFormLoginValidity(isValid);
+  // }, [formik.errors, formik.touched, formik.values, handleFormLoginValidity]);
 
   /* componente para renderizar los inputs de forma dinámica y no colocar cada input con las mismas propiedades */
   const renderInputField = (
@@ -104,7 +108,7 @@ export const LoginForm = () => {
         </div>
       </form>
 
-      <div className="flex items-center justify-between w-full sm:max-w-[450px] mt-3">
+      <div className="flex items-center justify-between w-full sm:max-w-[450px] mt-2">
         <button onClick={() => console.log("not implemented yet")}>
           Forgot your password?
         </button>
@@ -114,9 +118,14 @@ export const LoginForm = () => {
 
       <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-10 items-center justify-center">
         <button
-          type="button"
+          disabled={!formik.isValid || !formik.dirty} // Deshabilitado si no es válido o no se ha editado
+          type="submit"
           onClick={handleSubmitLogin}
-          className="py-2 px-4 w-[200px] bg-gray-900 text-white hover:bg-gray-700"
+          className={`py-2 px-4 w-[200px] ${
+            !formik.isValid || !formik.dirty
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gray-900 text-white hover:bg-gray-700"
+          }`}
         >
           Login
         </button>
