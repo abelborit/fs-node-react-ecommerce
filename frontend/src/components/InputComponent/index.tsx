@@ -57,7 +57,7 @@ export const InputComponent = ({
     : "";
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[70px]">
       <div className="flex gap-2 items-center justify-start">
         <label
           htmlFor={name}

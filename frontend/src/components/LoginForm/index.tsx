@@ -6,7 +6,7 @@ import { validationSchemaRules } from "./validationSchemaRules";
 import { InputComponent } from "../InputComponent";
 import { useFormUserContext } from "../../context/formUserContext/FormUserContext";
 
-const classWrapperInput = "flex flex-col justify-evenly gap-6 w-full";
+const classWrapperInput = "flex flex-col justify-evenly gap-4 w-full";
 
 export const LoginForm = () => {
   const navigate = useNavigate();
@@ -97,7 +97,7 @@ export const LoginForm = () => {
 
   return (
     <>
-      <form className="flex flex-col gap-6 py-6 px-6 bg-gray-100 rounded-lg w-full sm:max-w-[450px]">
+      <form className="flex flex-col gap-4 py-6 px-6 bg-gray-100 rounded-lg w-full sm:max-w-[450px]">
         <div className={classWrapperInput}>
           {renderInputField("Email", "email", "email", "correo@example.com")}
           {renderInputField("Password", "password", "password", "********")}
