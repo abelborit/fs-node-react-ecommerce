@@ -1,4 +1,4 @@
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { FormLoginInterface } from "../../constants/initialFormLogin";
@@ -11,6 +11,7 @@ const classWrapperInput = "flex flex-col justify-evenly gap-4 w-full";
 export const LoginForm = () => {
   const navigate = useNavigate();
   const {
+    userInfo,
     formLogin,
     // isFormLoginValid,
     handleSetFormLogin,
@@ -76,6 +77,15 @@ export const LoginForm = () => {
   //   const isValid = !hasTouchedErrors && allFieldsTouched;
   //   handleFormLoginValidity(isValid);
   // }, [formik.errors, formik.touched, formik.values, handleFormLoginValidity]);
+
+  useEffect(() => {
+    if (userInfo.isAuthenticated) {
+      navigate("/home");
+      return;
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /* componente para renderizar los inputs de forma dinámica y no colocar cada input con las mismas propiedades */
   const renderInputField = (

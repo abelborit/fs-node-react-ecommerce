@@ -9,7 +9,10 @@ import {
   FormRegisterInterface,
   initialFormRegister,
 } from "../../constants/initialFormRegister";
-import { initialUserInfo, UserInfoInterface } from "../../constants/initialUserInfo";
+import {
+  initialUserInfo,
+  UserInfoInterface,
+} from "../../constants/initialUserInfo";
 
 interface FormProviderProps {
   children: JSX.Element | JSX.Element[];
@@ -29,7 +32,12 @@ const INITIAL_STATE: FormUserProviderInterface = {
 };
 
 export const FormUserProvider = ({ children }: FormProviderProps) => {
-  const [userInfo, setUserInfo] = useState(INITIAL_STATE.userInfoValues); // estado donde se guardará la información del usuario que venga desde backend al loguearse o registrarse
+  /* estado donde se guardará la información del usuario que venga desde backend al loguearse o registrarse */
+  const [userInfo, setUserInfo] = useState(() => {
+    /* Recupera el estado inicial del formulario desde localStorage o usa el predeterminado */
+    const savedState = localStorage.getItem("userInfo");
+    return savedState ? JSON.parse(savedState) : INITIAL_STATE.userInfoValues;
+  });
 
   const [formLogin, setFormLogin] = useState<FormLoginInterface>(() => {
     /* Recupera el estado inicial del formulario desde localStorage o usa el predeterminado */
@@ -68,16 +76,6 @@ export const FormUserProvider = ({ children }: FormProviderProps) => {
     /* Establecer el estado con los valores modificados */
     setFormLogin(trimmedValuesForm);
 
-    setUserInfo({
-      userInfo: {
-        firstName: "First Name",
-        lastName: "Lastname",
-        email: "user@email.com",
-      },
-      isAuthenticated: true,
-      tokenUser: "tokenUser123",
-    });
-
     // Almacenar en el localStorage los valores recortados
     // localStorage.setItem("login-formState", JSON.stringify(trimmedValuesForm));
   };
@@ -95,16 +93,6 @@ export const FormUserProvider = ({ children }: FormProviderProps) => {
     /* Establecer el estado con los valores modificados */
     setFormRegister(trimmedValuesForm);
 
-    setUserInfo({
-      userInfo: {
-        firstName: "First Name",
-        lastName: "Lastname",
-        email: "user@email.com",
-      },
-      isAuthenticated: true,
-      tokenUser: "tokenUser123",
-    });
-
     // Almacenar en el localStorage los valores recortados
     // localStorage.setItem(
     //   "register-formState",
@@ -121,11 +109,39 @@ export const FormUserProvider = ({ children }: FormProviderProps) => {
   };
 
   const handleSubmitLogin = () => {
-    console.log(formLogin);
+    // console.log(formLogin);
+
+    /* esto debería ser la respuesta que viene de backend */
+    const responseUserInfo = {
+      userInfo: {
+        firstName: "Login Name",
+        lastName: "Lastname",
+        email: "user@email.com",
+      },
+      isAuthenticated: true,
+      tokenUser: "tokenUser123",
+    };
+
+    localStorage.setItem("userInfo", JSON.stringify(responseUserInfo));
+    setUserInfo(responseUserInfo);
   };
 
   const handleSubmitRegister = () => {
-    console.log(formRegister);
+    // console.log(formRegister);
+
+    /* esto debería ser la respuesta que viene de backend */
+    const responseUserInfo = {
+      userInfo: {
+        firstName: "Register Name",
+        lastName: "Lastname",
+        email: "user@email.com",
+      },
+      isAuthenticated: true,
+      tokenUser: "tokenUser123",
+    };
+
+    localStorage.setItem("userInfo", JSON.stringify(responseUserInfo));
+    setUserInfo(responseUserInfo);
   };
 
   /* funciones y métodos para colocar en el value... */
@@ -151,8 +167,13 @@ export const FormUserProvider = ({ children }: FormProviderProps) => {
       handleSubmitRegister,
     }),
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [formLogin, formRegister, /* isFormLoginValid, */ isFormRegisterValid]
+    [
+      formLogin,
+      formRegister,
+      // isFormLoginValid,
+      isFormRegisterValid,
+      userInfo,
+    ]
   );
 
   return (

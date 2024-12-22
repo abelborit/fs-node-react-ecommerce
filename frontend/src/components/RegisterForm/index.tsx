@@ -18,6 +18,7 @@ export const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
   const {
+    userInfo,
     formRegister,
     isFormRegisterValid,
     handleSetFormRegister,
@@ -86,6 +87,15 @@ export const RegisterForm = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.errors]);
+
+  useEffect(() => {
+    if (userInfo.isAuthenticated) {
+      navigate("/home");
+      return;
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /* componente para renderizar los inputs de forma dinámica y no colocar cada input con las mismas propiedades */
   const renderInputField = (

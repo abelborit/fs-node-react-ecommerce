@@ -1,4 +1,5 @@
 import { createHashRouter, Navigate } from "react-router-dom";
+import { ProtectedRoutesLayout } from "./layouts/ProtectedRoutesLayout.tsx";
 
 /* El uso de lazy() en la configuración de rutas de React Router es una característica introducida para soportar carga asíncrona de componentes en React Router v6.4 o superior. Sin embargo, lazy() no es un concepto explícito de React Router, sino una técnica derivada del manejo dinámico de importaciones (import()). La documentación oficial de React Router no menciona un método lazy() como el mostrado en el código. En cambio, utiliza el método lazy de React combinado con la API de carga diferida de las rutas. */
 
@@ -26,6 +27,7 @@ export const router = createHashRouter([
         element: <Navigate to="/home" replace />,
       },
 
+      /* ----- RUTAS PÚBLICAS ----- */
       /* ************************************************************************************************************** */
       /* ROUTES - AUTH */
       {
@@ -93,7 +95,9 @@ export const router = createHashRouter([
           return { Component: ProductPage };
         },
       },
-      /* ROUTES - ECOMMERCE -> CART - DELIVER - ORDERS */
+
+      /* ************************************************************************************************************** */
+      /* ROUTES - ECOMMERCE -> CART - PLACE ORDER - SHOP SUMMARY */
       {
         path: "cart",
         async lazy() {
@@ -121,23 +125,42 @@ export const router = createHashRouter([
           return { Component: ShopSummary };
         },
       },
+
+      /* ----- RUTAS PROTEGIDAS ----- */
+      /* ************************************************************************************************************** */
+      /* ROUTES - ECOMMERCE -> ORDERS - ORDER TRACKING - ORDER PDF */
       {
-        path: "orders",
-        async lazy() {
-          const { OrdersPage } = await import(
-            "./pages/cart-deliver-orders/OrdersPage.tsx"
-          );
-          return { Component: OrdersPage };
-        },
-      },
-      {
-        path: "order-tracking",
-        async lazy() {
-          const { OrderTrackingPage } = await import(
-            "./pages/cart-deliver-orders/OrderTrackingPage.tsx"
-          );
-          return { Component: OrderTrackingPage };
-        },
+        element: <ProtectedRoutesLayout redirectTo="/home" />,
+        children: [
+          {
+            path: "orders",
+            async lazy() {
+              const { OrdersPage } = await import(
+                "./pages/cart-deliver-orders/OrdersPage.tsx"
+              );
+              return { Component: OrdersPage };
+            },
+          },
+          {
+            path: "order-tracking",
+            async lazy() {
+              const { OrderTrackingPage } = await import(
+                "./pages/cart-deliver-orders/OrderTrackingPage.tsx"
+              );
+              return { Component: OrderTrackingPage };
+            },
+          },
+          /* ROUTES - Order PDF */
+          {
+            path: "order-pdf",
+            async lazy() {
+              const { OrderPDFPage } = await import(
+                "./pages/cart-deliver-orders/OrderPDFPage.tsx"
+              );
+              return { Component: OrderPDFPage };
+            },
+          },
+        ],
       },
 
       /* ************************************************************************************************************** */
@@ -150,17 +173,6 @@ export const router = createHashRouter([
         },
       },
     ],
-  },
-
-  /* ROUTES - Order PDF */
-  {
-    path: "order-pdf",
-    async lazy() {
-      const { OrderPDFPage } = await import(
-        "./pages/cart-deliver-orders/OrderPDFPage.tsx"
-      );
-      return { Component: OrderPDFPage };
-    },
   },
 
   /* ROUTES - 404 */
