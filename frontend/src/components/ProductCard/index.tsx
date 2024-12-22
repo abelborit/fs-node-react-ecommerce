@@ -21,7 +21,8 @@ export const ProductCard = ({ product }: ProductItemProps) => {
 
   return (
     <Link to={`/product/${id}`} className="text-gray-700 cursor-pointer">
-      <div className="overflow-hidden">
+      {/* se pone el -- aspect-[4.25/5] -- en el contenedor porque cuando la imagen no está disponible, el navegador no puede renderizar su espacio y, por lo tanto, no respeta las proporciones del contenedor definido por el -- aspect-[4.25/5] -- entonces para solucionar eso se está colocando en el contenedor para que que mantenga la proporción de aspecto incluso cuando la imagen aún no se ha cargado o está ausente */}
+      <div className="overflow-hidden aspect-[4.25/5]">
         <img
           className="hover:scale-110 transition ease-in-out"
           /* si la imagen no coincide con ninguna entonces tendrá una imagen por defecto */
