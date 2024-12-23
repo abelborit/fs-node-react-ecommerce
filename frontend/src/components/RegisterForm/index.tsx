@@ -9,6 +9,7 @@ import { validationSchemaRules } from "./validationSchemaRules";
 import { InputComponent } from "../InputComponent";
 import { useFormUserContext } from "../../context/formUserContext/FormUserContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { PasswordStrengthIndicator } from "../PasswordStrengthIndicator";
 
 const classWrapperInput =
   "flex flex-col sm:flex-row justify-evenly gap-6 w-full";
@@ -34,7 +35,7 @@ export const RegisterForm = () => {
   const formik = useFormik({
     initialValues: formRegister,
     validationSchema: validationSchemaRules,
-    validateOnChange: true, // Validar al escribir
+    validateOnChange: true, // Validar al escribir (los indicadores y validaciones se actualizarán dinámicamente mientras el usuario escribe)
     validateOnBlur: true, // Validar al desenfocar
     onSubmit: (values) => {
       console.log("Form submitted", values);
@@ -131,31 +132,36 @@ export const RegisterForm = () => {
           {renderInputField("Email", "email", "email", "email@example.com")}
         </div>
 
-        <div className={classWrapperInput}>
-          <div className="flex items-center justify-center w-full relative">
-            {renderInputField(
-              "Password",
-              "password",
-              showPassword ? "text" : "password",
-              "********"
-            )}
+        <div className={`${classWrapperInput} items-start`}>
+          <div className="w-full">
+            <div className="flex items-start justify-center w-full relative">
+              {renderInputField(
+                "Password",
+                "password",
+                showPassword ? "text" : "password",
+                "********"
+              )}
 
-            <span
-              className={`absolute right-2 ${
-                formik.errors.repeatPassword &&
-                formik.touched.repeatPassword &&
-                !formik.errors.password &&
-                !formik.touched.password
-                  ? "top-11"
-                  : "top-9"
-              } cursor-pointer`}
-              onClick={() => setShowPassword((prevState) => !prevState)}
-            >
-              {showPassword ? <FaEye /> : <FaEyeSlash />}
-            </span>
+              <span
+                className={`absolute right-2 ${
+                  formik.errors.repeatPassword &&
+                  formik.touched.repeatPassword &&
+                  !formik.errors.password &&
+                  !formik.touched.password
+                    ? "top-11"
+                    : "top-9"
+                } cursor-pointer`}
+                onClick={() => setShowPassword((prevState) => !prevState)}
+              >
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
+              </span>
+            </div>
+
+            {/* Mostrar los requisitos de contraseña */}
+            <PasswordStrengthIndicator password={formik.values.password} />
           </div>
 
-          <div className="flex items-center justify-center w-full relative">
+          <div className="flex items-start justify-center w-full relative">
             {renderInputField(
               "Repeat Password",
               "repeatPassword",
