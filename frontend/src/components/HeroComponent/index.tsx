@@ -2,7 +2,7 @@ import { hero_img } from "../../assets";
 
 export const HeroComponent = () => {
   return (
-    <div className="flex flex-col sm:flex-row border border-gray-400 w-full h-full aspect-[2.5/1]">
+    <div className="flex flex-col sm:flex-row border border-gray-400 w-full aspect-[2.5/1]">
       {/* Hero Left Side */}
       <div className="w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0">
         <div className="text-[#414141]">
