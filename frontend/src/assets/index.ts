@@ -1,5 +1,6 @@
 /* PNG */
 // import hero_img from "./png/hero_img.png";
+// import about_us from "./png/about_us.png";
 import logo_img from "./png/logo_img.png";
 // import default_placeholder from "./png/default-placeholder.png";
 // import exchange from "./png/exchange.png";
@@ -59,6 +60,7 @@ import logo_img from "./png/logo_img.png";
 
 /* WEBP */
 import hero_img from "./webp/hero_img.webp";
+import about_us from "./webp/about_us.webp";
 // import logo_img from "./webp/logo_img.webp";
 import default_placeholder from "./webp/default-placeholder.webp";
 import exchange from "./webp/exchange.webp";
@@ -118,6 +120,7 @@ import p_img52 from "./webp/p_img52.webp";
 
 export {
   hero_img,
+  about_us,
   logo_img,
   default_placeholder,
   exchange,
