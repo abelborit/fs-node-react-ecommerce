@@ -14,5 +14,7 @@ export const validationSchemaRules = Yup.object({
   email: Yup.string()
     .email("Invalid email format: email@example.com")
     .required("This input is required"),
-  password: Yup.string().required("This input is required"),
+  password: Yup.string()
+    .min(8, "Must be 8 characters or more")
+    .required("This input is required"),
 });

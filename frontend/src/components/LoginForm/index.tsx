@@ -140,6 +140,18 @@ export const LoginForm = () => {
           Login
         </button>
       </div>
+
+      {/* datos de prueba */}
+      <pre className="text-sm mt-2 bg-red-50 p-2">
+        {JSON.stringify(
+          {
+            email: "email@example.com",
+            password: "12345678",
+          },
+          null,
+          2
+        )}
+      </pre>
     </>
   );
 };
