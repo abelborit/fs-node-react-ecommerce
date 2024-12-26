@@ -34,7 +34,7 @@ export const AboutPage = () => {
         <img
           src={about_us}
           alt="about_us"
-          className="w-full md:max-w-[450px]"
+          className="w-full sm:max-w-[450px] m-auto object-cover"
         />
 
         <div className="flex flex-col justify-center gap-6 md:w-2/4 text-gray-600">
@@ -54,7 +54,7 @@ export const AboutPage = () => {
             brands and suppliers.
           </p>
 
-          <b className="text-gray-800">Our Mission</b>
+          <b className="text-gray-800 text-lg mt-4 -mb-2">Our Mission</b>
           <p>
             Our mission at Forever is to empower customers with choice,
             convenience, and confidence. We're dedicated to providing a seamless
