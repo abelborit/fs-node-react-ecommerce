@@ -36,6 +36,14 @@
 
 - #### Backend:
 
+  - Paquete `env-var` usando `npm i env-var` desde `https://www.npmjs.com/package/env-var`
+
+  - Paquete `dotenv` usando `npm i dotenv` desde `https://www.npmjs.com/package/dotenv`
+
+  - Paquete `express` usando `npm i express` desde `https://www.npmjs.com/package/express`
+
+    - Para sus tipos `npm i --save-dev @types/express`
+
   - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
 ### \* NOTAS:
