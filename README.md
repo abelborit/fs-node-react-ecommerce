@@ -44,6 +44,10 @@
 
     - Para sus tipos `npm i --save-dev @types/express`
 
+  - Paquete `cors` usando `npm i cors` desde `https://www.npmjs.com/package/cors`
+
+    - Para sus tipos `npm i --save-dev @types/cors`
+
   - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
 ### \* NOTAS:

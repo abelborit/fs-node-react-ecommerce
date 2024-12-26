@@ -1,6 +1,7 @@
 /* todo lo que va de express usualmente se coloca en la carpeta de presentation para no afectar la lógica de negocio. Aquí se podría decir que es una dependencia oculta pero en realidad se va a utilizar express en muy pocos archivos y por eso se puede colocar normal en los archivos donde haga falta */
 import express, { Router } from "express";
 import path from "path"; // este "path" ya viene nativo en node para trabajar con rutas de archivos y directorios. Aquí se utiliza para generar rutas absolutas
+import cors from "cors";
 
 interface ServerOptions {
   port: number;
@@ -21,6 +22,7 @@ export class Server {
   private readonly publicPath: string;
   private readonly routes: Router;
 
+  /* nuestro constructor será para poder hacer la inyección de dependencias */
   constructor(serverOptions: ServerOptions) {
     const { port, public_path = "public", routes } = serverOptions;
 
@@ -46,6 +48,9 @@ export class Server {
     /* Public Folder */
     /* aquí se configura un middleware para servir archivos estáticos desde la carpeta public. Esto significa que cualquier archivo dentro de public puede ser accedido directamente desde el navegador */
     this.app.use(express.static(this.publicPath));
+
+    /* para no tener problemas con CORS porque al tener el backend y frontend en diferentes puertos entonces puede ser que nos de problemas de este tipo */
+    this.app.use(cors());
 
     /* Routes de las API */
     this.app.use(this.routes);
