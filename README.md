@@ -48,6 +48,14 @@
 
     - Para sus tipos `npm i --save-dev @types/cors`
 
+  - Paquete `bcryptjs` usando `npm i bcryptjs` desde `https://www.npmjs.com/package/bcryptjs`
+
+    - Para sus tipos `npm i --save-dev @types/bcryptjs`
+
+  - Paquete `jsonwebtoken` usando `npm i jsonwebtoken` desde `https://www.npmjs.com/package/jsonwebtoken`
+
+    - Para sus tipos `npm i --save-dev @types/jsonwebtoken`
+
   - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
 ### \* NOTAS:
