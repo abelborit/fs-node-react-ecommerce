@@ -142,16 +142,15 @@ export const LoginForm = () => {
       </div>
 
       {/* datos de prueba */}
-      <pre className="text-sm mt-2 bg-red-50 p-2">
-        {JSON.stringify(
-          {
-            email: "email@example.com",
-            password: "12345678",
-          },
-          null,
-          2
-        )}
-      </pre>
+      <p className="flex flex-col gap-3 text-sm mt-2 bg-red-50 p-2 px-10">
+        <span>For instance, you could use this fake user:</span>
+        <span>
+          <strong>Email: </strong>email@example.com
+        </span>
+        <span>
+          <strong>Password: </strong>12AS@@ww
+        </span>
+      </p>
     </>
   );
 };

@@ -226,6 +226,30 @@ export const RegisterForm = () => {
           Register
         </button>
       </div>
+
+      {/* datos de prueba */}
+      <p className="flex flex-col gap-3 text-sm mt-2 bg-red-50 p-2 px-10">
+        <span>For instance, you could use this fake user:</span>
+        <span>
+          <strong>First name: </strong>Bart
+        </span>
+
+        <span>
+          <strong>Last name: </strong>Vhen
+        </span>
+
+        <span>
+          <strong>Email: </strong>email@example.com
+        </span>
+
+        <span>
+          <strong>Password: </strong>12AS@@ww
+        </span>
+
+        <span>
+          <strong>Repeat password: </strong>12AS@@ww
+        </span>
+      </p>
     </>
   );
 };
