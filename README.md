@@ -18,19 +18,25 @@
 
 ### \* RECURSOS A USAR:
 
-- Paquete `react-router-dom` usando `npm i react-router-dom` desde `https://reactrouter.com/en/main`
+- #### Frontend:
 
-- Paquete `react-toastify` usando `npm i react-toastify` desde `https://www.npmjs.com/package/react-toastify`
+  - Paquete `react-router-dom` usando `npm i react-router-dom` desde `https://reactrouter.com/en/main`
 
-- Paquete `tailwindcss` usando `npm install -D tailwindcss postcss autoprefixer` desde `https://tailwindcss.com/docs/guides/vite`
+  - Paquete `react-toastify` usando `npm i react-toastify` desde `https://www.npmjs.com/package/react-toastify`
 
-- Paquete `react-icons` usando `npm install react-icons --save` desde `https://react-icons.github.io/react-icons/`
+  - Paquete `tailwindcss` usando `npm install -D tailwindcss postcss autoprefixer` desde `https://tailwindcss.com/docs/guides/vite`
 
-- Paquete `formik` usando `npm install formik --save` desde `https://formik.org/docs/overview`
+  - Paquete `react-icons` usando `npm install react-icons --save` desde `https://react-icons.github.io/react-icons/`
 
-- Paquete `yup` usando `npm i yup` desde `https://www.npmjs.com/package/yup`
+  - Paquete `formik` usando `npm install formik --save` desde `https://formik.org/docs/overview`
 
-- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+  - Paquete `yup` usando `npm i yup` desde `https://www.npmjs.com/package/yup`
+
+  - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+
+- #### Backend:
+
+  - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
 ### \* NOTAS:
 
