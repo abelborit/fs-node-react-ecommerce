@@ -15,7 +15,7 @@ export class Server {
   public readonly app = express();
 
   /* opcional porque en algún punto en el tiempo no va a tener un valor, porque hasta que se levanta el servidor recién lo tendrá. Tiene de tipo any solo para no hacerlo más complicado, pero se podría buscar el tipo correcto */
-  private serverListener?: any;
+  private serverListener?: ReturnType<typeof this.app.listen>;
 
   /* FORMA 1 */
   private readonly port: number;
@@ -38,91 +38,52 @@ export class Server {
   //   private readonly publicPath: string
   // ) {}
 
-  /* Aunque actualmente el método start de nuestro servidor no contiene operaciones asíncronas (no hay await en su cuerpo), marcarlo como async es útil si en el futuro se necesita incluir inicializaciones asíncronas, como: Conexión a bases de datos - Inicialización de servicios externos (como Redis, Kafka, etc.) - Lectura o validación de archivos de configuración desde el sistema de archivos. Esta práctica hace que el código sea más flexible y fácil de adaptar sin tener que modificar la firma de la función o romper compatibilidad en otros lugares */
-  /* Las funciones asíncronas permiten usar try-catch de manera eficiente, especialmente para operaciones que puedan fallar y lanzar excepciones */
   async start(): Promise<void> {
-    // await this.connectToDatabase(); // Ejemplo de inicialización asíncrona
-    this.setupMiddlewares();
-    this.setupStaticFiles();
-    this.setupRoutes();
-    this.listen();
-  }
-
-  private setupMiddlewares(): void {
     /* Middlewares */
     /* Los Middlewares son funciones que se van a ejecutar en todo momento que se pase por una ruta. Los Middlewares son softwares que se sitúan entre un sistema operativo y las aplicaciones que se ejecutan en él. Básicamente, funcionan como una capa de traducción oculta para permitir la comunicación y la administración de datos en aplicaciones distribuidas las cuales estas son una aplicación con distintos componentes que se ejecutan en entornos separados, normalmente en diferentes plataformas conectadas a través de una red. */
     /* por defecto hay que decirle a Express cómo se quiere manejar la serialización de las peticiones POST, es decir, hay que decirle a Express cómo va a venir la data del body, que por lo general viene en formato JSON. En Express ya hay un middleware que ya nos sirve para parsear la información que viene en el body y la transforme en un objeto JSON usando express.json(). Entonces cualquier petición pasará por aquí y si tiene un body lo va a serializar a JSON. Si no se coloca esta serialización y se va a postman directamente para probar el envío del body con petición POST, entonces estará vacía la respuesta, que técnicamente es un undefined pero ese undefined no lo mostrará en postman */
     this.app.use(express.json()); // middleware para el tipo raw para serializarlo a JSON (que es el más común)
     this.app.use(express.urlencoded({ extended: true })); // middleware para serializarlo para el tipo x-www-form-urlencoded (por ejemplo para Angular con las peticiones por defecto que realiza). Si no se coloca este middleware y si se usa x-www-form-urlencoded, los datos no se envían en el body del request como un objeto JSON, sino que se envían como un conjunto de pares key value, por eso es que se ve el request.body vacío por ejemplo así {}
-    /* para no tener problemas con CORS porque al tener el backend y frontend en diferentes puertos entonces puede ser que nos de problemas de este tipo */
-    this.app.use(cors());
-  }
 
-  private setupStaticFiles(): void {
     /* Public Folder */
     /* aquí se configura un middleware para servir archivos estáticos desde la carpeta public. Esto significa que cualquier archivo dentro de public puede ser accedido directamente desde el navegador */
     this.app.use(express.static(this.publicPath));
-  }
 
-  private setupRoutes(): void {
+    /* para no tener problemas con CORS porque al tener el backend y frontend en diferentes puertos entonces puede ser que nos de problemas de este tipo */
+    this.app.use(cors());
+
     /* Routes de las API */
     this.app.use(this.routes);
 
-    /* --- FORMA 1: usando "path.resolve" --- */
     /* Servir las demás rutas por ejemplo de una SPA (Single Page Application) */
     /* para aplicaciones que tienen diferentes rutas usando get("*", ......) el asterísco significa cualquier otra petición get que se esté haciendo, aparte ya de la carpeta public anterior. Es como que si está en la carpeta public entonces que lo sirva (porque ahí ya entra react y toma la aplicación y hace todo desde el lado del cliente) y si no está en la carpeta public (serían las demás rutas que no sean el index o root de la aplicación) se pasaría a este get("*", ......) y esto nos sirve como comodín y vamos a interceptar todas las request y vamos a emitir una response */
-    /* Esta ruta es un comodín (*), lo que significa que intercepta todas las peticiones GET que no coincidan con ningún otro archivo estático en public. En este caso, se responde con el archivo index.html, que probablemente sea la entrada principal de una aplicación frontend (como React). El path.join se usa para asegurar que la ruta al archivo sea absoluta, lo cual es necesario para que Node.js lo encuentre correctamente. Se cambió "path.join" por "path.resolve" que es más intuitivo y asegura rutas absolutas sin concatenaciones manuales */
-    this.app.get("*", (_request, response) => {
+    /* Esta ruta es un comodín (*), lo que significa que intercepta todas las peticiones GET que no coincidan con ningún otro archivo estático en public. En este caso, se responde con el archivo index.html, que probablemente sea la entrada principal de una aplicación frontend (como React). El path.join se usa para asegurar que la ruta al archivo sea absoluta, lo cual es necesario para que Node.js lo encuentre correctamente */
+    this.app.get("*", (request, response) => {
       // console.log(__dirname); // es una variable global en Node.js que contiene la ruta absoluta del directorio donde se encuentra el archivo que se está ejecutando actualmente
       // console.log("../../../public/index.html"); // es un camino relativo que sube tres directorios hacia arriba y luego entra en la carpeta public para acceder al archivo index.html
 
-      /* Se cambió "path.join" por "path.resolve" que es más intuitivo y asegura rutas absolutas sin concatenaciones manuales */
-      const indexPath = path.resolve(
-        __dirname,
-        `../../../${this.publicPath}/index.html`
+      /* retornar el path a nuestro index de nuestra carpeta public, pero tiene que ser un path absoluto. Esto asegura que la ruta final sea absoluta, lo cual es necesario para que Node.js pueda encontrar el archivo sin ambigüedades ya que sin eso al entrar a la aplicación y recargar cualquier ruta nos aparecerá que no puede servir la aplicación porque no encontró la ruta, porque precisamente no tenemos en la carpeta public alguna carpeta con esa ruta */
+      const indexPath = path.join(
+        __dirname + `../../../${this.publicPath}/index.html`
       );
+      // console.log(indexPath); // la ruta absoluta de la ubicación del archivo index.html
 
       /* este método envía el archivo especificado (en este caso, index.html) como respuesta al cliente que hizo la solicitud. El index.html es el archivo principal de una aplicación web que generalmente contiene la estructura base de la interfaz de usuario. En una SPA, este archivo carga todo el contenido dinámico necesario mediante JavaScript (por ejemplo, React o Vue.js) */
       /* En una aplicación SPA, el enrutamiento del lado del cliente se maneja en el navegador mediante JavaScript. El servidor, en este caso, debe devolver siempre index.html, independientemente de la ruta solicitada, para que la aplicación del lado del cliente pueda tomar el control y renderizar la vista correcta. Esta ruta comodín asegura que cualquier ruta no capturada por archivos estáticos (como imágenes, hojas de estilo, etc.) sea manejada por index.html, lo que permite que el enrutamiento del lado del cliente funcione correctamente */
       response.sendFile(indexPath);
+
+      return;
     });
 
-    /* ************************************************************************************************************************ */
-
-    /* --- FORMA 2: usando "path.join" --- */
-    // /* Servir las demás rutas por ejemplo de una SPA (Single Page Application) */
-    // /* para aplicaciones que tienen diferentes rutas usando get("*", ......) el asterísco significa cualquier otra petición get que se esté haciendo, aparte ya de la carpeta public anterior. Es como que si está en la carpeta public entonces que lo sirva (porque ahí ya entra react y toma la aplicación y hace todo desde el lado del cliente) y si no está en la carpeta public (serían las demás rutas que no sean el index o root de la aplicación) se pasaría a este get("*", ......) y esto nos sirve como comodín y vamos a interceptar todas las request y vamos a emitir una response */
-    // /* Esta ruta es un comodín (*), lo que significa que intercepta todas las peticiones GET que no coincidan con ningún otro archivo estático en public. En este caso, se responde con el archivo index.html, que probablemente sea la entrada principal de una aplicación frontend (como React). El path.join se usa para asegurar que la ruta al archivo sea absoluta, lo cual es necesario para que Node.js lo encuentre correctamente */
-    // this.app.get("*", (request, response) => {
-    //   // console.log(__dirname); // es una variable global en Node.js que contiene la ruta absoluta del directorio donde se encuentra el archivo que se está ejecutando actualmente
-    //   // console.log("../../../public/index.html"); // es un camino relativo que sube tres directorios hacia arriba y luego entra en la carpeta public para acceder al archivo index.html
-
-    //   /* retornar el path a nuestro index de nuestra carpeta public, pero tiene que ser un path absoluto. Esto asegura que la ruta final sea absoluta, lo cual es necesario para que Node.js pueda encontrar el archivo sin ambigüedades ya que sin eso al entrar a la aplicación y recargar cualquier ruta nos aparecerá que no puede servir la aplicación porque no encontró la ruta, porque precisamente no tenemos en la carpeta public alguna carpeta con esa ruta */
-    //   const indexPath = path.join(
-    //     __dirname + `../../../${this.publicPath}/index.html`
-    //   );
-    //   // console.log(indexPath); // la ruta absoluta de la ubicación del archivo index.html
-
-    //   /* este método envía el archivo especificado (en este caso, index.html) como respuesta al cliente que hizo la solicitud. El index.html es el archivo principal de una aplicación web que generalmente contiene la estructura base de la interfaz de usuario. En una SPA, este archivo carga todo el contenido dinámico necesario mediante JavaScript (por ejemplo, React o Vue.js) */
-    //   /* En una aplicación SPA, el enrutamiento del lado del cliente se maneja en el navegador mediante JavaScript. El servidor, en este caso, debe devolver siempre index.html, independientemente de la ruta solicitada, para que la aplicación del lado del cliente pueda tomar el control y renderizar la vista correcta. Esta ruta comodín asegura que cualquier ruta no capturada por archivos estáticos (como imágenes, hojas de estilo, etc.) sea manejada por index.html, lo que permite que el enrutamiento del lado del cliente funcione correctamente */
-    //   response.sendFile(indexPath);
-
-    //   return;
-    // });
-  }
-
-  private listen(): void {
     /* colocar a nuestra aplicación a escuchar peticiones. El puerto debe venir por variables de entorno */
     /* para detener el procedimiento y cerrar los listeners que tenemos haremos uso del .close() que se está llamando en la función close() de abajo */
     this.serverListener = this.app.listen(this.port, () => {
-      console.log(`Server running on port ${this.port} ✅`);
+      console.log(`server running on port ${this.port} ✅`);
     });
   }
 
   public close() {
     /* aquí no aparecerá el autocompletado del .close() porque como arriba se puso de tipo any entonces puede ser cualquier valor */
-    this.serverListener?.close(() => {
-      console.log("Server stopped ❌");
-    });
+    this.serverListener?.close();
   }
 }
