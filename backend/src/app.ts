@@ -1,6 +1,6 @@
 // /* --- FORMA 1 --- */
 // import { Server } from "./presentation/server";
-// import { envs } from "./config/envs.plugin";
+// import { envs } from "./config";
 // import { AppRoutes } from "./presentation/routes";
 
 // /* Usar async en funciones como main ayuda a mantener un flujo estándar cuando la aplicación crezca. Por ejemplo, si se agrega inicializaciones que requieren await, no se tendrá que cambiar todo el esquema del inicio */
@@ -32,7 +32,7 @@
 
 /* --- FORMA 2 --- */
 // import { Server } from "./presentation/server";
-// import { envs } from "./config/envs.plugin";
+// import { envs } from "./config";
 // import { AppRoutes } from "./presentation/routes";
 
 // /* Usar async en funciones como main (o en este caso hacerlo en una función anónima autoejecutable) ayuda a mantener un flujo estándar cuando la aplicación crezca. Por ejemplo, si se agrega inicializaciones que requieren await, no se tendrá que cambiar todo el esquema del inicio */
@@ -93,7 +93,7 @@ En su función anónima (() => { main(); }) no está marcada como async, por lo 
 
 /* --- FORMA 3 --- */
 import { Server } from "./presentation/server";
-import { envs } from "./config/envs.plugin";
+import { envs } from "./config";
 import { AppRoutes } from "./presentation/routes";
 
 /* Usar async en funciones como main (o en este caso hacerlo en una función anónima autoejecutable) ayuda a mantener un flujo estándar cuando la aplicación crezca. Por ejemplo, si se agrega inicializaciones que requieren await, no se tendrá que cambiar todo el esquema del inicio */
