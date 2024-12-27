@@ -12,6 +12,7 @@ import * as Yup from "yup";
 /* Expresiones regulares reutilizables */
 const onlyLettersRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
 const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+const emailFormatRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /* Mensajes de error comunes */
 const messages = {
@@ -39,7 +40,10 @@ export const validationSchemaRules = Yup.object({
     .min(2, "Must be 2 characters or more")
     .max(15, "Must be 15 characters or less")
     .required(messages.required),
-  email: Yup.string().email(messages.invalidEmail).required(messages.required),
+  email: Yup.string()
+    .matches(emailFormatRegex, messages.invalidEmail) // para que coincida con el regex del backend
+    .required(messages.required),
+  // email: Yup.string().email(messages.invalidEmail).required(messages.required),
 
   /* Esto asegura que la contraseña tenga al menos:
     - Una letra minúscula.
