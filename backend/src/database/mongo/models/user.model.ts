@@ -4,6 +4,7 @@
 
 import mongoose, { Schema, Document } from "mongoose";
 import type { CartDataInterface } from "../../../interfaces/cartDataInterface";
+import { errorCommonMessageForm } from "../../../config";
 // import { passwordStrengthIndicator } from "../../../helpers/passwordStrengthIndicator";
 
 /* --- DEFINICIÓN DE SUB-ESQUEMAS --- */
@@ -36,18 +37,6 @@ const emailFormatRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // const passwordRegex =
 //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
 
-/* Mensajes de error comunes */
-const messages = {
-  onlyLetters: "Must contain only letters",
-  invalidEmail: "Invalid email format: email@example.com",
-  passwordLength: "Must be 8 characters or more",
-  passwordLowercase: "Must contain at least one lowercase letter",
-  passwordUppercase: "Must contain at least one uppercase letter",
-  passwordNumber: "Must contain at least one number",
-  passwordSpecial: "Must contain at least one special character",
-  passwordsNotMatch: "The passwords must be equal",
-};
-
 /* Interfaz para definir la estructura del documento */
 interface UserMongoInterface extends Document {
   firstName: string;
@@ -63,7 +52,7 @@ const userSchema = new Schema<UserMongoInterface>(
   {
     firstName: {
       type: String,
-      match: [onlyLettersRegex, messages.onlyLetters],
+      match: [onlyLettersRegex, errorCommonMessageForm.onlyLetters],
       // required: true, // si se quiere guardar el name en nuestro userSchema entonces el name tiene que venir sí o sí porque si no dará un error
       trim: true, // Elimina espacios innecesarios al inicio o final
       minlength: [2, "Must be 2 characters or more"],
@@ -73,7 +62,7 @@ const userSchema = new Schema<UserMongoInterface>(
 
     lastName: {
       type: String,
-      match: [onlyLettersRegex, messages.onlyLetters],
+      match: [onlyLettersRegex, errorCommonMessageForm.onlyLetters],
       // required: true, // si se quiere guardar el name en nuestro userSchema entonces el name tiene que venir sí o sí porque si no dará un error
       trim: true, // Elimina espacios innecesarios al inicio o final
       minlength: [2, "Must be 2 characters or more"],
@@ -87,7 +76,7 @@ const userSchema = new Schema<UserMongoInterface>(
       unique: true, // el email tiene que ser un valor único entonces en la base de datos NO tiene que existir un email duplicado
       lowercase: true, // Convierte automáticamente el email a minúsculas
       trim: true, // Elimina espacios innecesarios al inicio o final
-      match: [emailFormatRegex, messages.invalidEmail],
+      match: [emailFormatRegex, errorCommonMessageForm.invalidEmail],
       required: [true, "Email is required"],
     },
 
@@ -116,23 +105,23 @@ const userSchema = new Schema<UserMongoInterface>(
       validate: [
         {
           validator: (value: string) => value.length >= 8,
-          message: messages.passwordLength,
+          message: errorCommonMessageForm.passwordLength,
         },
         {
           validator: (value: string) => /[a-z]/.test(value),
-          message: messages.passwordLowercase,
+          message: errorCommonMessageForm.passwordLowercase,
         },
         {
           validator: (value: string) => /[A-Z]/.test(value),
-          message: messages.passwordUppercase,
+          message: errorCommonMessageForm.passwordUppercase,
         },
         {
           validator: (value: string) => /\d/.test(value),
-          message: messages.passwordNumber,
+          message: errorCommonMessageForm.passwordNumber,
         },
         {
           validator: (value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value),
-          message: messages.passwordSpecial,
+          message: errorCommonMessageForm.passwordSpecial,
         },
       ],
     },
@@ -177,23 +166,23 @@ userSchema.set("toJSON", {
 //   const password = this.password;
 
 //   if (password.length < 8) {
-//     return next(new Error(messages.passwordLength));
+//     return next(new Error(errorCommonMessageForm.passwordLength));
 //   }
 
 //   if (!/[a-z]/.test(password)) {
-//     return next(new Error(messages.passwordLowercase));
+//     return next(new Error(errorCommonMessageForm.passwordLowercase));
 //   }
 
 //   if (!/[A-Z]/.test(password)) {
-//     return next(new Error(messages.passwordUppercase));
+//     return next(new Error(errorCommonMessageForm.passwordUppercase));
 //   }
 
 //   if (!/\d/.test(password)) {
-//     return next(new Error(messages.passwordNumber));
+//     return next(new Error(errorCommonMessageForm.passwordNumber));
 //   }
 
 //   if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-//     return next(new Error(messages.passwordSpecial));
+//     return next(new Error(errorCommonMessageForm.passwordSpecial));
 //   }
 
 //   next(); // Todo bien, continúa con el flujo
