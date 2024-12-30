@@ -4,7 +4,7 @@
 
 import mongoose, { Schema, Document } from "mongoose";
 import type { CartDataInterface } from "../../../interfaces/cartDataInterface";
-import { errorCommonMessageForm } from "../../../config";
+import { errorCommonMessageForm, regularExps } from "../../../config";
 // import { passwordStrengthIndicator } from "../../../helpers/passwordStrengthIndicator";
 
 /* --- DEFINICIÓN DE SUB-ESQUEMAS --- */
@@ -30,13 +30,6 @@ const cartDataSchema = new Schema({
   },
 });
 
-/* Expresiones regulares reutilizables */
-const onlyLettersRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
-const emailFormatRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
-// const passwordRegex =
-//   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
-
 /* Interfaz para definir la estructura del documento */
 interface UserMongoInterface extends Document {
   firstName: string;
@@ -52,7 +45,7 @@ const userSchema = new Schema<UserMongoInterface>(
   {
     firstName: {
       type: String,
-      match: [onlyLettersRegex, errorCommonMessageForm.onlyLetters],
+      match: [regularExps.onlyLettersRegex, errorCommonMessageForm.onlyLetters],
       // required: true, // si se quiere guardar el name en nuestro userSchema entonces el name tiene que venir sí o sí porque si no dará un error
       trim: true, // Elimina espacios innecesarios al inicio o final
       minlength: [2, "Must be 2 characters or more"],
@@ -62,7 +55,7 @@ const userSchema = new Schema<UserMongoInterface>(
 
     lastName: {
       type: String,
-      match: [onlyLettersRegex, errorCommonMessageForm.onlyLetters],
+      match: [regularExps.onlyLettersRegex, errorCommonMessageForm.onlyLetters],
       // required: true, // si se quiere guardar el name en nuestro userSchema entonces el name tiene que venir sí o sí porque si no dará un error
       trim: true, // Elimina espacios innecesarios al inicio o final
       minlength: [2, "Must be 2 characters or more"],
@@ -76,7 +69,10 @@ const userSchema = new Schema<UserMongoInterface>(
       unique: true, // el email tiene que ser un valor único entonces en la base de datos NO tiene que existir un email duplicado
       lowercase: true, // Convierte automáticamente el email a minúsculas
       trim: true, // Elimina espacios innecesarios al inicio o final
-      match: [emailFormatRegex, errorCommonMessageForm.invalidEmail],
+      match: [
+        regularExps.emailFormatRegex,
+        errorCommonMessageForm.invalidEmail,
+      ],
       required: [true, "Email is required"],
     },
 
