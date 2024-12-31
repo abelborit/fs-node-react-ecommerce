@@ -116,7 +116,8 @@ const userSchema = new Schema<UserMongoInterface>(
           message: errorCommonMessageForm.passwordNumber,
         },
         {
-          validator: (value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value),
+          validator: (value: string) =>
+            regularExps.specialCharacterRegex.test(value),
           message: errorCommonMessageForm.passwordSpecial,
         },
       ],

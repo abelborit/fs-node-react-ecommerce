@@ -7,11 +7,11 @@ const errorCommonMessageForm = {
   passwordRequired: "Password is required",
 
   /* minlength - maxlength */
-  minLengthCharacters: (minValue: number) => {
-    return `Must be ${minValue} characters or less`;
+  minLengthCharacters: (value: number) => {
+    return `Must be ${value} characters or less`;
   },
-  maxLengthCharacters: (minValue: number) => {
-    return `Must be ${minValue} characters or more`;
+  maxLengthCharacters: (value: number) => {
+    return `Must be ${value} characters or more`;
   },
 
   /* other common message */
