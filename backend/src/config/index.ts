@@ -5,3 +5,4 @@ export * from "./regular-exp";
 export * from "./errorCommonMessage";
 export * from "./validators";
 export * from "./uuid.adapter";
+export * from "./multer.adapter";
