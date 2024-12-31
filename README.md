@@ -58,6 +58,10 @@
 
   - Paquete `mongoose` usando `npm install mongoose --save` desde `https://mongoosejs.com/docs/index.html`
 
+  - Paquete `uuid` usando `npm i uuid` desde `https://www.npmjs.com/package/uuid`
+
+    - Para sus tipos `npm i --save-dev @types/uuid`
+
   - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
 ### \* NOTAS:
