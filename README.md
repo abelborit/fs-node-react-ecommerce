@@ -62,6 +62,10 @@
 
     - Para sus tipos `npm i --save-dev @types/uuid`
 
+  - Paquete `multer` usando `npm i multer` desde `https://www.npmjs.com/package/multer`
+
+    - Para sus tipos `npm i --save-dev @types/multer`
+
   - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
 ### \* NOTAS:
