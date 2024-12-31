@@ -3,7 +3,8 @@ export class CustomError extends Error {
   /* se coloca como private para que solo se pueda utilizar en nuestros métodos estáticos */
   private constructor(
     public readonly messageError: string,
-    public readonly statusCode: number
+    public readonly statusCode: number,
+    public readonly success: boolean
   ) {
     /* aquí se coloca el super() porque como CustomError se está extendiendo del Error entonces necesita inicializar lo que necesita el Error para que sea permitido */
     super(messageError);
@@ -18,22 +19,22 @@ export class CustomError extends Error {
   /* como van a ser muchos errores los que podríamos manejar, entonces sería medio tedioso ir creando la instancia de CustomError y pasarle el messageError y statusCode, entonces también podríamos hacer una serie de factory constructors o métodos factory que regresen nuestra instancia previamente creada */
   static badRequest_400(messageError: string): CustomError {
     /* regresar una instancia de nuestro CustomError con el messageError del método badRequest y el código en duro de lo que sería el error personalizado */
-    return new CustomError(messageError, 400);
+    return new CustomError(messageError, 400, false);
   }
 
   static unauthorized_401(messageError: string): CustomError {
-    return new CustomError(messageError, 401);
+    return new CustomError(messageError, 401, false);
   }
 
   static forbidden_403(messageError: string): CustomError {
-    return new CustomError(messageError, 403);
+    return new CustomError(messageError, 403, false);
   }
 
   static notFound_404(messageError: string): CustomError {
-    return new CustomError(messageError, 404);
+    return new CustomError(messageError, 404, false);
   }
 
   static internalServer_500(messageError: string): CustomError {
-    return new CustomError(messageError, 500);
+    return new CustomError(messageError, 500, false);
   }
 }
