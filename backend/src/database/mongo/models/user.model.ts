@@ -48,9 +48,9 @@ const userSchema = new Schema<UserMongoInterface>(
       match: [regularExps.onlyLettersRegex, errorCommonMessageForm.onlyLetters],
       // required: true, // si se quiere guardar el name en nuestro userSchema entonces el name tiene que venir sí o sí porque si no dará un error
       trim: true, // Elimina espacios innecesarios al inicio o final
-      minlength: [2, "Must be 2 characters or more"],
-      maxlength: [15, "Must be 15 characters or less"],
-      required: [true, "FirstName is required"], // si se quiere guardar el name en nuestro userSchema entonces el name tiene que venir sí o sí porque si no dará un error el cual se lo podemos mandar de esa forma en un arreglo
+      minlength: [2, errorCommonMessageForm.minLengthCharacters(2)],
+      maxlength: [15, errorCommonMessageForm.maxLengthCharacters(15)],
+      required: [true, errorCommonMessageForm.firstNameRequired], // si se quiere guardar el name en nuestro userSchema entonces el name tiene que venir sí o sí porque si no dará un error el cual se lo podemos mandar de esa forma en un arreglo
     },
 
     lastName: {
@@ -58,9 +58,9 @@ const userSchema = new Schema<UserMongoInterface>(
       match: [regularExps.onlyLettersRegex, errorCommonMessageForm.onlyLetters],
       // required: true, // si se quiere guardar el name en nuestro userSchema entonces el name tiene que venir sí o sí porque si no dará un error
       trim: true, // Elimina espacios innecesarios al inicio o final
-      minlength: [2, "Must be 2 characters or more"],
-      maxlength: [15, "Must be 15 characters or less"],
-      required: [true, "LastName is required"], // si se quiere guardar el name en nuestro userSchema entonces el name tiene que venir sí o sí porque si no dará un error el cual se lo podemos mandar de esa forma en un arreglo
+      minlength: [2, errorCommonMessageForm.minLengthCharacters(2)],
+      maxlength: [15, errorCommonMessageForm.maxLengthCharacters(15)],
+      required: [true, errorCommonMessageForm.lastNameRequired], // si se quiere guardar el name en nuestro userSchema entonces el name tiene que venir sí o sí porque si no dará un error el cual se lo podemos mandar de esa forma en un arreglo
     },
 
     /* Si se quiere mayor consistencia se podría agregar la misma expresión regular del backend al frontend para garantizar que el formato sea idéntico. Aunque Yup.string().email() ya es confiable, usar la misma regex evitaría posibles discrepancias en formatos admitidos */
@@ -73,7 +73,7 @@ const userSchema = new Schema<UserMongoInterface>(
         regularExps.emailFormatRegex,
         errorCommonMessageForm.invalidEmail,
       ],
-      required: [true, "Email is required"],
+      required: [true, errorCommonMessageForm.emailRequired],
     },
 
     emailValidated: {
@@ -97,7 +97,7 @@ const userSchema = new Schema<UserMongoInterface>(
     /* --- FORMA 2: password -> tener similar a las validaciones que se tienen en frontend --- */
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [true, errorCommonMessageForm.passwordRequired],
       validate: [
         {
           validator: (value: string) => value.length >= 8,
