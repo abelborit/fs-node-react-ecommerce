@@ -22,18 +22,22 @@ export class AuthMiddleware {
     /* la idea será tomar el token que viene dentro de los headers de autenticación en el Bearer Token. Se puede colocar el Authorization o sino un x-token si queremos que sea un header personalizado. El Authorization es un header bien estándar para estos casos */
     const authorization = request.header("Authorization");
 
-    if (!authorization)
-      return response.status(401).json({
+    if (!authorization) {
+      response.status(401).json({
         success: false,
         error: "No token sent. You have to provide it - AuthMiddleware",
       });
+      return;
+    }
 
     /* indicar que se tiene que proveer el token como un Bearer Token */
-    if (!authorization.startsWith("Bearer "))
-      return response.status(401).json({
+    if (!authorization.startsWith("Bearer ")) {
+      response.status(401).json({
         success: false,
         error: "Ivalid Bearer token - AuthMiddleware",
       });
+      return;
+    }
 
     /* tomar el token, es decir, lo que viene después del Bearer y su espacio por eso el .split(" ") y tomaremos la segunda posición con el .at(1) o sino también puede ser [1] sino que con la nueva forma o métodos para los arreglos podría ser con .at(1) o como siempre con el [1] */
     const token = authorization.split(" ").at(1) || ""; // si no viene nada entonces será un string vacío solo para asegurarnos que siempre se tendrá un valor en nuestro token y que siempre será un string
@@ -81,10 +85,11 @@ export class AuthMiddleware {
       console.log(error);
 
       /* FORMA 1: usando directamente */
-      return response.status(500).json({
+      response.status(500).json({
         success: false,
         error: `Internal Server error - AuthMiddleware - ${error}`,
       });
+      return;
 
       /* FORMA 2: usando el CustomError */
       // throw CustomError.internalServer_500(`Internal Server Error - ${error}`);
