@@ -9,7 +9,7 @@ interface ProductMongoInterface extends Document {
   name: string;
   description: string;
   price: number;
-  image: string[];
+  images: string[];
   category: string;
   subCategory: string;
   sizes: string[]; // Asumiendo que los tamaños son cadenas como "S", "M", "L", etc.
@@ -36,7 +36,7 @@ const productSchema = new Schema<ProductMongoInterface>(
       required: [true, "Price is required"],
       default: 0,
     },
-    image: {
+    images: {
       type: [String],
       required: [true, "At least one image is required"],
     },
@@ -56,10 +56,36 @@ const productSchema = new Schema<ProductMongoInterface>(
       type: Boolean,
       // required: [true, "bestseller is required"], // si no se define el requerido entonces significa que es opcional lo cual hará que la propiedad ni siquiera va a existir en el documento que se creará en la base de datos
     },
+
+    /* No hay problema en que tanto el modelo de Mongoose como la entidad ProductEntity tengan la misma fecha por defecto (Date.now o una instancia de Date), pero es importante entender el propósito de cada capa para evaluar si es realmente necesario o redundante. */
+    /* ¿Por qué no es un problema?
+        - Consistencia de Datos:
+          Si no se especifica una fecha al crear un producto, ambas capas asignarán la fecha actual, lo cual asegura que el registro tendrá una fecha válida en cualquier caso.
+
+        - Redundancia Controlada:
+          Aunque parece redundante, cada capa tiene su propia responsabilidad. La entidad asegura que los datos que ingresan a la aplicación están completos y válidos, mientras que el modelo se encarga de las reglas relacionadas con la base de datos.
+    */
+    /* ¿Cuándo podría ser un problema?
+        - Desincronización:
+          Si las reglas cambian en una capa (por ejemplo, se decide usar otra lógica para la fecha en la entidad o en el modelo), podríamos olvidarnos de actualizar la otra, lo que puede causar inconsistencias.
+
+        - Sobrecarga innecesaria:
+          Si siempre se va a depender de la fecha predeterminada del modelo (por ejemplo, Date.now en Mongoose), incluirla también en la entidad podría ser innecesario.
+    */
+    /* ¿Qué hacer para optimizar?
+        1. Dejar la responsabilidad en el modelo (actual):
+          Si la fecha predeterminada solo es relevante para la base de datos, se puede omitir en la entidad y confiar en la configuración del esquema de Mongoose.
+
+        2. Dejar la responsabilidad en la entidad:
+          Si la fecha es importante desde el momento en que los datos se manejan en la aplicación, y no depende de la base de datos, se puede omitir la configuración predeterminada en el modelo y usarla solo en la entidad.
+
+        3. Usar la misma lógica en ambas capas:
+          Si deseamos asegurar consistencia en ambas capas sin sobrepensar, se puede mantener la lógica de tener la fecha por defecto tanto en la entidad como en el modelo de mongoose
+    */
     date: {
       type: Date,
       required: [true, "Date is required"],
-      default: Date.now, // Asignar fecha actual por defecto
+      default: Date.now, // Asignar fecha actual por defecto desde el modelo
     },
   }
 
