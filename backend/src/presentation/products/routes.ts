@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { ProductController } from "./controller";
 import { MulterAdapter } from "../../config";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
 export class ProductRoutes {
   /* aquí se utiliza static functions porque como no se hará inyección de dependencias entonces no sería necesario instsanciar la clase AppRoutes y solo se coloca directo. También se están usando el get function para tener otra forma de realizar esta función, se podría realizar sin ese get (son solo diferentes formas de hacerlo) */
@@ -20,6 +21,9 @@ export class ProductRoutes {
     router.post(
       "/create-product",
       [
+        /* en este caso, solo vamos a utilizar el middleware de AuthMiddleware para una ruta en particular, la cual es la ruta de crear el producto que es un post, pero si se necesita colocar o que afecte a varias rutas dentro de una ruta padre, entonces también se podría hacer, es decir, si quisiéramos que afecte todas las rutas de una ruta padre, por ejemplo, que el AuthMiddleware afecte a todas las rutas hijas de ..../api/products/.... también se puede hacer */
+        /* en este caso como queremos que afecte a una ruta en particular, se coloca solo en esa ruta y se puede colocar como segundo argumento el middleware a utilizar o sino un arreglo de middleware porque si tenemos más middleware entonces sería solo añadirlo. Colocando el middleware aquí entonce hará que solo esta ruta en particular tenga esa validación necesaria en cada request para ver si el usuario puede acceder o no a crear un producto y con esto estamos creando una ruta protegida */
+        AuthMiddleware.validateJWT,
         MulterAdapter.uploadFields([
           /* El método uploadFields acepta un arreglo donde se definen:
           - name: El nombre de los campos de archivo que se esperan en el formulario.
