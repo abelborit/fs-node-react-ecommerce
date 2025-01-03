@@ -18,6 +18,10 @@ export class MulterAdapter {
    * @returns Middleware de Multer para manejar un solo archivo.
    */
   static uploadSingle(fieldName: string) {
+    if (!fieldName || typeof fieldName !== "string") {
+      throw new Error("The 'fieldName' parameter must be a non-empty string.");
+    }
+
     /* aquí se tiene que retornar la función middleware de multer para luego poder usarlo correctamente como un middleware en las rutas que necesitemos */
     return multer({ storage: this.storage }).single(fieldName);
   }
@@ -29,6 +33,14 @@ export class MulterAdapter {
    * @returns Middleware de Multer para manejar múltiples archivos.
    */
   static uploadMultiple(fieldName: string, maxCount: number = 10) {
+    if (!fieldName || typeof fieldName !== "string") {
+      throw new Error("The 'fieldName' parameter must be a non-empty string.");
+    }
+
+    if (typeof maxCount !== "number" || maxCount <= 0) {
+      throw new Error("The 'maxCount' parameter must be a positive number.");
+    }
+
     /* aquí se tiene que retornar la función middleware de multer para luego poder usarlo correctamente como un middleware en las rutas que necesitemos */
     return multer({ storage: this.storage }).array(fieldName, maxCount);
   }
@@ -40,6 +52,21 @@ export class MulterAdapter {
    * @returns Middleware de Multer para manejar múltiples campos de archivos.
    */
   static uploadFields(fields: { name: string; maxCount?: number }[]) {
+    if (!Array.isArray(fields) || fields.length === 0) {
+      throw new Error("Fields parameter must be a non-empty array.");
+    }
+
+    for (const field of fields) {
+      if (!field.name || typeof field.name !== "string") {
+        throw new Error("Each field must have a valid 'name' property.");
+      }
+
+      if (field.maxCount !== undefined && typeof field.maxCount !== "number") {
+        throw new Error("'maxCount' must be a number if provided.");
+      }
+    }
+
+    /* aquí se tiene que retornar la función middleware de multer para luego poder usarlo correctamente como un middleware en las rutas que necesitemos */
     return multer({ storage: this.storage }).fields(fields);
   }
 }
